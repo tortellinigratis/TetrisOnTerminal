@@ -64,7 +64,7 @@ private:
             wmove(this-> win, i +1, 1);
             for ( int j = 0; j < XLENGTH; j++ ) {
                 if ( boardArray[i][j] ) {
-                    wprintw(this-> win, "#");
+                    wprintw(this-> win, "@");
                 } else {
                     wprintw(this-> win, " ");
                 }
@@ -79,7 +79,7 @@ private:
             wmove(this-> win, yPosition +i +1, xPosition+1);
             for ( int j = 0; j < 4; j++ ) {
                 if ( ttrmn-> isTrue(i, j) ) {
-                    wprintw(this-> win, "#");
+                    wprintw(this-> win, "@");
                 } else {
                     wmove(this-> win, yPosition +i +1, xPosition +j +2);
                 }
@@ -174,8 +174,49 @@ private:
             yPosition++;
             return 0;
         } else {
-            return addBlock();
+            int r = addBlock();
+            checkCompletedLines();
+            return r;
         }
+
+    }
+
+    void checkCompletedLines(){    
+
+        for(int y=0; y<YLENGTH; y++)
+        {
+            bool isLineCleared = true;
+            for(int x=0; x< XLENGTH ; x++)
+            {
+                if(boardArray[y][x] == false)
+                {
+                    isLineCleared = false; //se trovo un "buco" esco dal for e sono sicuro di aver trovato una riga non completa
+                    break;
+                } 
+            }
+            if(isLineCleared)
+            {
+                if(y==0)
+                {
+                    for(int x=0; x< XLENGTH ; x++)
+                    {
+                        boardArray[0][x]=false;
+                    }
+                }
+                else
+                {
+                    for(int y2=y; y2>0; y2--)
+                    {
+            
+                        for(int x2=0; x2< XLENGTH ; x2++)
+                        {
+                            boardArray[y2][x2]=boardArray[y2-1][x2];
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     void moveLeft() {

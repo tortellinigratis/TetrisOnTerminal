@@ -14,7 +14,7 @@ class Tetramino {
             // every subclass autoinitializes itself
         }
 
-        // REVEIEW change to a more efficient algorithm
+        // REVIEW change to a more efficient algorithm
         void antiRotate() {
             if ( maxDim > 2 ) {
                 bool clone[maxDim][maxDim -2];
