@@ -64,7 +64,7 @@ private:
             wmove(this-> win, i +1, 1);
             for ( int j = 0; j < XLENGTH; j++ ) {
                 if ( boardArray[i][j] ) {
-                    wprintw(this-> win, "@");
+                    wprintw(this-> win, "▉");
                 } else {
                     wprintw(this-> win, " ");
                 }
@@ -79,7 +79,7 @@ private:
             wmove(this-> win, yPosition +i +1, xPosition+1);
             for ( int j = 0; j < 4; j++ ) {
                 if ( ttrmn-> isTrue(i, j) ) {
-                    wprintw(this-> win, "@");
+                    wprintw(this-> win, "▉");
                 } else {
                     wmove(this-> win, yPosition +i +1, xPosition +j +2);
                 }

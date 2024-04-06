@@ -2,6 +2,7 @@
 #include "Menu.h"
 #include "TetrisBoard.h"
 #include "Leaderboard.h"
+#include<locale.h>
 
 using namespace std;
 
@@ -29,6 +30,8 @@ int showLeaderboard(Leaderboard* lBoard) {
 }
 
 int main() {
+    setlocale(LC_ALL, "");
+    
     initscr();
     refresh();
 
