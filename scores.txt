@@ -1,0 +1,24 @@
+Player 1
+21
+Player 2
+5
+Player 3
+50
+Player 4
+21
+Player 5
+5
+Player 6 
+502
+Player 7
+212
+Player 8
+52
+Player 9
+67
+Player 10
+4
+Player 11
+8
+Player 12
+15

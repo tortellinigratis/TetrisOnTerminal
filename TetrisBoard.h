@@ -1,4 +1,5 @@
-#include <ncurses.h>
+#include <ncurses/ncurses.h>
+//#include <ncurses.h>
 #include <string.h>
 #include "tetramino.h"
 #include "time.h"

@@ -1,4 +1,5 @@
-#include <ncurses.h>
+//#include <ncurses.h>
+#include <ncurses/ncurses.h>
 #include "Menu.h"
 #include "TetrisBoard.h"
 #include "Leaderboard.h"
@@ -22,10 +23,11 @@ int playTetris(TetrisBoard* tBoard) {
 }
 
 int showLeaderboard(Leaderboard* lBoard) {
-    while ( true ) {
-        // aggiungi qui un getInput, anche solo per prendere come input un tasto uscita per tornare al menu principale
+    int n = 1;
+    while ( n == 1 ) {
+        n = lBoard-> getInput();
     }
-    return -1;
+    return n;
 }
 
 int main() {
