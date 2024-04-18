@@ -98,7 +98,12 @@ private:
                 }
             }
         }
+        // NOTE: yPosition is here and not where randomTtrmn() is called (couple of lines beneath) because if the game ends and I
+        //       called addBlock() from fallCompletely(), the exit condition ( yPosition == 0 ) is never true, therefore tetraFall()
+        //       is called and tries to use ttrmn, which does no longer exists.
+        yPosition = 0;
         delete ttrmn;
+        ttrmn = NULL;
         // check if the game has ended
         for ( int i = 0; i < 2; i++ ) {
             for ( int j = 0; j < XLENGTH; j++ ) {
@@ -111,7 +116,6 @@ private:
 
         // extract a new Tetramino
         randomTtrmn();
-        yPosition = 0;
         xPosition = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
         return 0;
     }
@@ -161,7 +165,8 @@ private:
     bool clearRotation() {
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
-                if ( boardArray[i+yPosition][j+xPosition] && ttrmn-> isTrue(i, j) ) {
+                // controls: esiste gia' un blocco in quel posto                                                    uscirebbe dal basso         uscirebbe a destra          uscirebbe a sinistra
+                if ( ( boardArray[i+yPosition][j+xPosition] && ttrmn-> isTrue(i, j) ) || ( ttrmn-> isTrue(i, j) && (i + yPosition >= YLENGTH || j + xPosition >= XLENGTH || xPosition < 0 ) ) ) {
                     return false;
                 }
             }
@@ -301,13 +306,11 @@ public:
                 r = tetraFall();
                 break;
         }
-        if ( r == -1 ) {
-            return r;
-        } else {
+       if ( r != -1 ) {
             showBoard();
             drawTetramino();
-            return r;
         }
+        return r;
     }
 
 // utilities
@@ -339,6 +342,7 @@ public:
             wrefresh(this-> win);
             delwin(this-> win);
             this-> win = NULL;
+            this-> ttrmn = NULL;
             refresh();
         }
     }
