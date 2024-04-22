@@ -6,7 +6,8 @@
 using namespace std;
 
 // TODO empty file case
-#define N 11
+#define N 10
+#define maxc 15
 
 class Leaderboard{
 private:
@@ -19,9 +20,9 @@ private:
 	};
 	typedef pos* p_pos;
     void init(){
-		win = newwin (10, xMax/2, yMax/4, xMax/4);  //creo la finestra
+		win = newwin (16, xMax/2, yMax/4, xMax/4);  //creo la finestra
 	    box(win,0,0);
-	    mvwprintw( win, 0, xMax/4-5 ,"leaderboard");
+	    mvwprintw( win, 0, xMax/4-5 ,"Leaderboard");
 		printscores();	//Stampa nome e punteggio punteggio
 	    refresh();
 	    wrefresh(win);
@@ -29,30 +30,54 @@ private:
 
 	void printscores(){
 		ifstream readscore;
-		int h=3;
+		int h=3;  //g++ -I/mingw64/include/ncurses -o main main.cpp -lncurses -L/mingw64/bin -static
     	readscore.open("scores.txt");
 
-    	if(!readscore.is_open()) cout << "Errore nell' apertura del file";
-
-		for (int i = 0; i < page-1; i++){						//skippo le linee che non servono 
-			readscore.ignore(100, readscore.widen('\n'));
+		if(is_empty(readscore)){
+			int yMax, xMax;
+			getmaxyx(win, yMax, xMax);
+			mvwprintw( win, 2, xMax/2 - 6 ,"No scores yet");
+			mvwprintw( win, 5, xMax/2 - 21,"You can be the top player atleast for once");
 		}
+		else{
+			if(!readscore.is_open()) cout << "Error : opening file failed";
 
-		for (int i = page-5; i < page; i++ && !readscore.eof()){
-			
-			string a;
-			const char* u;
-		
-			getline(readscore,a);
-			u = a.c_str();
-			mvwprintw(win, h, xMax/4-6, u);
+			if(!is_empty(readscore)){
 
-			getline(readscore,a);
-			u = a.c_str();
-			mvwprintw(win, h, xMax/4+8, u);
+				for (int i = 0; i < page; i++){						//skippo le linee che non servono 
+					readscore.ignore(maxc, readscore.widen('\n'));
+				}
 
-			h++;
+				for (int i = 0; i < 5 && !readscore.eof(); i++ ){
+					
+					string a;
+					const char* u;
+
+					int classifica;
+					classifica = (page / 2) + 1 + i;
+					a= to_string(classifica);
+					a = a + ".";
+					u=a.c_str();
+					mvwprintw(win, h, xMax/4-11, u);
+					
+
+					getline(readscore,a);
+					u = a.c_str();
+					mvwprintw(win, h, xMax/4-6, u);
+
+					getline(readscore,a);
+					u = a.c_str();
+					mvwprintw(win, h, xMax/4+8, u);
+
+					h = h + 2;
+
+				}
+			}
 		}
+	}
+
+	bool is_empty(ifstream& file){
+		return file.peek() == ifstream :: traits_type :: eof();
 	}
 
 	void scrolldown(){
@@ -81,7 +106,7 @@ private:
 		readscore.open("scores.txt");
 
 		if(!readscore.is_open()) {
-			cout << "Errore nell' apertura del file";
+			cout << "Error : opening file failed";
 			// REVIEW error handling
 		}
 
@@ -98,6 +123,67 @@ private:
 			head = head_insert(head,p1,p3);
 		}
 		readscore.close();
+	}
+
+	void clear_scores(){
+		WINDOW *clear_check;
+		clear_check = newwin (7, xMax/3, yMax/3 + 1, xMax/3);  //creo la finestra
+	    box(clear_check,0,0);
+		start_color();
+		int ymax, xmax;
+		getmaxyx(clear_check, ymax, xmax);
+	    mvwprintw( clear_check, 0, xmax/2 -6 ," Are you sure? ");
+	    refresh();
+	    wrefresh(clear_check);
+		keypad(clear_check, true);
+		string choices[2] = {"No", "Yes"};
+		int choice;
+		int highlight = 0;
+		bool inSure = true;
+		while (inSure){
+			for (int i = 0; i < 2 ; i++){
+				if (i == highlight){
+					wattron(clear_check, A_REVERSE);
+				}	
+				mvwprintw(clear_check, 4, xmax/4 + (xmax/2)*i, choices[i].c_str());
+				wattroff(clear_check, A_REVERSE);
+				
+				
+			}
+			choice = wgetch (clear_check);
+
+			switch(choice){
+				case KEY_LEFT:
+					highlight --;
+					if(highlight == -1){
+						highlight = 0;
+					}
+					break;
+				case KEY_RIGHT:
+					highlight ++;
+					if (highlight == 2){
+						highlight = 1;
+					}
+					break;
+				case '\n':
+					if (highlight == 1){
+						ofstream readscore;
+						readscore.open("scores.txt", ofstream :: out | ofstream :: trunc);
+						readscore.close();
+						page=0;
+					}
+					wclear(clear_check);
+					wrefresh(clear_check);
+					delwin(clear_check);
+					clear_check = NULL;
+					refresh();
+					inSure = false;
+					reload();
+
+				default:
+					break;
+			}
+		}
 	}
 
     p_pos head_insert(p_pos head,  string user, int score){
@@ -134,8 +220,9 @@ public:
 		bool inLeaderboard = true;
 		while(inLeaderboard){
 			switch (getch()){
-				case 27:
+				case 27:  //esc=27
 					inLeaderboard = false;
+					page = 0;
 					break;
 
 				case KEY_DOWN:
@@ -145,6 +232,17 @@ public:
 				case KEY_UP:
 					scrollup();
 					break;
+
+				case 'c':
+				{
+					ifstream readscore;
+					readscore.open("scores.txt");
+					if (!is_empty(readscore)){
+						clear_scores();
+					}
+					
+					break;
+				}
 
 				default:
 					break;
