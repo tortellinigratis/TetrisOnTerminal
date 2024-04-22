@@ -1,11 +1,11 @@
-#include <ncurses/ncurses.h>
+#include <ncurses.h>
 //#include <ncurses.h>
 #include <string.h>
 #include "tetramino.h"
 #include "time.h"
 
-#define XLENGTH 20
-#define YLENGTH 22
+#define XLENGTH 10
+#define YLENGTH 20
 // List of possible blocks to choose from
 #define POSS_TETRAM 2
 
@@ -16,14 +16,30 @@ private:
     WINDOW* win;
     bool boardArray[YLENGTH][XLENGTH];
     Tetramino* ttrmn;
+    int score;
+
+    WINDOW* score_win;
+
+
 
     int yPosition, xPosition;
 
     void init() {
+        score = 0;
         yPosition = 0;
         randomTtrmn();
         xPosition = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
         this-> win = newwin(yDim, xDim, (yMax /2) - (yDim /2), (xMax /2) - (xDim /2));
+        this->score_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) - (xDim /2)+ 20);
+        box(this->score_win, 0, 0); 
+        mvwprintw(this->score_win, 1, 1, "Top ");
+        wattron(score_win, A_REVERSE);
+        mvwprintw(this->score_win, 2, 1, "999999999999999");
+        wattroff(score_win, A_REVERSE);
+        mvwprintw(this->score_win, 3, 1, "Score ");
+        wattron(score_win, A_REVERSE);
+        mvwprintw(this->score_win, 4, 1, "000000000000000"); 
+        wattroff(score_win, A_REVERSE);
         wborder(this-> win, 0, 0, ' ', 0, ' ', ' ', 0, 0);
         mvwprintw(this-> win, 1, 0, " ");
         mvwprintw(this-> win, 2, 0, " ");
@@ -34,6 +50,7 @@ private:
         drawTetramino();
         refresh();
         wrefresh(this-> win);
+        wrefresh(this-> score_win);
     }
 
     void randomTtrmn() {
@@ -188,16 +205,15 @@ private:
     }
 
     void checkCompletedLines(){    
-
+        int cont = 0;
         for(int y=0; y<YLENGTH; y++)
         {
             bool isLineCleared = true;
-            for(int x=0; x< XLENGTH ; x++)
+            for(int x=0; x< XLENGTH && isLineCleared ; x++)
             {
                 if(boardArray[y][x] == false)
                 {
                     isLineCleared = false; //se trovo un "buco" esco dal for e sono sicuro di aver trovato una riga non completa
-                    break;
                 } 
             }
             if(isLineCleared)
@@ -220,8 +236,10 @@ private:
                         }
                     }
                 }
+                cont++;
             }
         }
+        incr_score(cont);
 
     }
 
@@ -261,6 +279,7 @@ public:
         xDim = XLENGTH +2;
         yDim = YLENGTH +2;
         this-> win = NULL;
+        this->score_win = NULL;
     }
 
     int getInput() {
@@ -315,8 +334,22 @@ public:
 
 // utilities
     // REVIEW probably useless
+    int incr_score (int n)
+    {
+        return 0;
+    }
     WINDOW* getWinPointer() {
         return this-> win;
+    }
+
+    int count_digit(int number)
+    {
+        int count = 0;
+        while(number!=0){
+            number = number / 10;
+            count++;
+        }
+        return count;
     }
 
     // REVIEW check if these functions are actually used and how
@@ -324,6 +357,7 @@ public:
         if ( this-> win != NULL ) {
             refresh();
             wrefresh(this-> win);
+            wrefresh(this->score_win);
         } else {
             init();
         }
@@ -339,8 +373,13 @@ public:
     void remove() {
         if ( this-> win != NULL ) {
             wclear(this-> win);
+            wclear(this->score_win);
+            wrefresh(this->score_win);
             wrefresh(this-> win);
+            wclear(this->score_win);
             delwin(this-> win);
+            delwin(this->score_win);
+            this->score_win = NULL;
             this-> win = NULL;
             this-> ttrmn = NULL;
             refresh();

@@ -1,5 +1,5 @@
 //#include <ncurses.h>
-#include <ncurses/ncurses.h>
+#include <ncurses.h>
 #include "Menu.h"
 #include "TetrisBoard.h"
 #include "Leaderboard.h"

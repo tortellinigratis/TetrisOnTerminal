@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <ncurses/ncurses.h>
+#include <ncurses.h>
 //#include <ncurses.h>
 #include <cstring>
 using namespace std;
