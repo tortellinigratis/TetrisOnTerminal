@@ -22,7 +22,7 @@ private:
     void init(){
 		win = newwin (16, xMax/2, yMax/4, xMax/4);  //creo la finestra
 	    box(win,0,0);
-	    mvwprintw( win, 0, xMax/4-5 ,"Leaderboard");
+	    mvwprintw( win, 0, xMax/4-5 ," Leaderboard ");
 		printscores();	//Stampa nome e punteggio punteggio
 	    refresh();
 	    wrefresh(win);
@@ -223,6 +223,8 @@ public:
 				case 27:  //esc=27
 					inLeaderboard = false;
 					page = 0;
+					wclear(win);
+					wrefresh(win);
 					break;
 
 				case KEY_DOWN:
