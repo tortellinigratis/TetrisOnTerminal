@@ -1,8 +1,7 @@
-#include <ncurses.h>
-//#include <ncurses.h>
 #include <string.h>
 #include "tetramino.h"
 #include "time.h"
+#include "ncrss.cpp"
 
 #define XLENGTH 10
 #define YLENGTH 20
