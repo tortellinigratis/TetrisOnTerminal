@@ -14,6 +14,7 @@ private:
     int yMax, xMax;
     int yDim, xDim;
     WINDOW* win;
+    WINDOW* winNext;
     bool boardArray[YLENGTH][XLENGTH];
     Tetramino* ttrmn;
     int score;
@@ -27,6 +28,8 @@ private:
     void init() {
         score = 0;
         yPosition = 0;
+        randomTtrmn();
+        ttrmn = ttrmnNext;
         randomTtrmn();
         xPosition = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
         this-> win = newwin(yDim, xDim, (yMax /2) - (yDim /2), (xMax /2) - (xDim /2));
@@ -47,6 +50,12 @@ private:
         mvwprintw(this-> win, 2, xDim -1, " ");
         clearboard();
         showBoard();
+
+        winNext = newwin (8, 8, (yMax /2) - (yDim /2)+10, (xMax /2) - (xDim /2)+30);
+        box(winNext, 0, 0);
+        mvwprintw(winNext, 0, 1 , " Next ");
+
+        drawNext();
         drawTetramino();
         refresh();
         wrefresh(this-> win);
@@ -58,13 +67,16 @@ private:
         int rndm = rand() % POSS_TETRAM;
         switch ( rndm ) {
             case 0:
-                ttrmn = new Square();
+                ttrmnNext = new Square();
+                // ttrmn = new Square();
                 break;
             case 1:
-                ttrmn = new Rect();
+                ttrmnNext = new Rect();
+                //ttrmn = new Rect();
                 break;
             default:
-                ttrmn = new Square();
+                ttrmnNext = new Square();
+                //ttrmn = new Square();
                 break;
         }
     }
@@ -107,6 +119,22 @@ private:
         refresh();
     }
 
+    void drawNext(){
+        wmove(winNext, 2,2);
+        for ( int i = 0; i < 4; i++ ) {
+            for ( int j = 0; j < 4; j++ ) {
+                if ( ttrmnNext-> isTrue(i, j) ) {
+                    wprintw(this-> winNext, "@");
+                } else {
+                    wprintw(this-> winNext, " ");
+                }
+            }
+            wmove(winNext, 2+i+1, 2);
+        }
+        wrefresh(this-> winNext);
+        refresh();
+    }
+
     int addBlock() {
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
@@ -132,6 +160,7 @@ private:
         }
 
         // extract a new Tetramino
+        ttrmn = ttrmnNext;
         randomTtrmn();
         xPosition = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
         return 0;
@@ -328,6 +357,7 @@ public:
        if ( r != -1 ) {
             showBoard();
             drawTetramino();
+            drawNext();
         }
         return r;
     }
@@ -372,6 +402,10 @@ public:
 
     void remove() {
         if ( this-> win != NULL ) {
+            wclear(winNext);
+            wrefresh(winNext);
+            delwin(winNext);
+            winNext=NULL;
             wclear(this-> win);
             wclear(this->score_win);
             wrefresh(this->score_win);
@@ -381,7 +415,10 @@ public:
             delwin(this->score_win);
             this->score_win = NULL;
             this-> win = NULL;
+            delete ttrmn;
             this-> ttrmn = NULL;
+            delete ttrmnNext;
+            this-> ttrmnNext = NULL;
             refresh();
         }
     }
