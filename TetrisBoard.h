@@ -17,6 +17,7 @@ private:
     WINDOW* winNext;
     bool boardArray[YLENGTH][XLENGTH];
     Tetramino* ttrmn;
+    Tetramino* ttrmnNext;
     int score;
 
     WINDOW* score_win;
