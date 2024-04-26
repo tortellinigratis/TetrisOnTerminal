@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <ncurses.h>
+#include <ncurses/curses.h>
 //#include <ncurses.h>
 #include <cstring>
 using namespace std;
@@ -22,7 +22,7 @@ private:
     void init(){
 		win = newwin (16, xMax/2, yMax/4, xMax/4);  //creo la finestra
 	    box(win,0,0);
-	    mvwprintw( win, 0, xMax/4-5 ," Leaderboard ");
+	    mvwprintw( win, 0, xMax/4-7 ," Leaderboard ");
 		printscores();	//Stampa nome e punteggio punteggio
 	    refresh();
 	    wrefresh(win);
@@ -34,6 +34,7 @@ private:
     	readscore.open("scores.txt");
 
 		if(is_empty(readscore)){
+			clear();
 			int yMax, xMax;
 			getmaxyx(win, yMax, xMax);
 			mvwprintw( win, 2, xMax/2 - 6 ,"No scores yet");
@@ -43,6 +44,8 @@ private:
 			if(!readscore.is_open()) cout << "Error : opening file failed";
 
 			if(!is_empty(readscore)){
+
+				mvwprintw( stdscr, yMax/4 + 16 , 3*(xMax/4) - 17,"Press c to clear");
 
 				for (int i = 0; i < page; i++){						//skippo le linee che non servono 
 					readscore.ignore(maxc, readscore.widen('\n'));
@@ -221,6 +224,7 @@ public:
 		while(inLeaderboard){
 			switch (getch()){
 				case 27:  //esc=27
+					clear();
 					inLeaderboard = false;
 					page = 0;
 					wclear(win);

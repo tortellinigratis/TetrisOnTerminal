@@ -1,4 +1,6 @@
-#include <ncurses.h>
+#include <iostream>
+#include <fstream>
+#include <ncurses/curses.h>
 //#include <ncurses.h>
 #include <string.h>
 #include "tetramino.h"
@@ -8,6 +10,8 @@
 #define YLENGTH 20
 // List of possible blocks to choose from
 #define POSS_TETRAM 2
+#define maxc 15 //max carattere nome
+using namespace std;
 
 class TetrisBoard {
 private:
@@ -37,12 +41,24 @@ private:
         this->score_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) - (xDim /2)+ 20);
         box(this->score_win, 0, 0); 
         mvwprintw(this->score_win, 1, 1, "Top ");
+        //highscore da mettere che si muove col punteggio
+        ifstream readscore;
+        readscore.open("scores.txt");
+        string a = "0";
+        const char *u;
+        if(!is_empty(readscore)){
+            readscore.ignore(maxc, readscore.widen('\n'));
+            getline(readscore,a);	
+        }
+        u = a.c_str();
         wattron(score_win, A_REVERSE);
-        mvwprintw(this->score_win, 2, 1, "999999999999999");
+		mvwprintw(score_win, 2, 1, u);
         wattroff(score_win, A_REVERSE);
         mvwprintw(this->score_win, 3, 1, "Score ");
+        a = to_string(score);
+        u = a.c_str();
         wattron(score_win, A_REVERSE);
-        mvwprintw(this->score_win, 4, 1, "000000000000000"); 
+        mvwprintw(this->score_win, 4, 1, u); 
         wattroff(score_win, A_REVERSE);
         wborder(this-> win, 0, 0, ' ', 0, ' ', ' ', 0, 0);
         mvwprintw(this-> win, 1, 0, " ");
@@ -63,6 +79,10 @@ private:
         wrefresh(this-> score_win);
     }
 
+    bool is_empty(ifstream& file){
+		return file.peek() == ifstream :: traits_type :: eof();
+	}
+    
     void randomTtrmn() {
         srand(time(NULL));
         int rndm = rand() % POSS_TETRAM;
@@ -267,10 +287,39 @@ private:
                     }
                 }
                 cont++;
+                
             }
+            
         }
-        incr_score(cont);
+        score = incr_score(cont);
+        string a;
+        const char *u;
+        a = to_string(score);
+        u = a.c_str();
+        wattron(score_win, A_REVERSE);
+        mvwprintw(this->score_win, 4, 1, u); 
+        wattroff(score_win, A_REVERSE);
+        wrefresh(score_win);
+    }
 
+    int incr_score(int n){
+        switch(n){
+            case 0:
+                break;
+            case 1:
+                score = score + 40;
+                break;
+            case 2:
+                score = score + 100;
+                break;
+            case 3:
+                score = score + 300;
+                break;
+            case 4:
+                score = score + 1200;
+                break;
+        }
+        return score;
     }
 
     void moveLeft() {
@@ -365,13 +414,13 @@ public:
 
 // utilities
     // REVIEW probably useless
-    int incr_score (int n)
+    /*int incr_score (int n)
     {
         return 0;
     }
     WINDOW* getWinPointer() {
         return this-> win;
-    }
+    }*/
 
     int count_digit(int number)
     {
