@@ -83,6 +83,7 @@ private:
         drawTetramino();
         refresh();
         wrefresh(this->winHold);
+        wrefresh(this->winNext);
         wrefresh(this-> win);
         wrefresh(this-> score_win);
     }
@@ -577,9 +578,13 @@ public:
     void remove() {
         if ( this-> win != NULL ) {
             wclear(winNext);
+            wclear(winHold);
             wrefresh(winNext);
+            wrefresh(winHold);
             delwin(winNext);
+            delwin(winHold);
             winNext=NULL;
+            winHold=NULL;
             wclear(this-> win);
             wclear(this->score_win);
             wrefresh(this->score_win);
