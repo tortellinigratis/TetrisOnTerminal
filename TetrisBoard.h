@@ -17,9 +17,11 @@ private:
     int yDim, xDim;
     WINDOW* win;
     WINDOW* winNext;
+    WINDOW* winHold;
     bool boardArray[YLENGTH][XLENGTH];
     Tetramino* ttrmn;
     Tetramino* ttrmnNext;
+    int typeHold;
     int score;
     string highscore;
 
@@ -33,6 +35,7 @@ private:
         score = 0;
         yPosition = 0;
         randomTtrmn();
+        typeHold = -1; 
         ttrmn = ttrmnNext;
         randomTtrmn();
         xPosition = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
@@ -69,13 +72,16 @@ private:
         clearboard();
         showBoard();
 
-        winNext = newwin (8, 8, (yMax /2) - (yDim /2)+10, (xMax /2) - (xDim /2)+30);
+        winNext = newwin (8, 8, (yMax /2) - (yDim /2)+10, (xMax /2) - (xDim /2)+20);
+        winHold = newwin (8, 8, (yMax /2) - (yDim /2)+10, (xMax /2) - (xDim /2)-18);
         box(winNext, 0, 0);
+        box(winHold, 0, 0);
         mvwprintw(winNext, 0, 1 , " Next ");
-
+        mvwprintw(winHold, 0, 1, " Hold ");
         drawNext();
         drawTetramino();
         refresh();
+        wrefresh(this->winHold);
         wrefresh(this-> win);
         wrefresh(this-> score_win);
     }
@@ -139,6 +145,23 @@ private:
         }
         wrefresh(this-> win);
         refresh();
+    }
+
+    void drawHold(){
+        wmove(winHold, 2,2);
+        for ( int i = 0; i < 4; i++ ) {
+            for ( int j = 0; j < 4; j++ ) {
+                if ( ttrmn-> isTrue(i, j) ) {
+                    wprintw(this-> winHold, "@");
+                } else {
+                    wprintw(this-> winHold, " ");
+                }
+            }
+            wmove(winHold, 2+i+1, 2);
+        }
+        wrefresh(this->winHold);
+        refresh();
+
     }
 
     void drawNext(){
@@ -344,6 +367,28 @@ private:
         }
     }
 
+    void pigliaTetramino(){
+        if(typeHold == -1){ 
+        yPosition = 0; 
+        drawHold();
+        typeHold = ttrmn->type;
+        delete ttrmn;
+        ttrmn = NULL;
+        ttrmn = ttrmnNext;
+        randomTtrmn();
+        xPosition  = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
+        }
+        else
+        {
+            drawHold();
+            int tmp = ttrmn->type;
+            ttrmn->type = typeHold;
+            typeHold = tmp;
+        }
+        
+        
+    }
+
     int fallCompletely() {
         int r = 0;
         bool moving = true;
@@ -380,7 +425,7 @@ public:
                 moveRight();
                 break;
 
-            case KEY_LEFT:
+            case KEY_LEFT: //TODO : girare in senso orario con freccia su
                 moveLeft();
                 break;
 
@@ -393,6 +438,9 @@ public:
                 if ( !clearRotation() ) {
                     ttrmn-> antiRotate();
                 }
+                break;
+            case 'e':
+                pigliaTetramino();
                 break;
 
 			case 'q':

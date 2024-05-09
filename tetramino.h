@@ -2,6 +2,8 @@ class Tetramino {
     protected:
         bool shape[4][4];
         int maxDim;
+        //0: SQUARE
+        //1: RECT
 
         // REVIEW could be useless
         void clearTtrmn() {
@@ -9,6 +11,7 @@ class Tetramino {
         }
 
     public:
+        int type; 
         Tetramino() {
             // nothing here
             // every subclass autoinitializes itself
@@ -80,9 +83,10 @@ class Tetramino {
 
 class Square: public Tetramino {
 private:
-    
+
 public:
     Square() {
+        type = 0;
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j ++ ) {
                 if ( j < 2 && i < 2 ) {
@@ -98,9 +102,10 @@ public:
 
 class Rect: public Tetramino {
 private:
-
+    
 public:
     Rect() {
+        type = 1;
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j++ ) {
                 if ( i == 1 ) {
