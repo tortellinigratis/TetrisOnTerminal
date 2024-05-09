@@ -19,6 +19,7 @@ private:
     WINDOW* winNext;
     WINDOW* winHold;
     bool boardArray[YLENGTH][XLENGTH];
+    bool can_hold;
     Tetramino* ttrmn;
     Tetramino* ttrmnNext;
     int typeHold;
@@ -210,7 +211,8 @@ private:
                 }
             }
         }
-
+        //reset 'hold' use
+        can_hold = true;
         // extract a new Tetramino
         ttrmn = ttrmnNext;
         randomTtrmn();
@@ -419,6 +421,7 @@ private:
     }
 
     void pigliaTetramino(){
+        can_hold=false;
         if(typeHold == -1){ 
         yPosition = 0; 
         drawHold();
@@ -447,7 +450,6 @@ private:
             default:
                 break;
             }
-
             typeHold = tmp;
             yPosition = 0;
             xPosition  = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
@@ -507,7 +509,8 @@ public:
                 }
                 break;
             case 'e':
-                pigliaTetramino();
+                if(can_hold)
+                    pigliaTetramino();
                 break;
 
 			case 'q':
