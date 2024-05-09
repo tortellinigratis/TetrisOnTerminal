@@ -21,6 +21,7 @@ private:
     Tetramino* ttrmn;
     Tetramino* ttrmnNext;
     int score;
+    string highscore;
 
     WINDOW* score_win;
 
@@ -38,25 +39,27 @@ private:
         this-> win = newwin(yDim, xDim, (yMax /2) - (yDim /2), (xMax /2) - (xDim /2));
         this->score_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) - (xDim /2)+ 20);
         box(this->score_win, 0, 0); 
-        mvwprintw(this->score_win, 1, 1, "Top ");
+        mvwprintw(this->score_win, 1, 1, "Highscore");
         //highscore da mettere che si muove col punteggio
         ifstream readscore;
         readscore.open("scores.txt");
-        string a = "0";
+        highscore = "0";
         const char *u;
         if(!is_empty(readscore)){
             readscore.ignore(maxc, readscore.widen('\n'));
-            getline(readscore,a);	
+            getline(readscore,highscore);	
         }
-        u = a.c_str();
+        u = highscore.c_str();
         wattron(score_win, A_REVERSE);
 		mvwprintw(score_win, 2, 1, u);
         wattroff(score_win, A_REVERSE);
-        mvwprintw(this->score_win, 3, 1, "Score ");
+        mvwprintw(this->score_win, 3, 1, "Score");
+        string a;
+        const char * v;
         a = to_string(score);
-        u = a.c_str();
+        v = a.c_str();
         wattron(score_win, A_REVERSE);
-        mvwprintw(this->score_win, 4, 1, u); 
+        mvwprintw(this->score_win, 4, 1, v); 
         wattroff(score_win, A_REVERSE);
         wborder(this-> win, 0, 0, ' ', 0, ' ', ' ', 0, 0);
         mvwprintw(this-> win, 1, 0, " ");
@@ -297,7 +300,16 @@ private:
         wattron(score_win, A_REVERSE);
         mvwprintw(this->score_win, 4, 1, u); 
         wattroff(score_win, A_REVERSE);
+        int hs;
+        hs = stoi(highscore);
+        if (hs < score){
+            wattron(score_win, A_REVERSE);
+            mvwprintw(this->score_win, 2, 1, u); 
+            wattroff(score_win, A_REVERSE);
+            wrefresh(score_win);
+        }
         wrefresh(score_win);
+
     }
 
     int incr_score(int n){
