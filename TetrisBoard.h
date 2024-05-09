@@ -1,4 +1,5 @@
 #include <string.h>
+#include <fstream>
 #include "tetramino.h"
 #include "time.h"
 #include "ncrss.cpp"
