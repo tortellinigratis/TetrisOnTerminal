@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
-#include <ncurses/curses.h>
-//#include <ncurses.h>
 #include <cstring>
+#include "ncrss.cpp"
+
 using namespace std;
 
 // TODO empty file case

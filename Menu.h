@@ -1,7 +1,6 @@
 #include <string.h>
-#include <ncurses.h>
-//#include <ncurses.h>
 #include <iostream>
+#include "ncrss.cpp"
 
 using namespace std;
 
@@ -13,7 +12,7 @@ private:
     char title[7];
     WINDOW* win;
     int index;
-    char options[OPTIONS][10];
+    char options[OPTIONS][12];
 
     void writeTitle() {
         wmove(this-> win, 0, xMax /4 -3);
