@@ -382,11 +382,25 @@ private:
         {
             drawHold();
             int tmp = ttrmn->type;
-            ttrmn->type = typeHold;
+
+            switch (typeHold)
+            {
+            case 0:
+            ttrmn = new Square();
+                break;
+
+            case 1:
+            ttrmn = new Rect();
+                break;
+            
+            default:
+                break;
+            }
+
             typeHold = tmp;
+            yPosition = 0;
+            xPosition  = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
         }
-        
-        
     }
 
     int fallCompletely() {
