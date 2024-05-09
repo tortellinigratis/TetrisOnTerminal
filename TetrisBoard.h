@@ -26,7 +26,8 @@ private:
     string highscore;
 
     WINDOW* score_win;
-
+    WINDOW* name_win;
+    WINDOW* nome;
 
 
     int yPosition, xPosition;
@@ -86,8 +87,12 @@ private:
         wrefresh(this-> score_win);
     }
 
-    bool is_empty(ifstream& file){
+    bool is_empty(istream& file){
 		return file.peek() == ifstream :: traits_type :: eof();
+	}
+
+    bool is_empty_f(fstream& file){
+		return file.peek() ==   EOF;
 	}
     
     void randomTtrmn() {
@@ -199,6 +204,7 @@ private:
             for ( int j = 0; j < XLENGTH; j++ ) {
                 if ( boardArray[i][j] ) {
                     // TODO open "write your name" for leaderboard puposes
+                    name_player();
                     return -1;
                 }
             }
@@ -209,6 +215,50 @@ private:
         randomTtrmn();
         xPosition = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
         return 0;
+    }
+
+    void name_player(){
+        string s = "               ";
+        //apriamo finestra che chiede il nome, inseriamo il nome e sovrascriviamo il file
+        name_win = newwin(9, 40, yMax/4, xMax/2 - 20);
+        box(name_win,0,0);
+        mvwprintw(name_win, 1, 12,"Insert your name:");
+       
+        
+        nome = newwin(3, 17, yMax/4 + 4, xMax/2 - 9);
+        box(nome, 0,0);
+        refresh();
+        wrefresh(name_win);
+        wrefresh(nome);
+
+        int position = 0;
+        int c;
+        while(position < 16 && c != 27){
+            c = getch();
+            if ( (c == KEY_BACKSPACE || c == 127 || c == '\b') && position > 0 ) {
+                s[position - 1] = ' ' ;
+                mvwprintw(nome, 1, position, " ");
+                wrefresh(nome);
+                position--;
+            } else if ( c == '\n' && position > 0 ) {
+                position = 16;
+                // TODO add to leaderboard
+            } else if ( position < 15 && c != -1) {
+                s[position] = c;
+                // FIXME special chars are inserted even with arrows
+                mvwprintw(nome, 1, position +1, "%c", c);
+                wrefresh(nome);
+                position++;
+            }
+        }
+        fstream readscore;
+        readscore.open("scores.txt");
+        if(!readscore.is_open()) cout << "Error : opening file failed";
+        if(is_empty_f(readscore)){
+            readscore << s << '\n' << score ;
+        }
+        readscore.close();
+
     }
 
     bool clearUnder() {
@@ -417,7 +467,9 @@ public:
     }
 
     int getInput() {
+        
         timeout(1000);
+        
         int r = 0;
         switch( getch() ) {
 			// REVIEW each case should have all 3 possible type of key (see backspace for reference)
