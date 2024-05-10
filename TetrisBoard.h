@@ -35,6 +35,7 @@ private:
 
     void init() {
         score = 0;
+        can_hold = true;
         yPosition = 0;
         randomTtrmn();
         typeHold = -1; 
