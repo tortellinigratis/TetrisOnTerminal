@@ -156,10 +156,27 @@ private:
     }
 
     void drawHold(){
+        int t = ttrmn->type;
+        Tetramino* t_p;
+
+        switch (t)
+            {
+            case 0:
+            t_p = new Square();
+                break;
+
+            case 1:
+            t_p = new Rect();
+                break;
+            
+            default:
+                break;
+            }
+
         wmove(winHold, 2,2);
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j++ ) {
-                if ( ttrmn-> isTrue(i, j) ) {
+                if ( t_p-> isTrue(i, j) ) {
                     wprintw(this-> winHold, "@");
                 } else {
                     wprintw(this-> winHold, " ");
@@ -169,6 +186,8 @@ private:
         }
         wrefresh(this->winHold);
         refresh();
+        delete t_p;
+        t_p = NULL;
 
     }
 
@@ -424,14 +443,14 @@ private:
     void pigliaTetramino(){
         can_hold=false;
         if(typeHold == -1){ 
-        yPosition = 0; 
-        drawHold();
-        typeHold = ttrmn->type;
-        delete ttrmn;
-        ttrmn = NULL;
-        ttrmn = ttrmnNext;
-        randomTtrmn();
-        xPosition  = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
+            yPosition = 0; 
+            drawHold();
+            typeHold = ttrmn->type;
+            delete ttrmn;
+            ttrmn = NULL;
+            ttrmn = ttrmnNext;
+            randomTtrmn();
+            xPosition  = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
         }
         else
         {
