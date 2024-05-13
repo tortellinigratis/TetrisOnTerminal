@@ -9,7 +9,7 @@
 #define XLENGTH 10
 #define YLENGTH 20
 // List of possible blocks to choose from
-#define POSS_TETRAM 2
+#define POSS_TETRAM 7
 #define maxc 15 //max carattere nome
 using namespace std;
 
@@ -32,10 +32,11 @@ private:
     WINDOW* name_win;
     WINDOW* nome;
 
-
+    
     int yPosition, xPosition;
 
     void init() {
+        
         score = 0;
         can_hold = true;
         yPosition = 0;
@@ -112,6 +113,21 @@ private:
                 ttrmnNext = new Rect();
                 //ttrmn = new Rect();
                 break;
+            case 2:
+                ttrmnNext = new J_SHAPE();
+                break;
+            case 3:
+                ttrmnNext = new L_SHAPE();
+                break;
+            case 4:
+                ttrmnNext = new S_HAPE();
+                break;
+            case 5:
+                ttrmnNext = new T_SHAPE();
+                break;
+            case 6:
+                ttrmnNext = new Z_SHAPE();
+                break;
             default:
                 ttrmnNext = new Square();
                 //ttrmn = new Square();
@@ -147,7 +163,7 @@ private:
             wmove(this-> win, yPosition +i +1, xPosition+1);
             for ( int j = 0; j < 4; j++ ) {
                 if ( ttrmn-> isTrue(i, j) ) {
-                    wprintw(this-> win, "@");
+                    wprintw(this-> win, "@");      
                 } else {
                     wmove(this-> win, yPosition +i +1, xPosition +j +2);
                 }
@@ -170,7 +186,26 @@ private:
             case 1:
             t_p = new Rect();
                 break;
-            
+
+            case 2:
+            t_p = new J_SHAPE();
+                break;
+
+            case 3:
+            t_p = new L_SHAPE();
+                break;
+
+            case 4:
+            t_p = new S_HAPE();
+                break;
+            case 5:
+            t_p = new T_SHAPE();
+                break;
+
+            case 6:
+            t_p = new Z_SHAPE();
+                break;            
+
             default:
                 break;
             }
@@ -271,7 +306,7 @@ private:
             } else if ( position < 15 && c != -1 && c != ' ') {
                 s[position] = c;
                 // FIXME special chars are inserted even with arrows
-                mvwprintw(nome, 1, position +1, "%c", c);
+                mvwprintw(nome,  1, position +1, "%c", c);
                 wrefresh(nome);
                 position++;
             }
@@ -519,6 +554,26 @@ private:
             case 1:
             ttrmn = new Rect();
                 break;
+
+            case 2:
+            ttrmn = new J_SHAPE();
+                break;
+
+            case 3:
+            ttrmn = new L_SHAPE();
+                break;
+
+            case 4:
+            ttrmn = new S_HAPE();
+                break;
+            case 5:
+            ttrmn = new T_SHAPE();
+                break;
+
+            case 6:
+            ttrmn = new Z_SHAPE();
+                break;            
+
             
             default:
                 break;

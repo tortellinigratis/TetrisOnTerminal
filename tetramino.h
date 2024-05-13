@@ -4,6 +4,11 @@ class Tetramino {
         int maxDim;
         //0: SQUARE
         //1: RECT
+        //2: J SHAPE
+        //3: L SHAPE
+        //4: S HAPE
+        //5: T SHAPE
+        //6: Z SHAPE
 
         // REVIEW could be useless
         void clearTtrmn() {
@@ -116,5 +121,80 @@ public:
             }
         }
         maxDim = 4;
+    }
+};
+
+class J_SHAPE: public Tetramino {
+private:
+    
+public:
+    J_SHAPE() {
+        type = 2;
+        shape[0][0]=true;    shape[0][1]=false;  shape[0][2]=false;  shape[0][3]=false;
+        shape[1][0]=true;    shape[1][1]=true;   shape[1][2]=true;   shape[1][3]=false;
+        shape[2][0]=false;   shape[2][1]=false;  shape[2][2]=false;  shape[2][3]=false;
+        shape[3][0]=false;   shape[3][1]=false;  shape[3][2]=false;  shape[3][3]=false;
+
+        maxDim = 3;
+    }
+};
+
+class L_SHAPE: public Tetramino {
+private:
+    
+public:
+    L_SHAPE() {
+        type = 3;
+        shape[0][0]=false;    shape[0][1]=false;  shape[0][2]=true;  shape[0][3]=false;
+        shape[1][0]=true;    shape[1][1]=true;   shape[1][2]=true;   shape[1][3]=false;
+        shape[2][0]=false;   shape[2][1]=false;  shape[2][2]=false;  shape[2][3]=false;
+        shape[3][0]=false;   shape[3][1]=false;  shape[3][2]=false;  shape[3][3]=false;
+
+        maxDim = 3;
+    }
+};
+
+class S_HAPE: public Tetramino {
+private:
+    
+public:
+    S_HAPE() {
+        type = 4;
+        shape[0][0]=false;    shape[0][1]=true;  shape[0][2]=true;  shape[0][3]=false;
+        shape[1][0]=true;    shape[1][1]=true;   shape[1][2]=false;   shape[1][3]=false;
+        shape[2][0]=false;   shape[2][1]=false;  shape[2][2]=false;  shape[2][3]=false;
+        shape[3][0]=false;   shape[3][1]=false;  shape[3][2]=false;  shape[3][3]=false;
+
+        maxDim = 3;
+    }
+};
+
+class T_SHAPE: public Tetramino {
+private:
+    
+public:
+    T_SHAPE() {
+        type = 5;
+        shape[0][0]=false;    shape[0][1]=true;  shape[0][2]=false;  shape[0][3]=false;
+        shape[1][0]=true;    shape[1][1]=true;   shape[1][2]=true;   shape[1][3]=false;
+        shape[2][0]=false;   shape[2][1]=false;  shape[2][2]=false;  shape[2][3]=false;
+        shape[3][0]=false;   shape[3][1]=false;  shape[3][2]=false;  shape[3][3]=false;
+
+        maxDim = 3;
+    }
+};
+
+class Z_SHAPE: public Tetramino {
+private:
+    
+public:
+    Z_SHAPE() {
+        type = 2;
+        shape[0][0]=true;    shape[0][1]=true;  shape[0][2]=false;  shape[0][3]=false;
+        shape[1][0]=false;    shape[1][1]=true;   shape[1][2]=true;   shape[1][3]=false;
+        shape[2][0]=false;   shape[2][1]=false;  shape[2][2]=false;  shape[2][3]=false;
+        shape[3][0]=false;   shape[3][1]=false;  shape[3][2]=false;  shape[3][3]=false;
+
+        maxDim = 3;
     }
 };
