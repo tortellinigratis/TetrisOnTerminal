@@ -56,6 +56,20 @@ private:
 					string a;
 					const char* u;
 
+					switch( (page /2) +1 +i ) {
+						case 1:
+							wattron(win, COLOR_PAIR(1));
+							break;
+						case 2:
+							wattron(win, COLOR_PAIR(2));
+							break;
+						case 3:
+							wattron(win, COLOR_PAIR(3));
+							break;
+						default:
+							break;
+					}
+
 					int classifica;
 					classifica = (page / 2) + 1 + i;
 					a= to_string(classifica);
@@ -73,7 +87,9 @@ private:
 					mvwprintw(win, h, xMax/4+8, u);
 
 					h = h + 2;
-
+					wattroff(win, COLOR_PAIR(1));
+					wattroff(win, COLOR_PAIR(2));
+					wattroff(win, COLOR_PAIR(3));
 				}
 			}
 		}
