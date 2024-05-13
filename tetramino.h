@@ -189,7 +189,7 @@ private:
     
 public:
     Z_SHAPE() {
-        type = 2;
+        type = 6;
         shape[0][0]=true;    shape[0][1]=true;  shape[0][2]=false;  shape[0][3]=false;
         shape[1][0]=false;    shape[1][1]=true;   shape[1][2]=true;   shape[1][3]=false;
         shape[2][0]=false;   shape[2][1]=false;  shape[2][2]=false;  shape[2][3]=false;
