@@ -1,8 +1,10 @@
 #include <string.h>
 #include <fstream>
+#include <iostream>
 #include "tetramino.h"
 #include "time.h"
 #include "ncrss.cpp"
+#include <vector>
 
 #define XLENGTH 10
 #define YLENGTH 20
@@ -266,7 +268,7 @@ private:
             } else if ( c == '\n' && position > 0 ) {
                 position = 16;
                 // TODO add to leaderboard
-            } else if ( position < 15 && c != -1) {
+            } else if ( position < 15 && c != -1 && c != ' ') {
                 s[position] = c;
                 // FIXME special chars are inserted even with arrows
                 mvwprintw(nome, 1, position +1, "%c", c);
@@ -274,15 +276,66 @@ private:
                 position++;
             }
         }
-        fstream readscore;
+        bool prova;
+        ifstream readscore;
+        ofstream writescore;
         readscore.open("scores.txt");
         if(!readscore.is_open()) cout << "Error : opening file failed";
-        if(is_empty_f(readscore)){
-            readscore << s << '\n' << score ;
+        if(is_empty(readscore)){
+            writescore.open("scores.txt", ofstream::app);
+            if(!writescore.is_open()) cout << "Error : opening file failed";
+            writescore << s << endl << score ; 
         }
-        readscore.close();
+        else{
+            string line;
+            int p;
+            int read_line = 1;
+            bool found = false;
+            vector <string> contents;
+            while (!readscore.eof()){
+                cout << read_line << endl;
+                //readscore.ignore(maxc, readscore.widen('\n'));
+                getline(readscore, line);
+                if (read_line % 2 == 0 ){
+                    cout << line << endl;
+                    p = stoi(line);
+                    if(p < score){
+                        found = true;
+                        read_line -= 1;
+                    }
+                }
+                contents.push_back(line);
+                //readscore.ignore(maxc, readscore.widen('\n'));
+                if (!found) {
+                    read_line += 1;
+                }
+            }
+            if (!found){
+                writescore.open("scores.txt", ofstream::app);
+                if(!writescore.is_open()) cout << "Error : opening file failed";
+                writescore << endl << s << endl << score ;
+            }
+            else{
+                int current_line = 1;
+                writescore.open("scores.txt");
+                if(!writescore.is_open()) cout << "Error : opening file failed";
+                for (auto file_line : contents){
+                    writescore << file_line << endl;
+                    if(current_line == read_line){
+                        writescore << s << endl << score << endl ;
+                        current_line++;
+                    }
+                    current_line++;
+                }
+                writescore.close();
+            }
 
-    }
+            }
+        readscore.close();
+        writescore.close();
+        }
+
+    
 
     bool clearUnder() {
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
