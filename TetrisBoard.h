@@ -7,7 +7,7 @@
 #define XLENGTH 10
 #define YLENGTH 20
 // List of possible blocks to choose from
-#define POSS_TETRAM 2
+#define POSS_TETRAM 7
 #define maxc 15 //max carattere nome
 using namespace std;
 
@@ -109,6 +109,21 @@ private:
             case 1:
                 ttrmnNext = new Rect();
                 //ttrmn = new Rect();
+                break;
+            case 2:
+                ttrmnNext = new J_SHAPE();
+                break;
+            case 3:
+                ttrmnNext = new L_SHAPE();
+                break;
+            case 4:
+                ttrmnNext = new S_HAPE();
+                break;
+            case 5:
+                ttrmnNext = new T_SHAPE();
+                break;
+            case 6:
+                ttrmnNext = new Z_SHAPE();
                 break;
             default:
                 ttrmnNext = new Square();
@@ -250,7 +265,7 @@ private:
             } else if ( position < 15 && c != -1) {
                 s[position] = c;
                 // FIXME special chars are inserted even with arrows
-                mvwprintw(nome, 1, position +1, "%c", c);
+                mvwprintw(nome,  1, position +1, "%c", c);
                 wrefresh(nome);
                 position++;
             }
