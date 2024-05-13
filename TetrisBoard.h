@@ -30,10 +30,11 @@ private:
     WINDOW* name_win;
     WINDOW* nome;
 
-
+    
     int yPosition, xPosition;
 
     void init() {
+        
         score = 0;
         can_hold = true;
         yPosition = 0;
@@ -160,7 +161,7 @@ private:
             wmove(this-> win, yPosition +i +1, xPosition+1);
             for ( int j = 0; j < 4; j++ ) {
                 if ( ttrmn-> isTrue(i, j) ) {
-                    wprintw(this-> win, "@");
+                    wprintw(this-> win, "@");      
                 } else {
                     wmove(this-> win, yPosition +i +1, xPosition +j +2);
                 }
@@ -183,7 +184,26 @@ private:
             case 1:
             t_p = new Rect();
                 break;
-            
+
+            case 2:
+            t_p = new J_SHAPE();
+                break;
+
+            case 3:
+            t_p = new L_SHAPE();
+                break;
+
+            case 4:
+            t_p = new S_HAPE();
+                break;
+            case 5:
+            t_p = new T_SHAPE();
+                break;
+
+            case 6:
+            t_p = new Z_SHAPE();
+                break;            
+
             default:
                 break;
             }
@@ -481,6 +501,26 @@ private:
             case 1:
             ttrmn = new Rect();
                 break;
+
+            case 2:
+            ttrmn = new J_SHAPE();
+                break;
+
+            case 3:
+            ttrmn = new L_SHAPE();
+                break;
+
+            case 4:
+            ttrmn = new S_HAPE();
+                break;
+            case 5:
+            ttrmn = new T_SHAPE();
+                break;
+
+            case 6:
+            ttrmn = new Z_SHAPE();
+                break;            
+
             
             default:
                 break;
