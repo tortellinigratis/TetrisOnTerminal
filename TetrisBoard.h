@@ -610,10 +610,21 @@ public:
         this-> win = NULL;
         this->score_win = NULL;
     }
+    const int fallDelay = 1000;
+    clock_t lastFall = clock();
 
     int getInput() {
         
-        timeout(1000);
+        int elapsed = (clock()-lastFall)*1000000/CLOCKS_PER_SEC;
+        int remaining = fallDelay - elapsed;
+        if(remaining<0)
+        {
+            remaining = 0;
+        }
+        timeout(remaining);
+        elapsed = (clock()-lastFall)*1000000/CLOCKS_PER_SEC;
+        remaining = fallDelay - elapsed;
+
         
         int r = 0;
         switch( getch() ) {
@@ -657,7 +668,10 @@ public:
                 return -1;
 
             default:
-                r = tetraFall();
+                if(remaining<=0){
+                    lastFall = clock();
+                    r = tetraFall();
+                }
                 break;
         }
        if ( r != -1 ) {
