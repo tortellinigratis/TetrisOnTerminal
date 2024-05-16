@@ -1,41 +1,6 @@
-#include <string.h>
-#include <fstream>
-#include <iostream>
-#include "tetramino.h"
-#include "time.h"
-#include "ncrss.cpp"
-#include <vector>
+#include "TetrisBoard.hpp"
 
-#define XLENGTH 10
-#define YLENGTH 20
-// List of possible blocks to choose from
-#define POSS_TETRAM 7
-#define maxc 15 //max carattere nome
-using namespace std;
-
-class TetrisBoard {
-private:
-    int yMax, xMax;
-    int yDim, xDim;
-    WINDOW* win;
-    WINDOW* winNext;
-    WINDOW* winHold;
-    bool boardArray[YLENGTH][XLENGTH];
-    bool can_hold;
-    Tetramino* ttrmn;
-    Tetramino* ttrmnNext;
-    int typeHold;
-    int score;
-    string highscore;
-
-    WINDOW* score_win;
-    WINDOW* name_win;
-    WINDOW* nome;
-
-    
-    int yPosition, xPosition;
-
-    void init() {
+    void TetrisBoard::init() {
         
         score = 0;
         can_hold = true;
@@ -93,15 +58,15 @@ private:
         wrefresh(this-> score_win);
     }
 
-    bool is_empty(istream& file){
+    bool TetrisBoard::is_empty(istream& file){
 		return file.peek() == ifstream :: traits_type :: eof();
 	}
 
-    bool is_empty_f(fstream& file){
+    bool TetrisBoard::is_empty_f(fstream& file){
 		return file.peek() ==   EOF;
 	}
     
-    void randomTtrmn() {
+    void TetrisBoard::randomTtrmn() {
         srand(time(NULL));
         int rndm = rand() % POSS_TETRAM;
         switch ( rndm ) {
@@ -135,7 +100,7 @@ private:
         }
     }
 
-    void clearboard() {
+    void TetrisBoard::clearboard() {
         for ( int i = 0; i < YLENGTH; i++ ) {
             for ( int j = 0; j < XLENGTH; j++ ) {
                 boardArray[i][j] = false;
@@ -143,7 +108,7 @@ private:
         }
     }
 
-    void showBoard() {
+    void TetrisBoard::showBoard() {
         for ( int i = 0; i < YLENGTH; i++ ) {
             wmove(this-> win, i +1, 1);
             for ( int j = 0; j < XLENGTH; j++ ) {
@@ -158,7 +123,7 @@ private:
         refresh();
     }
 
-    void drawTetramino() {
+    void TetrisBoard::drawTetramino() {
         for ( int i = 0; i < 4; i++ ) {
             wmove(this-> win, yPosition +i +1, xPosition+1);
             for ( int j = 0; j < 4; j++ ) {
@@ -173,7 +138,7 @@ private:
         refresh();
     }
 
-    void drawHold(){
+    void TetrisBoard::drawHold(){
         int t = ttrmn->type;
         Tetramino* t_p;
 
@@ -228,7 +193,7 @@ private:
 
     }
 
-    void drawNext(){
+    void TetrisBoard::drawNext(){
         wmove(winNext, 2,2);
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j++ ) {
@@ -244,7 +209,7 @@ private:
         refresh();
     }
 
-    int addBlock() {
+    int TetrisBoard::addBlock() {
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
                 if ( ttrmn-> isTrue(i, j) ) {
@@ -277,7 +242,7 @@ private:
         return 0;
     }
 
-    void name_player(){
+    void TetrisBoard::name_player(){
         string s = "              ";
         //apriamo finestra che chiede il nome, inseriamo il nome e sovrascriviamo il file
         name_win = newwin(9, 40, yMax/4, xMax/2 - 20);
@@ -374,7 +339,7 @@ private:
 
     
 
-    bool clearUnder() {
+    bool TetrisBoard::clearUnder() {
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
                 if ( ttrmn-> isTrue(i, j) ) {
@@ -388,7 +353,7 @@ private:
         return true;
     }
 
-    bool clearLeft() {
+    bool TetrisBoard::clearLeft() {
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
                 if ( ttrmn-> isTrue(i, j) ) {
@@ -402,7 +367,7 @@ private:
         return true;
     }
 
-    bool clearRight() {
+    bool TetrisBoard::clearRight() {
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
                 if ( ttrmn-> isTrue(i, j) ) {
@@ -416,7 +381,7 @@ private:
         return true;
     }
 
-    bool clearRotation() {
+    bool TetrisBoard::clearRotation() {
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
                 // controls: esiste gia' un blocco in quel posto                                                    uscirebbe dal basso         uscirebbe a destra          uscirebbe a sinistra
@@ -429,7 +394,7 @@ private:
     }
 
     // movements:
-    int tetraFall() {
+    int TetrisBoard::tetraFall() {
         if ( clearUnder() ) {
             yPosition++;
             return 0;
@@ -441,7 +406,7 @@ private:
 
     }
 
-    void checkCompletedLines(){    
+    void TetrisBoard::checkCompletedLines(){    
         int cont = 0;
         for(int y=0; y<YLENGTH; y++)
         {
@@ -498,7 +463,7 @@ private:
 
     }
 
-    int incr_score(int n){
+    int TetrisBoard::incr_score(int n){
         switch(n){
             case 0:
                 break;
@@ -518,19 +483,19 @@ private:
         return score;
     }
 
-    void moveLeft() {
+    void TetrisBoard::moveLeft() {
         if ( clearLeft() ) {
             xPosition--;
         }
     }
 
-    void moveRight() {
+    void TetrisBoard::moveRight() {
         if ( clearRight() ) {
             xPosition++;
         }
     }
 
-    void pigliaTetramino(){
+    void TetrisBoard::pigliaTetramino(){
         can_hold=false;
         if(typeHold == -1){ 
             yPosition = 0; 
@@ -586,7 +551,7 @@ private:
         }
     }
 
-    int fallCompletely() {
+    int TetrisBoard::fallCompletely() {
         int r = 0;
         bool moving = true;
         while ( moving ) {
@@ -598,9 +563,7 @@ private:
         return r;
     }
 
-public:
-
-    TetrisBoard() {
+    TetrisBoard::TetrisBoard() {
         getmaxyx(stdscr, this-> yMax, this-> xMax);
         if ( this-> yMax < this-> yDim ) {
             // REVIEW error handling: not enough vertical space
@@ -615,7 +578,8 @@ public:
     const int fallDelay = 1000;
     clock_t lastFall = clock();
 
-    int getInput() {
+
+    int TetrisBoard::getInput() {
         
         int elapsed = (clock()-lastFall)*1000000/CLOCKS_PER_SEC;
         int remaining = fallDelay - elapsed;
@@ -684,28 +648,9 @@ public:
         return r;
     }
 
-// utilities
-    // REVIEW probably useless
-    /*int incr_score (int n)
-    {
-        return 0;
-    }
-    WINDOW* getWinPointer() {
-        return this-> win;
-    }*/
 
-    int count_digit(int number)
-    {
-        int count = 0;
-        while(number!=0){
-            number = number / 10;
-            count++;
-        }
-        return count;
-    }
 
-    // REVIEW check if these functions are actually used and how
-    void render() {
+    void TetrisBoard::render() {
         if ( this-> win != NULL ) {
             refresh();
             wrefresh(this-> win);
@@ -715,14 +660,14 @@ public:
         }
     }
 
-    void reload() {
+    void TetrisBoard::reload() {
         if ( this-> win != NULL ) {
             remove();
         }
         init();
     }
 
-    void remove() {
+     void TetrisBoard::remove() {
         if ( this-> win != NULL ) {
             wclear(winNext);
             wclear(winHold);
@@ -748,4 +693,3 @@ public:
             refresh();
         }
     }
-};

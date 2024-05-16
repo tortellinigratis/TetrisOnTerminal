@@ -1,35 +1,17 @@
-#include <iostream>
-#include <fstream>
-#include <cstring>
-#include "ncrss.cpp"
+#include "Leaderboard.hpp"
 
-using namespace std;
 
-// TODO empty file case
-#define N 10
-#define maxc 15
-
-class Leaderboard{
-private:
-    int yMax, xMax, page=0;
-    WINDOW * win;
-	struct pos{
-		string username;
-		int score;
-		pos *next;
-	};
-	typedef pos* p_pos;
-    void init(){
-		win = newwin (16, xMax/2, yMax/4, xMax/4);  //creo la finestra
+void Leaderboard::init(){
+    win = newwin (16, xMax/2, yMax/4, xMax/4);  //creo la finestra
 	    box(win,0,0);
 	    mvwprintw( win, 0, xMax/4-7 ," Leaderboard ");
 		printscores();	//Stampa nome e punteggio punteggio
 	    refresh();
 	    wrefresh(win);
-    }
+}
 
-	void printscores(){
-		ifstream readscore;
+void Leaderboard::printscores(){
+    ifstream readscore;
 		int h=3;  //g++ -I/mingw64/include/ncurses -o main main.cpp -lncurses -L/mingw64/bin -static
     	readscore.open("scores.txt");
 
@@ -93,14 +75,14 @@ private:
 				}
 			}
 		}
-	}
+}
 
-	bool is_empty(ifstream& file){
-		return file.peek() == ifstream :: traits_type :: eof();
-	}
+bool Leaderboard::is_empty(ifstream& file){
+    return file.peek() == ifstream :: traits_type :: eof();
+}
 
-	void scrolldown(){
-		int numLines = 0;
+void Leaderboard::scrolldown(){
+    int numLines = 0;
 		ifstream readscore;
 			readscore.open("scores.txt");
 		string unused;
@@ -110,18 +92,18 @@ private:
 			page = page + N;
 			reload();
 		}
-	}
+}
 
-	void scrollup(){
-		if(page == 0) reload();
+void Leaderboard::scrollup(){
+    if(page == 0) reload();
 		else{
 			page = page - N;
 			reload();
 		}
-	}
+}
 
-	void readFile(){
-		ifstream readscore;
+void Leaderboard::readFile(){
+    ifstream readscore;
 		readscore.open("scores.txt");
 
 		if(!readscore.is_open()) {
@@ -142,9 +124,10 @@ private:
 			head = head_insert(head,p1,p3);
 		}
 		readscore.close();
-	}
+}
 
-	void clear_scores(){
+void Leaderboard::clear_scores(){
+    start_color();
 		WINDOW *clear_check;
 		clear_check = newwin (7, xMax/3, yMax/3 + 1, xMax/3);  //creo la finestra
 	    box(clear_check,0,0);
@@ -203,23 +186,22 @@ private:
 					break;
 			}
 		}
-	}
+}
 
-    p_pos head_insert(p_pos head,  string user, int score){
+Leaderboard::p_pos Leaderboard::head_insert(p_pos head,  string user, int score){
         p_pos tmp = new pos;
         tmp->username = user;
         tmp->score = score;
         tmp->next = head;
 		return tmp;
-    }
+}
 
-public:
-    Leaderboard(){
-        getmaxyx(stdscr, yMax, xMax);
-        win = NULL;
-    }
+Leaderboard::Leaderboard(){
+    getmaxyx(stdscr, yMax, xMax);
+    win = NULL;
+}
 
-	void remove(){
+void Leaderboard::remove(){
 		if ( this-> win != NULL ) {
 			wclear(this-> win);
 			wrefresh(this-> win);
@@ -229,13 +211,13 @@ public:
 		}
 	}
 
-    void reload() {
+void Leaderboard::reload() {
 	    if (win != NULL)
 		    remove();
 	    init();
     }
 
-	int getInput(){
+int Leaderboard::getInput(){
 		bool inLeaderboard = true;
 		while(inLeaderboard){
 			switch (getch()){
@@ -274,5 +256,3 @@ public:
 		return -1;
 	}
 
-
-};
