@@ -72,11 +72,9 @@
         switch ( rndm ) {
             case 0:
                 ttrmnNext = new Square();
-                // ttrmn = new Square();
                 break;
             case 1:
                 ttrmnNext = new Rect();
-                //ttrmn = new Rect();
                 break;
             case 2:
                 ttrmnNext = new J_SHAPE();
@@ -112,55 +110,12 @@
         for ( int i = 0; i < YLENGTH; i++ ) {
             wmove(this-> win, i +1, 1);
             for ( int j = 0; j < XLENGTH; j++ ) {
-                switch (boardArray[i][j]){ 
- 
-                case 7: 
-                    wattron(win, COLOR_PAIR(7)); 
-                    wprintw(this-> win, " ");       
-                    wattroff(win, COLOR_PAIR(7)); 
-                    break; 
- 
-                case 1: 
-                    wattron(win, COLOR_PAIR(1)); 
-                    wprintw(this-> win, " ");       
-                    wattroff(win, COLOR_PAIR(1)); 
-                    break; 
- 
-                case 2: 
-                    wattron(win, COLOR_PAIR(2)); 
-                    wprintw(this-> win, " ");       
-                    wattroff(win, COLOR_PAIR(2)); 
-                    break; 
- 
-                case 3: 
-                    wattron(win, COLOR_PAIR(3)); 
-                    wprintw(this-> win, " ");       
-                    wattroff(win, COLOR_PAIR(3)); 
-                    break; 
- 
-                case 4: 
-                    wattron(win, COLOR_PAIR(4)); 
-                    wprintw(this-> win, " ");       
-                    wattroff(win, COLOR_PAIR(4)); 
-                    break; 
-                case 5: 
-                    wattron(win, COLOR_PAIR(5)); 
-                    wprintw(this-> win, " ");       
-                    wattroff(win, COLOR_PAIR(5)); 
-                    break; 
- 
-                case 6: 
-                    wattron(win, COLOR_PAIR(6)); 
-                    wprintw(this-> win, " ");       
-                    wattroff(win, COLOR_PAIR(6)); 
-                    break;  
- 
-                case -1: 
-                    wprintw(this-> win, " "); 
-                    break;            
- 
-                default: 
-                    break; 
+                if ( boardArray[i][j] == -1 ) {
+                    wprintw(this-> win, " ");
+                } else {
+                    wattron(this-> win, COLOR_PAIR(boardArray[i][j]));
+                    wprintw(this-> win, " ");
+                    wattroff(this-> win, COLOR_PAIR(boardArray[i][j]));
                 }
             }
         }
@@ -172,56 +127,12 @@
         for ( int i = 0; i < 4; i++ ) {
             wmove(this-> win, yPosition +i +1, xPosition+1);
             for ( int j = 0; j < 4; j++ ) {
-                switch (ttrmn->ttrmnColor(i,j)){ 
- 
-                case 0: 
-                    wattron(win, COLOR_PAIR(0)); 
-                    wprintw(this-> win, " ");       
-                    wattroff(win, COLOR_PAIR(0)); 
-                    break; 
- 
-                case 1: 
-                    wattron(win, COLOR_PAIR(1)); 
-                    wprintw(this-> win, " ");       
-                    wattroff(win, COLOR_PAIR(1)); 
-                    break; 
- 
-                case 2: 
-                    wattron(win, COLOR_PAIR(2)); 
-                    wprintw(this-> win, " ");       
-                    wattroff(win, COLOR_PAIR(2)); 
-                    break; 
- 
-                case 3: 
-                    wattron(win, COLOR_PAIR(3)); 
-                    wprintw(this-> win, " ");       
-                    wattroff(win, COLOR_PAIR(3)); 
-                    break; 
- 
-                case 4: 
-                    wattron(win, COLOR_PAIR(4)); 
-                    wprintw(this-> win, " ");       
-                    wattroff(win, COLOR_PAIR(4)); 
-                    break; 
-                case 5: 
-                    wattron(win, COLOR_PAIR(5)); 
-                    wprintw(this-> win, " ");       
-                    wattroff(win, COLOR_PAIR(5)); 
-                    break; 
- 
-                case 6: 
-                    wattron(win, COLOR_PAIR(6)); 
-                    wprintw(this-> win, " ");       
-                    wattroff(win, COLOR_PAIR(6)); 
-                    break;  
- 
-                case -1: 
+                if ( ttrmn-> ttrmnColor(i, j) == -1 ) {
                     wmove(this-> win, yPosition +i +1, xPosition +j +2);
-                    break;            
- 
-                default: 
-                    break; 
-                
+                } else {
+                    wattron(this-> win, COLOR_PAIR(ttrmn-> ttrmnColor(i, j)));
+                    wprintw(this-> win, " ");
+                    wattroff(this-> win, COLOR_PAIR(ttrmn-> ttrmnColor(i, j)));
                 }
             }
         }
@@ -236,30 +147,30 @@
         switch (t)
             {
             case 0:
-            t_p = new Square();
+                t_p = new Square();
                 break;
 
             case 1:
-            t_p = new Rect();
+                t_p = new Rect();
                 break;
 
             case 2:
-            t_p = new J_SHAPE();
+                t_p = new J_SHAPE();
                 break;
 
             case 3:
-            t_p = new L_SHAPE();
+                t_p = new L_SHAPE();
                 break;
 
             case 4:
-            t_p = new S_HAPE();
+                t_p = new S_HAPE();
                 break;
             case 5:
-            t_p = new T_SHAPE();
+                t_p = new T_SHAPE();
                 break;
 
             case 6:
-            t_p = new Z_SHAPE();
+                t_p = new Z_SHAPE();
                 break;            
 
             default:
@@ -269,55 +180,12 @@
         wmove(winHold, 2,2);
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j++ ) {
-                switch (t_p->ttrmnColor(i,j)){ 
- 
-                case 0: 
-                    wattron(winHold, COLOR_PAIR(0)); 
-                    wprintw(this-> winHold, " ");       
-                    wattroff(winHold, COLOR_PAIR(0)); 
-                    break; 
- 
-                case 1: 
-                    wattron(winHold, COLOR_PAIR(1)); 
-                    wprintw(this-> winHold, " ");       
-                    wattroff(winHold, COLOR_PAIR(1)); 
-                    break; 
- 
-                case 2: 
-                    wattron(winHold, COLOR_PAIR(2)); 
-                    wprintw(this-> winHold, " ");       
-                    wattroff(winHold, COLOR_PAIR(2)); 
-                    break; 
- 
-                case 3: 
-                    wattron(winHold, COLOR_PAIR(3)); 
-                    wprintw(this-> winHold, " ");       
-                    wattroff(winHold, COLOR_PAIR(3)); 
-                    break; 
- 
-                case 4: 
-                    wattron(winHold, COLOR_PAIR(4)); 
-                    wprintw(this-> winHold, " ");       
-                    wattroff(winHold, COLOR_PAIR(4)); 
-                    break; 
-                case 5: 
-                    wattron(winHold, COLOR_PAIR(5)); 
-                    wprintw(this-> winHold, " ");       
-                    wattroff(winHold, COLOR_PAIR(5)); 
-                    break; 
- 
-                case 6: 
-                    wattron(winHold, COLOR_PAIR(6)); 
-                    wprintw(this-> winHold, " ");       
-                    wattroff(winHold, COLOR_PAIR(6)); 
-                    break;  
- 
-                case -1: 
+                if ( t_p-> ttrmnColor(i, j) == -1 ) {
                     wprintw(this-> winHold, " ");
-                    break;            
- 
-                default: 
-                    break; 
+                } else {
+                    wattron(this-> winHold, COLOR_PAIR(t_p-> ttrmnColor(i, j)));
+                    wprintw(this-> winHold, " ");
+                    wattroff(this-> winHold, COLOR_PAIR(t_p-> ttrmnColor(i, j)));
                 }
             }
             wmove(winHold, 2+i+1, 2);
@@ -333,56 +201,12 @@
         wmove(winNext, 2,2);
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j++ ) {
-                switch (ttrmnNext->ttrmnColor(i,j)){ 
- 
-                case 0: 
-                    wattron(winNext, COLOR_PAIR(0)); 
-                    wprintw(this-> winNext, " ");       
-                    wattroff(winNext, COLOR_PAIR(0)); 
-                    break; 
- 
-                case 1: 
-                    wattron(winNext, COLOR_PAIR(1)); 
-                    wprintw(this-> winNext, " ");       
-                    wattroff(winNext, COLOR_PAIR(1)); 
-                    break; 
- 
-                case 2: 
-                    wattron(winNext, COLOR_PAIR(2)); 
-                    wprintw(this-> winNext, " ");       
-                    wattroff(winNext, COLOR_PAIR(2)); 
-                    break; 
- 
-                case 3: 
-                    wattron(winNext, COLOR_PAIR(3)); 
-                    wprintw(this-> winNext, " ");       
-                    wattroff(winNext, COLOR_PAIR(3)); 
-                    break; 
- 
-                case 4: 
-                    wattron(winNext, COLOR_PAIR(4)); 
-                    wprintw(this-> winNext, " ");       
-                    wattroff(winNext, COLOR_PAIR(4)); 
-                    break; 
-                case 5: 
-                    wattron(winNext, COLOR_PAIR(5)); 
-                    wprintw(this-> winNext, " ");       
-                    wattroff(winNext, COLOR_PAIR(5)); 
-                    break; 
- 
-                case 6: 
-                    wattron(winNext, COLOR_PAIR(6)); 
-                    wprintw(this-> winNext, " ");       
-                    wattroff(winNext, COLOR_PAIR(6)); 
-                    break;  
- 
-                case -1: 
+                if ( ttrmnNext-> ttrmnColor(i, j) == -1 ) {
                     wprintw(this-> winNext, " ");
-                    break;            
- 
-                default: 
-                    break; 
-                
+                } else {
+                    wattron(this-> winNext, COLOR_PAIR(ttrmnNext-> ttrmnColor(i, j)));
+                    wprintw(this-> winNext, " ");
+                    wattroff(this-> winNext, COLOR_PAIR(ttrmnNext-> ttrmnColor(i, j)));
                 }
             }
             wmove(winNext, 2+i+1, 2);
@@ -394,52 +218,10 @@
     int TetrisBoard::addBlock() {
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
-                switch (ttrmn->ttrmnColor(i,j)){ 
- 
-                case 0: 
-                    wattron(win, COLOR_PAIR(0)); 
-                    boardArray [i + yPosition][j + xPosition] = ttrmn->type;       
-                    wattroff(win, COLOR_PAIR(0)); 
-                    break; 
- 
-                case 1: 
-                    wattron(win, COLOR_PAIR(1)); 
-                    boardArray [i + yPosition][j + xPosition] = ttrmn->type;     
-                    wattroff(win, COLOR_PAIR(1)); 
-                    break; 
- 
-                case 2: 
-                    wattron(win, COLOR_PAIR(2)); 
-                    boardArray [i + yPosition][j + xPosition] = ttrmn->type;       
-                    wattroff(win, COLOR_PAIR(2)); 
-                    break; 
- 
-                case 3: 
-                    wattron(win, COLOR_PAIR(3)); 
-                    boardArray [i + yPosition][j + xPosition] = ttrmn->type;     
-                    wattroff(win, COLOR_PAIR(3)); 
-                    break; 
- 
-                case 4: 
-                    wattron(win, COLOR_PAIR(4)); 
-                    boardArray [i + yPosition][j + xPosition] = ttrmn->type;       
-                    wattroff(win, COLOR_PAIR(4)); 
-                    break; 
-                case 5: 
-                    wattron(win, COLOR_PAIR(5)); 
-                    boardArray [i + yPosition][j + xPosition] = ttrmn->type;          
-                    wattroff(win, COLOR_PAIR(5)); 
-                    break; 
- 
-                case 6: 
-                    wattron(win, COLOR_PAIR(6)); 
-                    boardArray [i + yPosition][j + xPosition] = ttrmn->type;      
-                    wattroff(win, COLOR_PAIR(6)); 
-                    break;            
- 
-                default: 
-                    break; 
-                
+                if ( ttrmn-> ttrmnColor(i, j) != -1 ) {
+                    wattron(win, COLOR_PAIR(ttrmn-> ttrmnColor(i, j)));
+                    boardArray[i + yPosition][j + xPosition] = ttrmn-> type;
+                    wattroff(win, COLOR_PAIR(ttrmn-> ttrmnColor(i, j)));
                 }
             }
         }
@@ -493,10 +275,9 @@
                 position--;
             } else if ( c == '\n' && position > 0 ) {
                 position = 15;
-                // TODO add to leaderboard
             } else if ( position < 14 && c != -1 && c != ' ') {
                 s[position] = c;
-                // FIXME special chars are inserted even with arrows
+                // TODO special chars are inserted even with arrows
                 mvwprintw(nome,  1, position +1, "%c", c);
                 wrefresh(nome);
                 position++;
@@ -519,11 +300,9 @@
             bool found = false;
             vector <string> contents;
             while (!readscore.eof()){
-                cout << read_line << endl;
                 //readscore.ignore(maxc, readscore.widen('\n'));
                 getline(readscore, line);
                 if (read_line % 2 == 0 ){
-                    cout << line << endl;
                     p = stoi(line);
                     if(p < score){
                         found = true;
@@ -634,15 +413,12 @@
 
     void TetrisBoard::checkCompletedLines(){    
         int cont = 0;
-        for(int y=0; y<YLENGTH; y++)
-        {
+        for(int y=0; y<YLENGTH; y++) {
             bool isLineCleared = true;
-            for(int x=0; x< XLENGTH && isLineCleared ; x++)
-            {
-                if(boardArray[y][x] == -1)
-                {
+            for(int x=0; x< XLENGTH && isLineCleared ; x++) {
+                if(boardArray[y][x] == -1) {
                     isLineCleared = false; //se trovo un "buco" esco dal for e sono sicuro di aver trovato una riga non completa
-                } 
+                }
             }
             if(isLineCleared)
             {
@@ -690,6 +466,7 @@
     }
 
     int TetrisBoard::incr_score(int n){
+        // REVIEW can incr_score be called even if n is 0??
         switch(n){
             case 0:
                 break;
@@ -704,6 +481,8 @@
                 break;
             case 4:
                 score = score + 1200;
+                break;
+            default:
                 break;
         }
         return score;
@@ -723,7 +502,7 @@
 
     void TetrisBoard::pigliaTetramino(){
         can_hold=false;
-        if(typeHold == -1){ 
+        if ( typeHold == -1 ) { 
             yPosition = 0; 
             drawHold();
             typeHold = ttrmn->type;
@@ -732,48 +511,44 @@
             ttrmn = ttrmnNext;
             randomTtrmn();
             xPosition  = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
-        }
-        else
-        {
+        } else {
             drawHold();
             int tmp = ttrmn->type;
 
-            switch (typeHold)
-            {
-            case 0:
-            ttrmn = new Square();
-                break;
+            switch (typeHold) {
+                case 0:
+                    ttrmn = new Square();
+                    break;
 
-            case 1:
-            ttrmn = new Rect();
-                break;
+                case 1:
+                    ttrmn = new Rect();
+                    break;
 
-            case 2:
-            ttrmn = new J_SHAPE();
-                break;
+                case 2:
+                    ttrmn = new J_SHAPE();
+                    break;
 
-            case 3:
-            ttrmn = new L_SHAPE();
-                break;
+                case 3:
+                    ttrmn = new L_SHAPE();
+                    break;
 
-            case 4:
-            ttrmn = new S_HAPE();
-                break;
-            case 5:
-            ttrmn = new T_SHAPE();
-                break;
+                case 4:
+                    ttrmn = new S_HAPE();
+                    break;
+                case 5:
+                    ttrmn = new T_SHAPE();
+                    break;
 
-            case 6:
-            ttrmn = new Z_SHAPE();
-                break;            
+                case 6:
+                    ttrmn = new Z_SHAPE();
+                    break;            
 
-            
-            default:
-                break;
+                default:
+                    break;
             }
             typeHold = tmp;
             yPosition = 0;
-            xPosition  = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
+            xPosition = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
         }
     }
 
@@ -809,8 +584,7 @@
         
         int elapsed = (clock()-lastFall)*10000/CLOCKS_PER_SEC;
         int remaining = fallDelay - elapsed;
-        if(remaining<0)
-        {
+        if(remaining < 0) {
             remaining = 0;
         }
         timeout(remaining);
@@ -897,12 +671,16 @@
         if ( this-> win != NULL ) {
             wclear(winNext);
             wclear(winHold);
+            wclear(name_win);
             wrefresh(winNext);
             wrefresh(winHold);
+            wrefresh(name_win);
             delwin(winNext);
             delwin(winHold);
+            delwin(name_win);
             winNext=NULL;
             winHold=NULL;
+            name_win = NULL;
             wclear(this-> win);
             wclear(this->score_win);
             wrefresh(this->score_win);
