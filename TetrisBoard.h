@@ -278,7 +278,7 @@ private:
     }
 
     void name_player(){
-        string s = "               ";
+        string s = "              ";
         //apriamo finestra che chiede il nome, inseriamo il nome e sovrascriviamo il file
         name_win = newwin(9, 40, yMax/4, xMax/2 - 20);
         box(name_win,0,0);
@@ -293,7 +293,7 @@ private:
 
         int position = 0;
         int c;
-        while(position < 16 && c != 27){
+        while(position < 15 && c != 27){
             c = getch();
             if ( (c == KEY_BACKSPACE || c == 127 || c == '\b') && position > 0 ) {
                 s[position - 1] = ' ' ;
@@ -301,9 +301,9 @@ private:
                 wrefresh(nome);
                 position--;
             } else if ( c == '\n' && position > 0 ) {
-                position = 16;
+                position = 15;
                 // TODO add to leaderboard
-            } else if ( position < 15 && c != -1 && c != ' ') {
+            } else if ( position < 14 && c != -1 && c != ' ') {
                 s[position] = c;
                 // FIXME special chars are inserted even with arrows
                 mvwprintw(nome,  1, position +1, "%c", c);
@@ -355,17 +355,19 @@ private:
                 writescore.open("scores.txt");
                 if(!writescore.is_open()) cout << "Error : opening file failed";
                 for (auto file_line : contents){
-                    writescore << file_line << endl;
+                    if (current_line != 1) {
+                        writescore << endl;
+                    }
                     if(current_line == read_line){
-                        writescore << s << endl << score << endl ;
+                        writescore << s << endl << score << endl;
                         current_line++;
                     }
+                    writescore << file_line;
                     current_line++;
                 }
-                writescore.close();
             }
 
-            }
+        }
         readscore.close();
         writescore.close();
         }
