@@ -1,6 +1,6 @@
 #include "Menu.h"
-#include "TetrisBoard.h"
-#include "Leaderboard.h"
+#include "TetrisBoard.hpp"
+#include "Leaderboard.hpp"
 #include "ncrss.cpp"
 
 using namespace std;

@@ -23,8 +23,13 @@ class Tetramino {
         }
 
         // REVIEW change to a more efficient algorithm
-        void antiRotate() {
-            if ( maxDim > 2 ) {
+        void rotate() {
+            for ( int i = 0; i < maxDim /2; i++ ) {
+                for ( int j = 0; j < (maxDim +1) /2; j++ ) {
+                    cyclic_roll(shape[j][maxDim-1-i], shape[i][j], shape[maxDim-1-j][i], shape[maxDim-1-i][maxDim-1-j]);
+                }
+            }
+            /* if ( maxDim > 2 ) {
                 bool clone[maxDim][maxDim -2];
                 bool extra = shape[3][1];
                 for ( int i = 0; i < maxDim; i++ ) {
@@ -47,10 +52,23 @@ class Tetramino {
                     }
                     z--;
                 }
-            }
+            } */
         }
 
-        void rotate() {
+        void antiRotate() {
+            for(int i=0; i<maxDim/2; i++)
+                for(int j=0; j<(maxDim+1)/2; j++)
+                    cyclic_roll(shape[j][maxDim-1-i], shape[maxDim-1-i][maxDim-1-j], shape[maxDim-1-j][i], shape[i][j]);
+        }
+
+        void cyclic_roll(bool &a, bool &b, bool &c, bool &d) {
+            int temp = a;
+            a = b;
+            b = c;
+            c = d;
+            d = temp;
+        }
+            /*
             if ( maxDim > 2 ) {
                 bool clone[maxDim -2][maxDim];
                 bool extra = shape[1][0];
@@ -75,7 +93,8 @@ class Tetramino {
                     z++;
                 }
             }
-        }
+        } */
+        
 
         bool isTrue(int i, int j) {
             return this-> shape[i][j];
