@@ -1,6 +1,6 @@
 class Tetramino {
     protected:
-        bool shape[4][4];
+        short shape[4][4];
         int maxDim;
         //0: SQUARE
         //1: RECT
@@ -61,7 +61,7 @@ class Tetramino {
                     cyclic_roll(shape[j][maxDim-1-i], shape[maxDim-1-i][maxDim-1-j], shape[maxDim-1-j][i], shape[i][j]);
         }
 
-        void cyclic_roll(bool &a, bool &b, bool &c, bool &d) {
+        void cyclic_roll(short &a, short &b, short &c, short &d) {
             int temp = a;
             a = b;
             b = c;
@@ -96,7 +96,7 @@ class Tetramino {
         } */
         
 
-        bool isTrue(int i, int j) {
+        short ttrmnColor(int i, int j) {
             return this-> shape[i][j];
         }
 
@@ -114,9 +114,9 @@ public:
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j ++ ) {
                 if ( j < 2 && i < 2 ) {
-                    shape[i][j] = true;
+                    shape[i][j] = this->type;
                 } else {
-                    shape[i][j] = false;
+                    shape[i][j] = -1;
                 }
             }
         }
@@ -133,9 +133,9 @@ public:
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j++ ) {
                 if ( i == 1 ) {
-                    shape[i][j] = true;
+                    shape[i][j] = this->type;
                 } else {
-                    shape[i][j] = false;
+                    shape[i][j] = -1;
                 }
             }
         }
@@ -149,10 +149,10 @@ private:
 public:
     J_SHAPE() {
         type = 2;
-        shape[0][0]=true;    shape[0][1]=false;  shape[0][2]=false;  shape[0][3]=false;
-        shape[1][0]=true;    shape[1][1]=true;   shape[1][2]=true;   shape[1][3]=false;
-        shape[2][0]=false;   shape[2][1]=false;  shape[2][2]=false;  shape[2][3]=false;
-        shape[3][0]=false;   shape[3][1]=false;  shape[3][2]=false;  shape[3][3]=false;
+        shape[0][0]=this->type;    shape[0][1]=-1;  shape[0][2]=-1;  shape[0][3]=-1;
+        shape[1][0]=this->type;    shape[1][1]=this->type;   shape[1][2]=this->type;   shape[1][3]=-1;
+        shape[2][0]=-1;   shape[2][1]=-1;  shape[2][2]=-1;  shape[2][3]=-1;
+        shape[3][0]=-1;   shape[3][1]=-1;  shape[3][2]=-1;  shape[3][3]=-1;
 
         maxDim = 3;
     }
@@ -164,10 +164,10 @@ private:
 public:
     L_SHAPE() {
         type = 3;
-        shape[0][0]=false;    shape[0][1]=false;  shape[0][2]=true;  shape[0][3]=false;
-        shape[1][0]=true;    shape[1][1]=true;   shape[1][2]=true;   shape[1][3]=false;
-        shape[2][0]=false;   shape[2][1]=false;  shape[2][2]=false;  shape[2][3]=false;
-        shape[3][0]=false;   shape[3][1]=false;  shape[3][2]=false;  shape[3][3]=false;
+        shape[0][0]=-1;    shape[0][1]=-1;  shape[0][2]=this->type;  shape[0][3]=-1;
+        shape[1][0]=this->type;    shape[1][1]=this->type;   shape[1][2]=this->type;   shape[1][3]=-1;
+        shape[2][0]=-1;   shape[2][1]=-1;  shape[2][2]=-1;  shape[2][3]=-1;
+        shape[3][0]=-1;   shape[3][1]=-1;  shape[3][2]=-1;  shape[3][3]=-1;
 
         maxDim = 3;
     }
@@ -179,10 +179,10 @@ private:
 public:
     S_HAPE() {
         type = 4;
-        shape[0][0]=false;    shape[0][1]=true;  shape[0][2]=true;  shape[0][3]=false;
-        shape[1][0]=true;    shape[1][1]=true;   shape[1][2]=false;   shape[1][3]=false;
-        shape[2][0]=false;   shape[2][1]=false;  shape[2][2]=false;  shape[2][3]=false;
-        shape[3][0]=false;   shape[3][1]=false;  shape[3][2]=false;  shape[3][3]=false;
+        shape[0][0]=-1;    shape[0][1]=this->type;  shape[0][2]=this->type;  shape[0][3]=-1;
+        shape[1][0]=this->type;    shape[1][1]=this->type;   shape[1][2]=-1;   shape[1][3]=-1;
+        shape[2][0]=-1;   shape[2][1]=-1;  shape[2][2]=-1;  shape[2][3]=-1;
+        shape[3][0]=-1;   shape[3][1]=-1;  shape[3][2]=-1;  shape[3][3]=-1;
 
         maxDim = 3;
     }
@@ -194,10 +194,10 @@ private:
 public:
     T_SHAPE() {
         type = 5;
-        shape[0][0]=false;    shape[0][1]=true;  shape[0][2]=false;  shape[0][3]=false;
-        shape[1][0]=true;    shape[1][1]=true;   shape[1][2]=true;   shape[1][3]=false;
-        shape[2][0]=false;   shape[2][1]=false;  shape[2][2]=false;  shape[2][3]=false;
-        shape[3][0]=false;   shape[3][1]=false;  shape[3][2]=false;  shape[3][3]=false;
+        shape[0][0]=-1;    shape[0][1]=this->type;  shape[0][2]=-1;  shape[0][3]=-1;
+        shape[1][0]=this->type;    shape[1][1]=this->type;   shape[1][2]=this->type;   shape[1][3]=-1;
+        shape[2][0]=-1;   shape[2][1]=-1;  shape[2][2]=-1;  shape[2][3]=-1;
+        shape[3][0]=-1;   shape[3][1]=-1;  shape[3][2]=-1;  shape[3][3]=-1;
 
         maxDim = 3;
     }
@@ -209,10 +209,10 @@ private:
 public:
     Z_SHAPE() {
         type = 6;
-        shape[0][0]=true;    shape[0][1]=true;  shape[0][2]=false;  shape[0][3]=false;
-        shape[1][0]=false;    shape[1][1]=true;   shape[1][2]=true;   shape[1][3]=false;
-        shape[2][0]=false;   shape[2][1]=false;  shape[2][2]=false;  shape[2][3]=false;
-        shape[3][0]=false;   shape[3][1]=false;  shape[3][2]=false;  shape[3][3]=false;
+        shape[0][0]=this->type;    shape[0][1]=this->type;  shape[0][2]=-1;  shape[0][3]=-1;
+        shape[1][0]=-1;    shape[1][1]=this->type;   shape[1][2]=this->type;   shape[1][3]=-1;
+        shape[2][0]=-1;   shape[2][1]=-1;  shape[2][2]=-1;  shape[2][3]=-1;
+        shape[3][0]=-1;   shape[3][1]=-1;  shape[3][2]=-1;  shape[3][3]=-1;
 
         maxDim = 3;
     }

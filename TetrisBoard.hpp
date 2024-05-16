@@ -23,7 +23,7 @@ private:
     WINDOW* win;
     WINDOW* winNext;
     WINDOW* winHold;
-    bool boardArray[YLENGTH][XLENGTH];
+    short boardArray[YLENGTH][XLENGTH];
     bool can_hold;
     Tetramino* ttrmn;
     Tetramino* ttrmnNext;

@@ -40,13 +40,13 @@ void Leaderboard::printscores(){
 
 					switch( (page /2) +1 +i ) {
 						case 1:
-							wattron(win, COLOR_PAIR(1)); //verde
+							wattron(win, COLOR_PAIR(11)); //verde
 							break;
 						case 2:
-							wattron(win, COLOR_PAIR(2)); // blu
+							wattron(win, COLOR_PAIR(12)); // blu
 							break;
 						case 3:
-							wattron(win, COLOR_PAIR(3)); // giallo
+							wattron(win, COLOR_PAIR(13)); // giallo
 							break;
 						default:
 							break;
@@ -69,9 +69,9 @@ void Leaderboard::printscores(){
 					mvwprintw(win, h, xMax/4+8, u);
 
 					h = h + 2;
-					wattroff(win, COLOR_PAIR(1));
-					wattroff(win, COLOR_PAIR(2));
-					wattroff(win, COLOR_PAIR(3));
+					wattroff(win, COLOR_PAIR(11));
+					wattroff(win, COLOR_PAIR(12));
+					wattroff(win, COLOR_PAIR(13));
 				}
 			}
 		}

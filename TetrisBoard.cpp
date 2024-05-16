@@ -103,7 +103,7 @@
     void TetrisBoard::clearboard() {
         for ( int i = 0; i < YLENGTH; i++ ) {
             for ( int j = 0; j < XLENGTH; j++ ) {
-                boardArray[i][j] = false;
+                boardArray[i][j] = -1;
             }
         }
     }
@@ -112,10 +112,55 @@
         for ( int i = 0; i < YLENGTH; i++ ) {
             wmove(this-> win, i +1, 1);
             for ( int j = 0; j < XLENGTH; j++ ) {
-                if ( boardArray[i][j] ) {
-                    wprintw(this-> win, "@");
-                } else {
-                    wprintw(this-> win, " ");
+                switch (boardArray[i][j]){ 
+ 
+                case 7: 
+                    wattron(win, COLOR_PAIR(7)); 
+                    wprintw(this-> win, " ");       
+                    wattroff(win, COLOR_PAIR(7)); 
+                    break; 
+ 
+                case 1: 
+                    wattron(win, COLOR_PAIR(1)); 
+                    wprintw(this-> win, " ");       
+                    wattroff(win, COLOR_PAIR(1)); 
+                    break; 
+ 
+                case 2: 
+                    wattron(win, COLOR_PAIR(2)); 
+                    wprintw(this-> win, " ");       
+                    wattroff(win, COLOR_PAIR(2)); 
+                    break; 
+ 
+                case 3: 
+                    wattron(win, COLOR_PAIR(3)); 
+                    wprintw(this-> win, " ");       
+                    wattroff(win, COLOR_PAIR(3)); 
+                    break; 
+ 
+                case 4: 
+                    wattron(win, COLOR_PAIR(4)); 
+                    wprintw(this-> win, " ");       
+                    wattroff(win, COLOR_PAIR(4)); 
+                    break; 
+                case 5: 
+                    wattron(win, COLOR_PAIR(5)); 
+                    wprintw(this-> win, " ");       
+                    wattroff(win, COLOR_PAIR(5)); 
+                    break; 
+ 
+                case 6: 
+                    wattron(win, COLOR_PAIR(6)); 
+                    wprintw(this-> win, " ");       
+                    wattroff(win, COLOR_PAIR(6)); 
+                    break;  
+ 
+                case -1: 
+                    wprintw(this-> win, " "); 
+                    break;            
+ 
+                default: 
+                    break; 
                 }
             }
         }
@@ -127,10 +172,56 @@
         for ( int i = 0; i < 4; i++ ) {
             wmove(this-> win, yPosition +i +1, xPosition+1);
             for ( int j = 0; j < 4; j++ ) {
-                if ( ttrmn-> isTrue(i, j) ) {
-                    wprintw(this-> win, "@");      
-                } else {
+                switch (ttrmn->ttrmnColor(i,j)){ 
+ 
+                case 0: 
+                    wattron(win, COLOR_PAIR(0)); 
+                    wprintw(this-> win, " ");       
+                    wattroff(win, COLOR_PAIR(0)); 
+                    break; 
+ 
+                case 1: 
+                    wattron(win, COLOR_PAIR(1)); 
+                    wprintw(this-> win, " ");       
+                    wattroff(win, COLOR_PAIR(1)); 
+                    break; 
+ 
+                case 2: 
+                    wattron(win, COLOR_PAIR(2)); 
+                    wprintw(this-> win, " ");       
+                    wattroff(win, COLOR_PAIR(2)); 
+                    break; 
+ 
+                case 3: 
+                    wattron(win, COLOR_PAIR(3)); 
+                    wprintw(this-> win, " ");       
+                    wattroff(win, COLOR_PAIR(3)); 
+                    break; 
+ 
+                case 4: 
+                    wattron(win, COLOR_PAIR(4)); 
+                    wprintw(this-> win, " ");       
+                    wattroff(win, COLOR_PAIR(4)); 
+                    break; 
+                case 5: 
+                    wattron(win, COLOR_PAIR(5)); 
+                    wprintw(this-> win, " ");       
+                    wattroff(win, COLOR_PAIR(5)); 
+                    break; 
+ 
+                case 6: 
+                    wattron(win, COLOR_PAIR(6)); 
+                    wprintw(this-> win, " ");       
+                    wattroff(win, COLOR_PAIR(6)); 
+                    break;  
+ 
+                case -1: 
                     wmove(this-> win, yPosition +i +1, xPosition +j +2);
+                    break;            
+ 
+                default: 
+                    break; 
+                
                 }
             }
         }
@@ -178,10 +269,55 @@
         wmove(winHold, 2,2);
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j++ ) {
-                if ( t_p-> isTrue(i, j) ) {
-                    wprintw(this-> winHold, "@");
-                } else {
+                switch (t_p->ttrmnColor(i,j)){ 
+ 
+                case 0: 
+                    wattron(winHold, COLOR_PAIR(0)); 
+                    wprintw(this-> winHold, " ");       
+                    wattroff(winHold, COLOR_PAIR(0)); 
+                    break; 
+ 
+                case 1: 
+                    wattron(winHold, COLOR_PAIR(1)); 
+                    wprintw(this-> winHold, " ");       
+                    wattroff(winHold, COLOR_PAIR(1)); 
+                    break; 
+ 
+                case 2: 
+                    wattron(winHold, COLOR_PAIR(2)); 
+                    wprintw(this-> winHold, " ");       
+                    wattroff(winHold, COLOR_PAIR(2)); 
+                    break; 
+ 
+                case 3: 
+                    wattron(winHold, COLOR_PAIR(3)); 
+                    wprintw(this-> winHold, " ");       
+                    wattroff(winHold, COLOR_PAIR(3)); 
+                    break; 
+ 
+                case 4: 
+                    wattron(winHold, COLOR_PAIR(4)); 
+                    wprintw(this-> winHold, " ");       
+                    wattroff(winHold, COLOR_PAIR(4)); 
+                    break; 
+                case 5: 
+                    wattron(winHold, COLOR_PAIR(5)); 
+                    wprintw(this-> winHold, " ");       
+                    wattroff(winHold, COLOR_PAIR(5)); 
+                    break; 
+ 
+                case 6: 
+                    wattron(winHold, COLOR_PAIR(6)); 
+                    wprintw(this-> winHold, " ");       
+                    wattroff(winHold, COLOR_PAIR(6)); 
+                    break;  
+ 
+                case -1: 
                     wprintw(this-> winHold, " ");
+                    break;            
+ 
+                default: 
+                    break; 
                 }
             }
             wmove(winHold, 2+i+1, 2);
@@ -197,10 +333,56 @@
         wmove(winNext, 2,2);
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j++ ) {
-                if ( ttrmnNext-> isTrue(i, j) ) {
-                    wprintw(this-> winNext, "@");
-                } else {
+                switch (ttrmnNext->ttrmnColor(i,j)){ 
+ 
+                case 0: 
+                    wattron(winNext, COLOR_PAIR(0)); 
+                    wprintw(this-> winNext, " ");       
+                    wattroff(winNext, COLOR_PAIR(0)); 
+                    break; 
+ 
+                case 1: 
+                    wattron(winNext, COLOR_PAIR(1)); 
+                    wprintw(this-> winNext, " ");       
+                    wattroff(winNext, COLOR_PAIR(1)); 
+                    break; 
+ 
+                case 2: 
+                    wattron(winNext, COLOR_PAIR(2)); 
+                    wprintw(this-> winNext, " ");       
+                    wattroff(winNext, COLOR_PAIR(2)); 
+                    break; 
+ 
+                case 3: 
+                    wattron(winNext, COLOR_PAIR(3)); 
+                    wprintw(this-> winNext, " ");       
+                    wattroff(winNext, COLOR_PAIR(3)); 
+                    break; 
+ 
+                case 4: 
+                    wattron(winNext, COLOR_PAIR(4)); 
+                    wprintw(this-> winNext, " ");       
+                    wattroff(winNext, COLOR_PAIR(4)); 
+                    break; 
+                case 5: 
+                    wattron(winNext, COLOR_PAIR(5)); 
+                    wprintw(this-> winNext, " ");       
+                    wattroff(winNext, COLOR_PAIR(5)); 
+                    break; 
+ 
+                case 6: 
+                    wattron(winNext, COLOR_PAIR(6)); 
+                    wprintw(this-> winNext, " ");       
+                    wattroff(winNext, COLOR_PAIR(6)); 
+                    break;  
+ 
+                case -1: 
                     wprintw(this-> winNext, " ");
+                    break;            
+ 
+                default: 
+                    break; 
+                
                 }
             }
             wmove(winNext, 2+i+1, 2);
@@ -212,8 +394,52 @@
     int TetrisBoard::addBlock() {
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
-                if ( ttrmn-> isTrue(i, j) ) {
-                    boardArray[i + yPosition][j + xPosition] = true;
+                switch (ttrmn->ttrmnColor(i,j)){ 
+ 
+                case 0: 
+                    wattron(win, COLOR_PAIR(0)); 
+                    boardArray [i + yPosition][j + xPosition] = ttrmn->type;       
+                    wattroff(win, COLOR_PAIR(0)); 
+                    break; 
+ 
+                case 1: 
+                    wattron(win, COLOR_PAIR(1)); 
+                    boardArray [i + yPosition][j + xPosition] = ttrmn->type;     
+                    wattroff(win, COLOR_PAIR(1)); 
+                    break; 
+ 
+                case 2: 
+                    wattron(win, COLOR_PAIR(2)); 
+                    boardArray [i + yPosition][j + xPosition] = ttrmn->type;       
+                    wattroff(win, COLOR_PAIR(2)); 
+                    break; 
+ 
+                case 3: 
+                    wattron(win, COLOR_PAIR(3)); 
+                    boardArray [i + yPosition][j + xPosition] = ttrmn->type;     
+                    wattroff(win, COLOR_PAIR(3)); 
+                    break; 
+ 
+                case 4: 
+                    wattron(win, COLOR_PAIR(4)); 
+                    boardArray [i + yPosition][j + xPosition] = ttrmn->type;       
+                    wattroff(win, COLOR_PAIR(4)); 
+                    break; 
+                case 5: 
+                    wattron(win, COLOR_PAIR(5)); 
+                    boardArray [i + yPosition][j + xPosition] = ttrmn->type;          
+                    wattroff(win, COLOR_PAIR(5)); 
+                    break; 
+ 
+                case 6: 
+                    wattron(win, COLOR_PAIR(6)); 
+                    boardArray [i + yPosition][j + xPosition] = ttrmn->type;      
+                    wattroff(win, COLOR_PAIR(6)); 
+                    break;            
+ 
+                default: 
+                    break; 
+                
                 }
             }
         }
@@ -226,7 +452,7 @@
         // check if the game has ended
         for ( int i = 0; i < 2; i++ ) {
             for ( int j = 0; j < XLENGTH; j++ ) {
-                if ( boardArray[i][j] ) {
+                if ( boardArray[i][j] >= 0) {
                     // TODO open "write your name" for leaderboard puposes
                     name_player();
                     return -1;
@@ -342,8 +568,8 @@
     bool TetrisBoard::clearUnder() {
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
-                if ( ttrmn-> isTrue(i, j) ) {
-                    if ( yPosition +i +1 == YLENGTH || boardArray[yPosition +i +1][xPosition + j] ) {
+                if ( ttrmn-> ttrmnColor(i, j) >= 0 ) {
+                    if ( yPosition +i +1 == YLENGTH || boardArray[yPosition +i +1][xPosition + j] >= 0 ) {
 						// TODO potential improvement, for-loop could be stopped at the first true bottom element of each column
                         return false;
                     }
@@ -356,8 +582,8 @@
     bool TetrisBoard::clearLeft() {
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
-                if ( ttrmn-> isTrue(i, j) ) {
-                    if ( xPosition +j == 0 || boardArray[yPosition +i][xPosition + j -1] ) {
+                if ( ttrmn-> ttrmnColor(i,j) >=0 ) {
+                    if ( xPosition +j == 0 || boardArray[yPosition +i][xPosition + j -1] >= 0) {
                         // TODO potential improvement, for-loop could be stopped at the first true left element of each row
                         return false;
                     }
@@ -370,8 +596,8 @@
     bool TetrisBoard::clearRight() {
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
-                if ( ttrmn-> isTrue(i, j) ) {
-                    if ( xPosition +j +1 == XLENGTH || boardArray[yPosition +i][xPosition + j +1] ) {
+                if ( ttrmn->ttrmnColor(i,j) >=0 ) {
+                    if ( xPosition +j +1 == XLENGTH || boardArray[yPosition +i][xPosition + j +1] >=0 ) {
 						// TODO potential improvement, for-loop could be stopped at the first true right element of each row
                         return false;
                     }
@@ -385,7 +611,7 @@
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
                 // controls: esiste gia' un blocco in quel posto                                                    uscirebbe dal basso         uscirebbe a destra          uscirebbe a sinistra
-                if ( ( boardArray[i+yPosition][j+xPosition] && ttrmn-> isTrue(i, j) ) || ( ttrmn-> isTrue(i, j) && (i + yPosition >= YLENGTH || j + xPosition >= XLENGTH || xPosition < 0 ) ) ) {
+                if ( ( boardArray[i+yPosition][j+xPosition] >=0 && ttrmn-> ttrmnColor(i,j) >= 0 ) || ( ttrmn-> ttrmnColor(i,j) >= 0 && (i + yPosition >= YLENGTH || j + xPosition >= XLENGTH || xPosition < 0 ) ) ) {
                     return false;
                 }
             }
@@ -413,7 +639,7 @@
             bool isLineCleared = true;
             for(int x=0; x< XLENGTH && isLineCleared ; x++)
             {
-                if(boardArray[y][x] == false)
+                if(boardArray[y][x] == -1)
                 {
                     isLineCleared = false; //se trovo un "buco" esco dal for e sono sicuro di aver trovato una riga non completa
                 } 
@@ -424,7 +650,7 @@
                 {
                     for(int x=0; x< XLENGTH ; x++)
                     {
-                        boardArray[0][x]=false;
+                        boardArray[0][x]=-1;
                     }
                 }
                 else
@@ -581,7 +807,7 @@
 
     int TetrisBoard::getInput() {
         
-        int elapsed = (clock()-lastFall)*1000000/CLOCKS_PER_SEC;
+        int elapsed = (clock()-lastFall)*10000/CLOCKS_PER_SEC;
         int remaining = fallDelay - elapsed;
         if(remaining<0)
         {
