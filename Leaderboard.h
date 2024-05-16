@@ -38,7 +38,7 @@ private:
 			int yMax, xMax;
 			getmaxyx(win, yMax, xMax);
 			mvwprintw( win, 2, xMax/2 - 6 ,"No scores yet");
-			mvwprintw( win, 5, xMax/2 - 21,"You can be the top player atleast for once");
+			mvwprintw( win, 5, xMax/2 - 21,"You can be the top player at least for once");
 		}
 		else{
 			if(!readscore.is_open()) cout << "Error : opening file failed";
@@ -58,13 +58,13 @@ private:
 
 					switch( (page /2) +1 +i ) {
 						case 1:
-							wattron(win, COLOR_PAIR(1));
+							wattron(win, COLOR_PAIR(1)); //verde
 							break;
 						case 2:
-							wattron(win, COLOR_PAIR(2));
+							wattron(win, COLOR_PAIR(2)); // blu
 							break;
 						case 3:
-							wattron(win, COLOR_PAIR(3));
+							wattron(win, COLOR_PAIR(3)); // giallo
 							break;
 						default:
 							break;
@@ -106,7 +106,7 @@ private:
 		string unused;
 		while (getline(readscore, unused)) numLines++;
 	
-		if(numLines-N >= page){	//non so perche funzioni, sono andato ad intuito
+		if(numLines-N > page){	//non so perche funzioni, sono andato ad intuito
 			page = page + N;
 			reload();
 		}
