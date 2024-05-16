@@ -25,8 +25,8 @@ class Tetramino {
         // REVIEW change to a more efficient algorithm
         void rotate() {
             for ( int i = 0; i < maxDim /2; i++ ) {
-                for ( int j = 0; j < maxDim +1 /2; j++ ) {
-                    cyclic_roll(shape[i][j], shape[maxDim-1-j][i], shape[maxDim-1-i][maxDim-1-j], shape[j][maxDim-1-i]);
+                for ( int j = 0; j < (maxDim +1) /2; j++ ) {
+                    cyclic_roll(shape[j][maxDim-1-i], shape[i][j], shape[maxDim-1-j][i], shape[maxDim-1-i][maxDim-1-j]);
                 }
             }
             /* if ( maxDim > 2 ) {
