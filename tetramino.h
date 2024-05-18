@@ -2,13 +2,13 @@ class Tetramino {
     protected:
         short shape[4][4];
         int maxDim;
-        //0: SQUARE
-        //1: RECT
-        //2: J SHAPE
-        //3: L SHAPE
-        //4: S HAPE
-        //5: T SHAPE
-        //6: Z SHAPE
+        //1: SQUARE
+        //2: RECT
+        //3: J SHAPE
+        //4: L SHAPE
+        //5: S HAPE
+        //6: T SHAPE
+        //7: Z SHAPE
 
         // REVIEW could be useless
         void clearTtrmn() {
@@ -110,7 +110,7 @@ private:
 
 public:
     Square() {
-        type = 0;
+        type = 1;
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j ++ ) {
                 if ( j < 2 && i < 2 ) {
@@ -129,7 +129,7 @@ private:
     
 public:
     Rect() {
-        type = 1;
+        type = 2;
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j++ ) {
                 if ( i == 1 ) {
@@ -148,7 +148,7 @@ private:
     
 public:
     J_SHAPE() {
-        type = 2;
+        type = 3;
         shape[0][0]=this->type;    shape[0][1]=-1;  shape[0][2]=-1;  shape[0][3]=-1;
         shape[1][0]=this->type;    shape[1][1]=this->type;   shape[1][2]=this->type;   shape[1][3]=-1;
         shape[2][0]=-1;   shape[2][1]=-1;  shape[2][2]=-1;  shape[2][3]=-1;
@@ -163,7 +163,7 @@ private:
     
 public:
     L_SHAPE() {
-        type = 3;
+        type = 4;
         shape[0][0]=-1;    shape[0][1]=-1;  shape[0][2]=this->type;  shape[0][3]=-1;
         shape[1][0]=this->type;    shape[1][1]=this->type;   shape[1][2]=this->type;   shape[1][3]=-1;
         shape[2][0]=-1;   shape[2][1]=-1;  shape[2][2]=-1;  shape[2][3]=-1;
@@ -178,7 +178,7 @@ private:
     
 public:
     S_HAPE() {
-        type = 4;
+        type = 5;
         shape[0][0]=-1;    shape[0][1]=this->type;  shape[0][2]=this->type;  shape[0][3]=-1;
         shape[1][0]=this->type;    shape[1][1]=this->type;   shape[1][2]=-1;   shape[1][3]=-1;
         shape[2][0]=-1;   shape[2][1]=-1;  shape[2][2]=-1;  shape[2][3]=-1;
@@ -193,7 +193,7 @@ private:
     
 public:
     T_SHAPE() {
-        type = 5;
+        type = 6;
         shape[0][0]=-1;    shape[0][1]=this->type;  shape[0][2]=-1;  shape[0][3]=-1;
         shape[1][0]=this->type;    shape[1][1]=this->type;   shape[1][2]=this->type;   shape[1][3]=-1;
         shape[2][0]=-1;   shape[2][1]=-1;  shape[2][2]=-1;  shape[2][3]=-1;
@@ -208,7 +208,7 @@ private:
     
 public:
     Z_SHAPE() {
-        type = 6;
+        type = 7;
         shape[0][0]=this->type;    shape[0][1]=this->type;  shape[0][2]=-1;  shape[0][3]=-1;
         shape[1][0]=-1;    shape[1][1]=this->type;   shape[1][2]=this->type;   shape[1][3]=-1;
         shape[2][0]=-1;   shape[2][1]=-1;  shape[2][2]=-1;  shape[2][3]=-1;

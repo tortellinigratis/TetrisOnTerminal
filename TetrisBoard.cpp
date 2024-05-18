@@ -70,25 +70,25 @@
         srand(time(NULL));
         int rndm = rand() % POSS_TETRAM;
         switch ( rndm ) {
-            case 0:
+            case 1:
                 ttrmnNext = new Square();
                 break;
-            case 1:
+            case 2:
                 ttrmnNext = new Rect();
                 break;
-            case 2:
+            case 3:
                 ttrmnNext = new J_SHAPE();
                 break;
-            case 3:
+            case 4:
                 ttrmnNext = new L_SHAPE();
                 break;
-            case 4:
+            case 5:
                 ttrmnNext = new S_HAPE();
                 break;
-            case 5:
+            case 6:
                 ttrmnNext = new T_SHAPE();
                 break;
-            case 6:
+            case 7:
                 ttrmnNext = new Z_SHAPE();
                 break;
             default:
@@ -146,30 +146,30 @@
 
         switch (t)
             {
-            case 0:
+            case 1:
                 t_p = new Square();
                 break;
 
-            case 1:
+            case 2:
                 t_p = new Rect();
                 break;
 
-            case 2:
+            case 3:
                 t_p = new J_SHAPE();
                 break;
 
-            case 3:
+            case 4:
                 t_p = new L_SHAPE();
                 break;
 
-            case 4:
+            case 5:
                 t_p = new S_HAPE();
                 break;
-            case 5:
+            case 6:
                 t_p = new T_SHAPE();
                 break;
 
-            case 6:
+            case 7:
                 t_p = new Z_SHAPE();
                 break;            
 
@@ -516,30 +516,31 @@
             int tmp = ttrmn->type;
 
             switch (typeHold) {
-                case 0:
+                case 1:
                     ttrmn = new Square();
                     break;
 
-                case 1:
+                case 2:
                     ttrmn = new Rect();
                     break;
 
-                case 2:
+                case 3:
                     ttrmn = new J_SHAPE();
                     break;
 
-                case 3:
+                case 4:
                     ttrmn = new L_SHAPE();
                     break;
 
-                case 4:
-                    ttrmn = new S_HAPE();
-                    break;
                 case 5:
-                    ttrmn = new T_SHAPE();
+                    ttrmn = new S_HAPE();
                     break;
 
                 case 6:
+                    ttrmn = new T_SHAPE();
+                    break;
+
+                case 7:
                     ttrmn = new Z_SHAPE();
                     break;            
 
