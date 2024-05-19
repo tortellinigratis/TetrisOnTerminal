@@ -1,4 +1,4 @@
-#include "Menu.h"
+#include "Menu.hpp"
 #include "TetrisBoard.hpp"
 #include "Leaderboard.hpp"
 #include "ncrss.cpp"

@@ -1,25 +1,10 @@
-#include <string.h>
-#include <iostream>
-#include "ncrss.cpp"
-
-using namespace std;
-
-#define OPTIONS 3
-
-class Menu {
-private:
-    int yMax, xMax;
-    char title[7];
-    WINDOW* win;
-    int index;
-    char options[OPTIONS][12];
-
-    void writeTitle() {
+#include "Menu.hpp"
+void Menu::writeTitle() {
         wmove(this-> win, 0, xMax /4 -3);
         wprintw(this-> win, this-> title);
     }
 
-    void writeOptions() {
+void Menu::writeOptions() {
         for ( int i = 0; i < OPTIONS; i++ ) {
             wmove(this-> win, (yMax /4 -3) +(i *2), 6);
             if ( i == this-> index ) {
@@ -30,15 +15,13 @@ private:
         }
     }
 
-    void init() {
+void Menu::init() {
         getmaxyx(stdscr, this-> yMax, this-> xMax);
         this-> index = 0;
         this-> win = newwin(yMax /2, xMax /2, yMax /4, xMax /4);
         update();
     }
-
-public:
-    Menu() {
+Menu::Menu() {
         strcpy(this-> title, " Menu ");
         strcpy(this-> options[0], "Play");
         strcpy(this-> options[1], "Leaderboard");
@@ -47,7 +30,7 @@ public:
         // nothing to see here;
     }
 
-    int getInput() {
+int Menu::getInput() {
         switch (getch()) {
             case KEY_DOWN:
                 if ( index < OPTIONS -1 ) {
@@ -79,9 +62,7 @@ public:
         }
         return -1;
     }
-
-    // REVIEW potential semplification, check if these functions are actually used and how
-    void update() {
+void Menu::update() {
         wclear(this-> win);
         box(this-> win, 0, 0);
         writeTitle();
@@ -89,7 +70,7 @@ public:
         render();
     }
 
-    void render() {
+void Menu::render() {
         if ( this-> win != NULL ) {
             refresh();
             wrefresh(this-> win);
@@ -98,14 +79,14 @@ public:
         }
     }
 
-    void reload() {
+void Menu::reload() {
         if ( this-> win != NULL ) {
             remove();
         }
         init();
     }
 
-    void remove() {
+void Menu::remove() {
         if ( this-> win != NULL ) {
             wclear(this-> win);
             wrefresh(this-> win);
@@ -113,5 +94,4 @@ public:
             this-> win = NULL;
             refresh();
         }
-    }
-};
+    } 

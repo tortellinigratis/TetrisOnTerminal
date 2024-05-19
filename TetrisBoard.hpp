@@ -4,7 +4,7 @@
 #include <string.h>
 #include <fstream>
 #include <iostream>
-#include "tetramino.h"
+#include "tetramino.hpp"
 #include "time.h"
 #include "ncrss.cpp"
 #include <vector>

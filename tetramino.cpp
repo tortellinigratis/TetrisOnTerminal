@@ -1,29 +1,16 @@
-class Tetramino {
-    protected:
-        short shape[4][4];
-        int maxDim;
-        //1: SQUARE
-        //2: RECT
-        //3: J SHAPE
-        //4: L SHAPE
-        //5: S HAPE
-        //6: T SHAPE
-        //7: Z SHAPE
-
+#include "tetramino.hpp"
         // REVIEW could be useless
-        void clearTtrmn() {
+/*void Tetramino::clearTtrmn() {
 
-        }
+        }*/
 
-    public:
-        int type; 
-        Tetramino() {
+Tetramino::Tetramino() {
             // nothing here
             // every subclass autoinitializes itself
         }
 
         // REVIEW change to a more efficient algorithm
-        void rotate() {
+void Tetramino::rotate() {
             for ( int i = 0; i < maxDim /2; i++ ) {
                 for ( int j = 0; j < (maxDim +1) /2; j++ ) {
                     cyclic_roll(shape[j][maxDim-1-i], shape[i][j], shape[maxDim-1-j][i], shape[maxDim-1-i][maxDim-1-j]);
@@ -55,13 +42,13 @@ class Tetramino {
             } */
         }
 
-        void antiRotate() {
+void Tetramino::antiRotate() {
             for(int i=0; i<maxDim/2; i++)
                 for(int j=0; j<(maxDim+1)/2; j++)
                     cyclic_roll(shape[j][maxDim-1-i], shape[maxDim-1-i][maxDim-1-j], shape[maxDim-1-j][i], shape[i][j]);
         }
 
-        void cyclic_roll(short &a, short &b, short &c, short &d) {
+void Tetramino::cyclic_roll(short &a, short &b, short &c, short &d) {
             int temp = a;
             a = b;
             b = c;
@@ -96,23 +83,19 @@ class Tetramino {
         } */
         
 
-        short ttrmnColor(int i, int j) {
+short Tetramino::ttrmnColor(int i, int j) {
             return this-> shape[i][j];
         }
 
-        int getMaxDim() {
+int Tetramino::getMaxDim() {
             return this-> maxDim;
         }
-};
 
-class Square: public Tetramino {
-private:
 
-public:
-    Square() {
+    Square::Square() {
         type = 1;
         for ( int i = 0; i < 4; i++ ) {
-            for ( int j = 0; j < 4; j ++ ) {
+            for ( int j = 0; j < 4 ;j ++ ) {
                 if ( j < 2 && i < 2 ) {
                     shape[i][j] = this->type;
                 } else {
@@ -122,13 +105,10 @@ public:
         }
         maxDim = 2;
     }
-};
 
-class Rect: public Tetramino {
-private:
-    
-public:
-    Rect() {
+
+
+    Rect::Rect() {
         type = 2;
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j++ ) {
@@ -141,13 +121,8 @@ public:
         }
         maxDim = 4;
     }
-};
 
-class J_SHAPE: public Tetramino {
-private:
-    
-public:
-    J_SHAPE() {
+    J_SHAPE::J_SHAPE() {
         type = 3;
         shape[0][0]=this->type;    shape[0][1]=-1;  shape[0][2]=-1;  shape[0][3]=-1;
         shape[1][0]=this->type;    shape[1][1]=this->type;   shape[1][2]=this->type;   shape[1][3]=-1;
@@ -156,13 +131,9 @@ public:
 
         maxDim = 3;
     }
-};
 
-class L_SHAPE: public Tetramino {
-private:
-    
-public:
-    L_SHAPE() {
+
+    L_SHAPE::L_SHAPE() {
         type = 4;
         shape[0][0]=-1;    shape[0][1]=-1;  shape[0][2]=this->type;  shape[0][3]=-1;
         shape[1][0]=this->type;    shape[1][1]=this->type;   shape[1][2]=this->type;   shape[1][3]=-1;
@@ -171,13 +142,9 @@ public:
 
         maxDim = 3;
     }
-};
 
-class S_HAPE: public Tetramino {
-private:
-    
-public:
-    S_HAPE() {
+
+    S_HAPE::S_HAPE() {
         type = 5;
         shape[0][0]=-1;    shape[0][1]=this->type;  shape[0][2]=this->type;  shape[0][3]=-1;
         shape[1][0]=this->type;    shape[1][1]=this->type;   shape[1][2]=-1;   shape[1][3]=-1;
@@ -186,13 +153,9 @@ public:
 
         maxDim = 3;
     }
-};
 
-class T_SHAPE: public Tetramino {
-private:
-    
-public:
-    T_SHAPE() {
+
+    T_SHAPE::T_SHAPE() {
         type = 6;
         shape[0][0]=-1;    shape[0][1]=this->type;  shape[0][2]=-1;  shape[0][3]=-1;
         shape[1][0]=this->type;    shape[1][1]=this->type;   shape[1][2]=this->type;   shape[1][3]=-1;
@@ -201,13 +164,8 @@ public:
 
         maxDim = 3;
     }
-};
 
-class Z_SHAPE: public Tetramino {
-private:
-    
-public:
-    Z_SHAPE() {
+    Z_SHAPE::Z_SHAPE() {
         type = 7;
         shape[0][0]=this->type;    shape[0][1]=this->type;  shape[0][2]=-1;  shape[0][3]=-1;
         shape[1][0]=-1;    shape[1][1]=this->type;   shape[1][2]=this->type;   shape[1][3]=-1;
@@ -216,4 +174,3 @@ public:
 
         maxDim = 3;
     }
-};

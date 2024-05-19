@@ -1,4 +1,4 @@
-#include <iostream>
+/*#include <iostream>
 #include <fstream>
 #include <cstring>
 #include "ncrss.cpp"
@@ -85,4 +85,4 @@ p_pos remove_invalid_scores(p_pos head) {
         tmp = tmp->next;
     }
     } return head;
-}//per ora non serve
+}//per ora non serve*/
