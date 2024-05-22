@@ -35,14 +35,11 @@ private:
     WINDOW* name_win;
     WINDOW* nome;
 
-    
     int yPosition, xPosition;
 
     void init() ;
     bool is_empty(istream&);
 
-    bool is_empty_f(fstream& );
-    
     void randomTtrmn() ;
     void clearboard() ;
 
@@ -85,22 +82,12 @@ public:
 
     int getInput() ;
 
-// utilities
-    // REVIEW probably useless
-    /*int incr_score (int n)
-    {
-        return 0;
-    }
-    WINDOW* getWinPointer() {
-        return this-> win;
-    }*/
-
-    int count_digit(int );
-
-    // REVIEW check if these functions are actually used and how
-    void render();
+    // utilities
+    void printColors(WINDOW* thisWin, short colorNumber);
 
     void reload();
+
+    void deleteWin(WINDOW* window);
 
     void remove();
 };

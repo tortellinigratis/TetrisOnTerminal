@@ -62,10 +62,6 @@
 		return file.peek() == ifstream :: traits_type :: eof();
 	}
 
-    bool TetrisBoard::is_empty_f(fstream& file){
-		return file.peek() ==   EOF;
-	}
-    
     void TetrisBoard::randomTtrmn() {
         srand(time(NULL));
         int rndm = rand() % POSS_TETRAM;
@@ -113,9 +109,7 @@
                 if ( boardArray[i][j] == -1 ) {
                     wprintw(this-> win, " ");
                 } else {
-                    wattron(this-> win, COLOR_PAIR(boardArray[i][j]));
-                    wprintw(this-> win, " ");
-                    wattroff(this-> win, COLOR_PAIR(boardArray[i][j]));
+                    printColors(this-> win, boardArray[i][j]);
                 }
             }
         }
@@ -130,9 +124,7 @@
                 if ( ttrmn-> ttrmnColor(i, j) == -1 ) {
                     wmove(this-> win, yPosition +i +1, xPosition +j +2);
                 } else {
-                    wattron(this-> win, COLOR_PAIR(ttrmn-> ttrmnColor(i, j)));
-                    wprintw(this-> win, " ");
-                    wattroff(this-> win, COLOR_PAIR(ttrmn-> ttrmnColor(i, j)));
+                    printColors(this-> win, ttrmn-> ttrmnColor(i, j));
                 }
             }
         }
@@ -144,8 +136,7 @@
         int t = ttrmn->type;
         Tetramino* t_p;
 
-        switch (t)
-            {
+        switch (t) {
             case 1:
                 t_p = new Square();
                 break;
@@ -175,7 +166,7 @@
 
             default:
                 break;
-            }
+        }
 
         wmove(winHold, 2,2);
         for ( int i = 0; i < 4; i++ ) {
@@ -183,9 +174,7 @@
                 if ( t_p-> ttrmnColor(i, j) == -1 ) {
                     wprintw(this-> winHold, " ");
                 } else {
-                    wattron(this-> winHold, COLOR_PAIR(t_p-> ttrmnColor(i, j)));
-                    wprintw(this-> winHold, " ");
-                    wattroff(this-> winHold, COLOR_PAIR(t_p-> ttrmnColor(i, j)));
+                    printColors(this-> winHold, t_p-> ttrmnColor(i, j));
                 }
             }
             wmove(winHold, 2+i+1, 2);
@@ -204,9 +193,7 @@
                 if ( ttrmnNext-> ttrmnColor(i, j) == -1 ) {
                     wprintw(this-> winNext, " ");
                 } else {
-                    wattron(this-> winNext, COLOR_PAIR(ttrmnNext-> ttrmnColor(i, j)));
-                    wprintw(this-> winNext, " ");
-                    wattroff(this-> winNext, COLOR_PAIR(ttrmnNext-> ttrmnColor(i, j)));
+                    printColors(this-> winNext, ttrmnNext-> ttrmnColor(i, j));
                 }
             }
             wmove(winNext, 2+i+1, 2);
@@ -219,9 +206,7 @@
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
                 if ( ttrmn-> ttrmnColor(i, j) != -1 ) {
-                    wattron(win, COLOR_PAIR(ttrmn-> ttrmnColor(i, j)));
                     boardArray[i + yPosition][j + xPosition] = ttrmn-> type;
-                    wattroff(win, COLOR_PAIR(ttrmn-> ttrmnColor(i, j)));
                 }
             }
         }
@@ -250,7 +235,7 @@
         return 0;
     }
 
-    void TetrisBoard::name_player(){
+    void TetrisBoard::name_player() {
         string s = "              ";
         //apriamo finestra che chiede il nome, inseriamo il nome e sovrascriviamo il file
         name_win = newwin(9, 40, yMax/4, xMax/2 - 20);
@@ -411,7 +396,7 @@
 
     }
 
-    void TetrisBoard::checkCompletedLines(){    
+    void TetrisBoard::checkCompletedLines(){
         int cont = 0;
         for(int y=0; y<YLENGTH; y++) {
             bool isLineCleared = true;
@@ -420,32 +405,23 @@
                     isLineCleared = false; //se trovo un "buco" esco dal for e sono sicuro di aver trovato una riga non completa
                 }
             }
-            if(isLineCleared)
-            {
-                if(y==0)
-                {
-                    for(int x=0; x< XLENGTH ; x++)
-                    {
+            if(isLineCleared) {
+                if(y==0) {
+                    for(int x=0; x< XLENGTH ; x++) {
                         boardArray[0][x]=-1;
                     }
-                }
-                else
-                {
-                    for(int y2=y; y2>0; y2--)
-                    {
-            
-                        for(int x2=0; x2< XLENGTH ; x2++)
-                        {
+                } else {
+                    for(int y2=y; y2>0; y2--) {
+                        for(int x2=0; x2< XLENGTH ; x2++) {
                             boardArray[y2][x2]=boardArray[y2-1][x2];
                         }
                     }
                 }
                 cont++;
-                
             }
-            
         }
         score = incr_score(cont);
+        //REVIEW Probabilmente non e' necessario leggere lo score ogni volta da una stringa, conviene tenere una variabile gia' sottoforma di numero
         string a;
         const char *u;
         a = to_string(score);
@@ -459,10 +435,8 @@
             wattron(score_win, A_REVERSE);
             mvwprintw(this->score_win, 2, 1, u); 
             wattroff(score_win, A_REVERSE);
-            wrefresh(score_win);
         }
         wrefresh(score_win);
-
     }
 
     int TetrisBoard::incr_score(int n){
@@ -577,12 +551,9 @@
         this-> win = NULL;
         this->score_win = NULL;
     }
-    const int fallDelay = 1000;
-    clock_t lastFall = clock();
 
 
     int TetrisBoard::getInput() {
-        
         int elapsed = (clock()-lastFall)*10000/CLOCKS_PER_SEC;
         int remaining = fallDelay - elapsed;
         if(remaining < 0) {
@@ -649,16 +620,10 @@
         return r;
     }
 
-
-
-    void TetrisBoard::render() {
-        if ( this-> win != NULL ) {
-            refresh();
-            wrefresh(this-> win);
-            wrefresh(this->score_win);
-        } else {
-            init();
-        }
+    void TetrisBoard::printColors(WINDOW* thisWin, short colorNumber) {
+        wattron(thisWin, COLOR_PAIR(colorNumber));
+        wprintw(thisWin, " ");
+        wattroff(thisWin, COLOR_PAIR(colorNumber));
     }
 
     void TetrisBoard::reload() {
@@ -668,29 +633,21 @@
         init();
     }
 
-     void TetrisBoard::remove() {
+
+    void TetrisBoard::deleteWin(WINDOW* window) {
+        wclear(window);
+        wrefresh(window);
+        delwin(window);
+        window = NULL;
+    }
+
+    void TetrisBoard::remove() {
         if ( this-> win != NULL ) {
-            wclear(winNext);
-            wclear(winHold);
-            wclear(name_win);
-            wrefresh(winNext);
-            wrefresh(winHold);
-            wrefresh(name_win);
-            delwin(winNext);
-            delwin(winHold);
-            delwin(name_win);
-            winNext=NULL;
-            winHold=NULL;
-            name_win = NULL;
-            wclear(this-> win);
-            wclear(this->score_win);
-            wrefresh(this->score_win);
-            wrefresh(this-> win);
-            wclear(this->score_win);
-            delwin(this-> win);
-            delwin(this->score_win);
-            this->score_win = NULL;
-            this-> win = NULL;
+            deleteWin(winNext);
+            deleteWin(winHold);
+            deleteWin(name_win);
+            deleteWin(this-> win);
+            deleteWin(score_win);
             delete ttrmn;
             this-> ttrmn = NULL;
             delete ttrmnNext;

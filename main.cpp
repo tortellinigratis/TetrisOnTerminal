@@ -67,19 +67,22 @@ int main() {
             case -1:
                 // remove eventual loaded windows;
                 tBoard.remove();
+                lBoard.remove();
                 // load the menu;
                 mainMenu.reload();
                 inpt = showMenu(&mainMenu);
                 break;
             case 0:
-                // start the game;
                 mainMenu.remove();
+                lBoard.remove();
+                // start the game;
                 tBoard.reload();
                 inpt = playTetris(&tBoard);
                 break;
             case 1:
-                // show the leaderboard;
                 mainMenu.remove();
+                tBoard.remove();
+                // show the leaderboard;
                 lBoard.reload();
                 inpt = showLeaderboard(&lBoard);
                 break;
