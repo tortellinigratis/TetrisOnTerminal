@@ -43,6 +43,9 @@ int main() {
         init_pair(11, COLOR_GREEN, COLOR_BLACK);
         init_pair(12, COLOR_CYAN, COLOR_BLACK);
         init_pair(13, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(14, COLOR_RED, COLOR_BLACK);
+        init_pair(15, COLOR_BLUE, COLOR_BLACK);
+        init_pair(16, COLOR_MAGENTA, COLOR_BLACK);
     } else {
         printw("No colors were found, errors may occur.");
     }

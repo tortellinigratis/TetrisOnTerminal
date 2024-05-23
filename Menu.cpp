@@ -1,17 +1,42 @@
 #include "Menu.hpp"
 void Menu::writeTitle() {
+        string Title[7];
+        for (int i =0; i<7; i++ ){
+            Title[i]=title[i];
+        }
         wmove(this-> win, 0, xMax /4 -3);
-        wprintw(this-> win, this-> title);
+        wattron(this->win, COLOR_PAIR(14));
+        wprintw(this-> win, Title[0].c_str());
+        wattroff(this->win,COLOR_PAIR(14));
+        wattron(this->win, COLOR_PAIR(13));
+        wprintw(this-> win, Title[1].c_str());
+        wattroff(this->win,COLOR_PAIR(13));
+        wattron(this->win, COLOR_PAIR(11));
+        wprintw(this-> win, Title[2].c_str());
+        wattroff(this->win,COLOR_PAIR(11));
+        wattron(this->win, COLOR_PAIR(12));
+        wprintw(this-> win, Title[3].c_str());
+        wattroff(this->win,COLOR_PAIR(12));
+        wattron(this->win, COLOR_PAIR(15));
+        wprintw(this-> win,Title[4].c_str());
+        wattroff(this->win,COLOR_PAIR(15));
+        wattron(this->win, COLOR_PAIR(16));
+        wprintw(this-> win, Title[5].c_str());
+        wattroff(this->win,COLOR_PAIR(16));
     }
 
 void Menu::writeOptions() {
+        string a;
+        a='>';
         for ( int i = 0; i < OPTIONS; i++ ) {
             wmove(this-> win, (yMax /4 -3) +(i *2), 6);
             if ( i == this-> index ) {
-                wattron(this-> win, A_REVERSE);
+                //wattron(this-> win, A_REVERSE);
+                wprintw(this-> win, a.c_str());
             }
+            
             wprintw(this-> win, options[i]);
-            wattroff(this-> win, A_REVERSE);
+            //wattroff(this-> win, A_REVERSE);
         }
     }
 
@@ -22,7 +47,7 @@ void Menu::init() {
         update();
     }
 Menu::Menu() {
-        strcpy(this-> title, " Menu ");
+        strcpy(this-> title, "TETRIS");
         strcpy(this-> options[0], "Play");
         strcpy(this-> options[1], "Leaderboard");
         strcpy(this-> options[2], "Exit");
@@ -64,7 +89,9 @@ int Menu::getInput() {
     }
 void Menu::update() {
         wclear(this-> win);
-        box(this-> win, 0, 0);
+        char c;
+        c = ' ';
+        wborder(this-> win, int(c), int(c), int(c), int(c), int(c), int(c), int(c), int(c));
         writeTitle();
         writeOptions();
         render();
