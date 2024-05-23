@@ -10,11 +10,10 @@
         ttrmn = ttrmnNext;
         randomTtrmn();
         xPosition = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
-        this-> win = newwin(yDim, xDim, (yMax /2) - (yDim /2), (xMax /2) - (xDim /2));
-        this->score_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) - (xDim /2)+ 20);
+        this-> win = newwin(yDim, xDim + 10 , (yMax /2) - (yDim /2), (xMax /2) - (xDim /2) + 5);
+        this->score_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) - (xDim /2) + 40 );
         box(this->score_win, 0, 0); 
         mvwprintw(this->score_win, 1, 1, "Highscore");
-        //highscore da mettere che si muove col punteggio
         ifstream readscore;
         readscore.open("scores.txt");
         highscore = "0";
@@ -43,12 +42,12 @@
         clearboard();
         showBoard();
 
-        winNext = newwin (8, 8, (yMax /2) - (yDim /2)+10, (xMax /2) - (xDim /2)+20);
-        winHold = newwin (8, 8, (yMax /2) - (yDim /2)+10, (xMax /2) - (xDim /2)-18);
+        winNext = newwin (8, 16, (yMax /2) - (yDim /2)+10, (xMax /2) - (xDim /2)+40);
+        winHold = newwin (8, 16, (yMax /2) - (yDim /2)+10, (xMax /2) - (xDim /2)-30);
         box(winNext, 0, 0);
         box(winHold, 0, 0);
-        mvwprintw(winNext, 0, 1 , " Next ");
-        mvwprintw(winHold, 0, 1, " Hold ");
+        mvwprintw(winNext, 0, 6 , " Next ");
+        mvwprintw(winHold, 0, 6, " Hold ");
         drawNext();
         drawTetramino();
         refresh();
@@ -108,7 +107,9 @@
             for ( int j = 0; j < XLENGTH; j++ ) {
                 if ( boardArray[i][j] == -1 ) {
                     wprintw(this-> win, " ");
+                    wprintw(this-> win, " ");
                 } else {
+                    printColors(this-> win, boardArray[i][j]);
                     printColors(this-> win, boardArray[i][j]);
                 }
             }
@@ -119,12 +120,15 @@
 
     void TetrisBoard::drawTetramino() {
         for ( int i = 0; i < 4; i++ ) {
-            wmove(this-> win, yPosition +i +1, xPosition+1);
+            wmove(this-> win, yPosition +i +1, 2*(xPosition) + 1);
             for ( int j = 0; j < 4; j++ ) {
                 if ( ttrmn-> ttrmnColor(i, j) == -1 ) {
-                    wmove(this-> win, yPosition +i +1, xPosition +j +2);
+                    wmove(this-> win, yPosition +i +1, 2*(xPosition) + 2*j + 3);
                 } else {
+
                     printColors(this-> win, ttrmn-> ttrmnColor(i, j));
+                    printColors(this-> win, ttrmn-> ttrmnColor(i, j));
+
                 }
             }
         }
@@ -156,6 +160,7 @@
             case 5:
                 t_p = new S_HAPE();
                 break;
+             
             case 6:
                 t_p = new T_SHAPE();
                 break;
@@ -168,12 +173,14 @@
                 break;
         }
 
-        wmove(winHold, 2,2);
+        wmove(winHold, 2,4);
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j++ ) {
                 if ( t_p-> ttrmnColor(i, j) == -1 ) {
                     wprintw(this-> winHold, " ");
+                    wprintw(this-> winHold, " ");
                 } else {
+                    printColors(this-> winHold, t_p-> ttrmnColor(i, j));
                     printColors(this-> winHold, t_p-> ttrmnColor(i, j));
                 }
             }
@@ -187,12 +194,14 @@
     }
 
     void TetrisBoard::drawNext(){
-        wmove(winNext, 2,2);
+        wmove(winNext, 2,4);
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j++ ) {
                 if ( ttrmnNext-> ttrmnColor(i, j) == -1 ) {
                     wprintw(this-> winNext, " ");
+                    wprintw(this-> winNext, " ");
                 } else {
+                    printColors(this-> winNext, ttrmnNext-> ttrmnColor(i, j));
                     printColors(this-> winNext, ttrmnNext-> ttrmnColor(i, j));
                 }
             }
@@ -361,7 +370,7 @@
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
                 if ( ttrmn->ttrmnColor(i,j) >=0 ) {
-                    if ( xPosition +j +1 == XLENGTH || boardArray[yPosition +i][xPosition + j +1] >=0 ) {
+                    if ( xPosition + j + 1 == XLENGTH || boardArray[yPosition +i][xPosition + j + 1] >=0 ) {
 						// TODO potential improvement, for-loop could be stopped at the first true right element of each row
                         return false;
                     }
