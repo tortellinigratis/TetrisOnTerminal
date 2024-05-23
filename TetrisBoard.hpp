@@ -5,7 +5,6 @@
 #include <fstream>
 #include <iostream>
 #include "tetramino.hpp"
-#include "time.h"
 #include "ncrss.cpp"
 #include <vector>
 
@@ -81,7 +80,7 @@ public:
 
     TetrisBoard() ;
 
-    int getInput() ;
+    int getInput(int inpt) ;
 
     // utilities
     void printColors(WINDOW* thisWin, short colorNumber);

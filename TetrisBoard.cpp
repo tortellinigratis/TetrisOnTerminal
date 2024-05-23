@@ -555,19 +555,10 @@
     }
 
 
-    int TetrisBoard::getInput() {
-        int elapsed = (clock()-lastFall)*10000/CLOCKS_PER_SEC;
-        int remaining = fallDelay - elapsed;
-        if(remaining < 0) {
-            remaining = 0;
-        }
-        timeout(remaining);
-        elapsed = (clock()-lastFall)*1000000/CLOCKS_PER_SEC;
-        remaining = fallDelay - elapsed;
+    int TetrisBoard::getInput(int inpt) {
 
-        
         int r = 0;
-        switch( getch() ) {
+        switch( inpt ) {
 			// REVIEW each case should have all 3 possible type of key (see backspace for reference)
             case KEY_RIGHT:
                 moveRight();
@@ -608,10 +599,8 @@
                 return -1;
 
             default:
-                if(remaining<=0){
-                    lastFall = clock();
-                    r = tetraFall();
-                }
+                lastFall = clock();
+                r = tetraFall();
                 break;
         }
        if ( r != -1 ) {

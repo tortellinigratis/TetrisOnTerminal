@@ -2,6 +2,7 @@
 #include "TetrisBoard.hpp"
 #include "Leaderboard.hpp"
 #include "ncrss.cpp"
+#include <chrono>
 
 using namespace std;
 
@@ -15,8 +16,20 @@ int showMenu(Menu* mMenu) {
 
 int playTetris(TetrisBoard* tBoard) {
     int n = 0;
+    int r = 1000;
+    char inpt;
+    chrono::time_point<std::chrono::high_resolution_clock> t_start, t_end;
+    // time diff
     while ( n == 0 ) {
-        n = tBoard-> getInput();
+        t_start = chrono::high_resolution_clock::now();
+        timeout(r);
+        n = tBoard-> getInput(getch());
+        t_end = chrono::high_resolution_clock::now();
+
+        r += (int)duration_cast<chrono::milliseconds>(t_start - t_end).count();
+        if ( r <= 0 ) {
+            r = 1000;
+        }
     }
     return n;
 }
