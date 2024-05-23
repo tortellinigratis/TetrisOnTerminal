@@ -550,6 +550,8 @@
         yDim = YLENGTH +2;
         this-> win = NULL;
         this->score_win = NULL;
+        fallDelay = 1000;
+        lastFall = clock();
     }
 
 

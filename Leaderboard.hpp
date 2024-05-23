@@ -9,17 +9,16 @@
 #define maxc 15
 using namespace std;
 
-
 class Leaderboard{
 
 private:  
-    int yMax, xMax, page=0;
+    int yMax, xMax, page;
     WINDOW * win;
- struct pos{
+	struct pos{
 		string username;
 		int score;
 		pos *next;
-    	};
+    };
 	typedef pos* p_pos;
     void init();
     void printscores();
@@ -28,12 +27,9 @@ private:
 	void scrollup();
 	void readFile();
 	void clear_scores();
-    p_pos head_insert(p_pos ,  string , int );
-     
+    p_pos head_insert(p_pos ,  string , int ); 
 
 public:
-   
-
     Leaderboard();
 	void remove();
     void reload();

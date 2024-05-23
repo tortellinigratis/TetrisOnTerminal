@@ -3,11 +3,12 @@
 
 void Leaderboard::init(){
     win = newwin (16, xMax/2, yMax/4, xMax/4);  //creo la finestra
-	    box(win,0,0);
-	    mvwprintw( win, 0, xMax/4-7 ," Leaderboard ");
-		printscores();	//Stampa nome e punteggio punteggio
-	    refresh();
-	    wrefresh(win);
+	box(win,0,0);
+    mvwprintw( win, 0, xMax/4-7 ," Leaderboard ");
+	printscores();	//Stampa nome e punteggio punteggio
+    refresh();
+	wrefresh(win);
+	page = 0;
 }
 
 void Leaderboard::printscores(){
@@ -238,15 +239,14 @@ int Leaderboard::getInput(){
 					break;
 
 				case 'c':
-				{
+					{
 					ifstream readscore;
 					readscore.open("scores.txt");
 					if (!is_empty(readscore)){
 						clear_scores();
 					}
-					
 					break;
-				}
+					}
 
 				default:
 					break;

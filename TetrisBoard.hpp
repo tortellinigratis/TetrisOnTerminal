@@ -37,6 +37,9 @@ private:
 
     int yPosition, xPosition;
 
+    int fallDelay;
+    clock_t lastFall;
+
     void init() ;
     bool is_empty(istream&);
 
@@ -77,8 +80,6 @@ private:
 public:
 
     TetrisBoard() ;
-    const int fallDelay = 1000;
-    clock_t lastFall = clock();
 
     int getInput() ;
 
