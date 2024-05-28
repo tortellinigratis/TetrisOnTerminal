@@ -1,7 +1,9 @@
 #include "TetrisBoard.hpp"
 
-    void TetrisBoard::init() {
-        
+    void TetrisBoard::init(int &fall_rate) {
+        fall_rate = 1000;
+        compl_lines = 0;
+        level = 0;
         score = 0;
         can_hold = true;
         yPosition = 0;
@@ -10,7 +12,9 @@
         ttrmn = ttrmnNext;
         randomTtrmn();
         xPosition = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
-        
+        //this->fall_rate = &fr;
+        printw("%d",fall_rate);
+        this->lev_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) - (xDim /2)-31);
         this-> win = newwin(yDim, xDim + 10 , (yMax /2) - (yDim /2), (xMax /2) - (xDim /2) + 5);
         this->score_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) + (xDim /2) + 20 );
         tetris = newwin(3, 12 , (yMax /2) - (yDim /2) , (xMax /2) - (xDim /2) - 20);
@@ -36,7 +40,10 @@
         wprintw(this-> tetris, "S");
         wattroff(this->tetris,COLOR_PAIR(16));
         box(this->score_win, 0, 0); 
+         box(this->lev_win, 0,  0);
         mvwprintw(this->score_win, 1, 1, "Highscore");
+        mvwprintw(this->lev_win, 1, 1, "Lines");
+        mvwprintw(this->lev_win, 3, 1, "Level");
         ifstream readscore;
         readscore.open("scores.txt");
         highscore = "0";
@@ -46,6 +53,12 @@
             getline(readscore,highscore);	
         }
         u = highscore.c_str();
+        wattron(lev_win, A_REVERSE);
+		mvwprintw(lev_win, 2, 1, "%d",compl_lines);
+        wattroff(lev_win, A_REVERSE);
+        wattron(lev_win, A_REVERSE);
+		mvwprintw(lev_win, 4, 1, "%d",level);
+        wattroff(lev_win, A_REVERSE);
         wattron(score_win, A_REVERSE);
 		mvwprintw(score_win, 2, 1, u);
         wattroff(score_win, A_REVERSE);
@@ -78,7 +91,7 @@
         wrefresh(this->winNext);
         wrefresh(this-> win);
         wrefresh(this-> score_win);
-        wrefresh(tetris);
+        wrefresh(this->lev_win);
     }
 
     bool TetrisBoard::is_empty(istream& file){
@@ -454,6 +467,7 @@
             }
         }
         score = incr_score(cont);
+        compl_lines+=cont;
         //REVIEW Probabilmente non e' necessario leggere lo score ogni volta da una stringa, conviene tenere una variabile gia' sottoforma di numero
         string a;
         const char *u;
@@ -469,6 +483,18 @@
             mvwprintw(this->score_win, 2, 1, u); 
             wattroff(score_win, A_REVERSE);
         }
+        
+        if(compl_lines%4==0 && compl_lines!=0){
+            fall_rate-=50;
+            level++;
+        }
+        wattron(lev_win, A_REVERSE);
+		mvwprintw(lev_win, 2, 1, "%d",compl_lines);
+        wattroff(lev_win, A_REVERSE);
+        wattron(lev_win, A_REVERSE);
+		mvwprintw(lev_win, 4, 1, "%d",level);
+        wattroff(lev_win, A_REVERSE);
+        wrefresh(lev_win);
         wrefresh(score_win);
     }
 
@@ -583,10 +609,11 @@
         yDim = YLENGTH +2;
         this-> win = NULL;
         this->score_win = NULL;
+
     }
 
 
-    int TetrisBoard::getInput(int inpt) {
+    int TetrisBoard::getInput(int inpt, int &fall_rate) {
 
         int r = 0;
         switch( inpt ) {
@@ -630,7 +657,7 @@
                 return -1;
 
             default:
-                r=tetraFall();
+                r = tetraFall();
                 break;
         }
        if ( r != -1 ) {
@@ -647,11 +674,11 @@
         wattroff(thisWin, COLOR_PAIR(colorNumber));
     }
 
-    void TetrisBoard::reload() {
+    void TetrisBoard::reload(int &fall_rate) {
         if ( this-> win != NULL ) {
             remove();
         }
-        init();
+        init(fall_rate);
     }
 
 
@@ -669,6 +696,7 @@
             deleteWin(name_win);
             deleteWin(this-> win);
             deleteWin(score_win);
+            deleteWin(lev_win);
             delete ttrmn;
             this-> ttrmn = NULL;
             delete ttrmnNext;

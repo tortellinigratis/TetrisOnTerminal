@@ -20,6 +20,9 @@ class TetrisBoard {
 private:
     int yMax, xMax;
     int yDim, xDim;
+    int compl_lines;
+    int level;
+    int *fall_rate;
     WINDOW* win;
     WINDOW* winNext;
     WINDOW* winHold;
@@ -35,10 +38,11 @@ private:
     WINDOW* score_win;
     WINDOW* name_win;
     WINDOW* nome;
+    WINDOW* lev_win;
 
     int yPosition, xPosition;
 
-    void init() ;
+    void init(int &fall_rate) ;
     bool is_empty(istream&);
 
     void randomTtrmn() ;
@@ -79,12 +83,12 @@ public:
 
     TetrisBoard() ;
 
-    int getInput(int inpt) ;
+    int getInput(int inpt, int &fall_rate) ;
 
     // utilities
     void printColors(WINDOW* thisWin, short colorNumber);
 
-    void reload();
+    void reload(int &fall_rate);
 
     void deleteWin(WINDOW* window);
 
