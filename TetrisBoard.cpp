@@ -303,7 +303,7 @@
                 mvwprintw(nome, 1, position, " ");
                 wrefresh(nome);
                 position--;
-            } else if ( c == '\n' && position > 0 ) {
+            } else if ( c == 27 || ( c == '\n' && position > 0 ) ) {
                 position = 15;
             } else if ( position < 14 && c != -1 && c != ' ') {
                 s[position] = c;
@@ -313,64 +313,66 @@
                 position++;
             }
         }
-        bool prova;
-        ifstream readscore;
-        ofstream writescore;
-        readscore.open("scores.txt");
-        if(!readscore.is_open()) cout << "Error : opening file failed";
-        if(is_empty(readscore)){
-            writescore.open("scores.txt", ofstream::app);
-            if(!writescore.is_open()) cout << "Error : opening file failed";
-            writescore << s << endl << score ; 
-        }
-        else{
-            string line;
-            int p;
-            int read_line = 1;
-            bool found = false;
-            vector <string> contents;
-            while (!readscore.eof()){
-                //readscore.ignore(maxc, readscore.widen('\n'));
-                getline(readscore, line);
-                if (read_line % 2 == 0 ){
-                    p = stoi(line);
-                    if(p < score){
-                        found = true;
-                        read_line -= 1;
-                    }
-                }
-                contents.push_back(line);
-                //readscore.ignore(maxc, readscore.widen('\n'));
-                if (!found) {
-                    read_line += 1;
-                }
-            }
-            if (!found){
+        if ( c != 27 ) {
+            bool prova;
+            ifstream readscore;
+            ofstream writescore;
+            readscore.open("scores.txt");
+            if(!readscore.is_open()) cout << "Error : opening file failed";
+            if(is_empty(readscore)){
                 writescore.open("scores.txt", ofstream::app);
                 if(!writescore.is_open()) cout << "Error : opening file failed";
-                writescore << endl << s << endl << score ;
+                writescore << s << endl << score ; 
             }
             else{
-                int current_line = 1;
-                writescore.open("scores.txt");
-                if(!writescore.is_open()) cout << "Error : opening file failed";
-                for (auto file_line : contents){
-                    if (current_line != 1) {
-                        writescore << endl;
+                string line;
+                int p;
+                int read_line = 1;
+                bool found = false;
+                vector <string> contents;
+                while (!readscore.eof()){
+                    //readscore.ignore(maxc, readscore.widen('\n'));
+                    getline(readscore, line);
+                    if (read_line % 2 == 0 ){
+                        p = stoi(line);
+                        if(p < score){
+                            found = true;
+                            read_line -= 1;
+                        }
                     }
-                    if(current_line == read_line){
-                        writescore << s << endl << score << endl;
+                    contents.push_back(line);
+                    //readscore.ignore(maxc, readscore.widen('\n'));
+                    if (!found) {
+                        read_line += 1;
+                    }
+                }
+                if (!found){
+                    writescore.open("scores.txt", ofstream::app);
+                    if(!writescore.is_open()) cout << "Error : opening file failed";
+                    writescore << endl << s << endl << score ;
+                }
+                else{
+                    int current_line = 1;
+                    writescore.open("scores.txt");
+                    if(!writescore.is_open()) cout << "Error : opening file failed";
+                    for (auto file_line : contents){
+                        if (current_line != 1) {
+                            writescore << endl;
+                        }
+                        if(current_line == read_line){
+                            writescore << s << endl << score << endl;
+                            current_line++;
+                        }
+                        writescore << file_line;
                         current_line++;
                     }
-                    writescore << file_line;
-                    current_line++;
                 }
-            }
 
+            }
+            readscore.close();
+            writescore.close();
         }
-        readscore.close();
-        writescore.close();
-        }
+    }
 
     
 
@@ -688,20 +690,26 @@
     }
 
 
-    void TetrisBoard::deleteWin(WINDOW* window) {
-        wclear(window);
-        wrefresh(window);
-        delwin(window);
-        window = NULL;
+    void TetrisBoard::deleteWin(WINDOW* finestra) {
+        wclear(finestra);
+        wrefresh(finestra);
+        delwin(finestra);
+        finestra = NULL;
     }
 
     void TetrisBoard::remove() {
         if ( this-> win != NULL ) {
             deleteWin(winNext);
             deleteWin(winHold);
-            deleteWin(name_win);
-            deleteWin(this-> win);
-            deleteWin(score_win);
+
+            // For some reasons it crashes when you do deleteWin(this-> win);
+            // No fucking clue of why
+            wclear(this-> win);
+            wrefresh(this-> win);
+            delwin(this-> win);
+            this-> win = NULL;
+
+            deleteWin(this-> score_win);
             deleteWin(lev_win);
             deleteWin(tetris);
             delete ttrmn;
