@@ -622,7 +622,6 @@
 
 
     int TetrisBoard::getInput(int inpt, int &fall_rate) {
-        //printw("%d",fall_rate);
         int r = 0;
         switch( inpt ) {
 			// REVIEW each case should have all 3 possible type of key (see backspace for reference)
