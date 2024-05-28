@@ -8,7 +8,7 @@ void Leaderboard::init(){
 	printscores();	//Stampa nome e punteggio punteggio
     refresh();
 	wrefresh(win);
-	page = 0;
+	
 }
 
 void Leaderboard::printscores(){
@@ -200,6 +200,7 @@ Leaderboard::p_pos Leaderboard::head_insert(p_pos head,  string user, int score)
 Leaderboard::Leaderboard(){
     getmaxyx(stdscr, yMax, xMax);
     win = NULL;
+	page = 0;
 }
 
 void Leaderboard::remove(){
@@ -229,7 +230,13 @@ int Leaderboard::getInput(){
 					wclear(win);
 					wrefresh(win);
 					break;
-
+				case KEY_LEFT:  //esc=27
+					clear();
+					inLeaderboard = false;
+					page = 0;
+					wclear(win);
+					wrefresh(win);
+					break;
 				case KEY_DOWN:
 					scrolldown();
 					break;

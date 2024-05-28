@@ -98,7 +98,7 @@ int main() {
                 break;
             case 1:
                 mainMenu.remove();
-                tBoard.remove();
+                //tBoard.remove();
                 // show the leaderboard;
                 lBoard.reload();
                 inpt = showLeaderboard(&lBoard);

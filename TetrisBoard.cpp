@@ -696,6 +696,7 @@
             deleteWin(this-> win);
             deleteWin(score_win);
             deleteWin(lev_win);
+            deleteWin(tetris);
             delete ttrmn;
             this-> ttrmn = NULL;
             delete ttrmnNext;
