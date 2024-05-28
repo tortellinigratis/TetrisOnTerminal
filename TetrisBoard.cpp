@@ -10,8 +10,31 @@
         ttrmn = ttrmnNext;
         randomTtrmn();
         xPosition = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
+        
         this-> win = newwin(yDim, xDim + 10 , (yMax /2) - (yDim /2), (xMax /2) - (xDim /2) + 5);
-        this->score_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) - (xDim /2) + 40 );
+        this->score_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) + (xDim /2) + 20 );
+        tetris = newwin(3, 12 , (yMax /2) - (yDim /2) , (xMax /2) - (xDim /2) - 20);
+        box(tetris, 0, 0);
+        wmove(this-> tetris, 1, 3);
+        
+        wattron(this->tetris, COLOR_PAIR(14));
+        wprintw(this-> tetris, "T");
+        wattroff(this->tetris,COLOR_PAIR(14));
+        wattron(this->tetris, COLOR_PAIR(13));
+        wprintw(this-> tetris, "E");
+        wattroff(this->tetris,COLOR_PAIR(13));
+        wattron(this->tetris, COLOR_PAIR(11));
+        wprintw(this-> tetris, "T");
+        wattroff(this->tetris,COLOR_PAIR(11));
+        wattron(this->tetris, COLOR_PAIR(12));
+        wprintw(this-> tetris, "R");
+        wattroff(this->tetris,COLOR_PAIR(12));
+        wattron(this->tetris, COLOR_PAIR(15));
+        wprintw(this-> tetris,"I");
+        wattroff(this->tetris,COLOR_PAIR(15));
+        wattron(this->tetris, COLOR_PAIR(16));
+        wprintw(this-> tetris, "S");
+        wattroff(this->tetris,COLOR_PAIR(16));
         box(this->score_win, 0, 0); 
         mvwprintw(this->score_win, 1, 1, "Highscore");
         ifstream readscore;
@@ -37,17 +60,17 @@
         wborder(this-> win, 0, 0, ' ', 0, ' ', ' ', 0, 0);
         mvwprintw(this-> win, 1, 0, " ");
         mvwprintw(this-> win, 2, 0, " ");
-        mvwprintw(this-> win, 1, xDim -1, " ");
-        mvwprintw(this-> win, 2, xDim -1, " ");
+        mvwprintw(this-> win, 1, xDim +9, " ");
+        mvwprintw(this-> win, 2, xDim +9, " ");
         clearboard();
         showBoard();
 
-        winNext = newwin (8, 16, (yMax /2) - (yDim /2)+10, (xMax /2) - (xDim /2)+40);
-        winHold = newwin (8, 16, (yMax /2) - (yDim /2)+10, (xMax /2) - (xDim /2)-30);
+        winNext = newwin (8, 12, (yMax /2) - (yDim /2)+10, (xMax /2) + (xDim /2) + 20);
+        winHold = newwin (8, 12, (yMax /2) - (yDim /2)+10, (xMax /2) - (xDim /2) - 20);
         box(winNext, 0, 0);
         box(winHold, 0, 0);
-        mvwprintw(winNext, 0, 6 , " Next ");
-        mvwprintw(winHold, 0, 6, " Hold ");
+        mvwprintw(winNext, 0, 3 , " Next ");
+        mvwprintw(winHold, 0, 3, " Hold ");
         drawNext();
         drawTetramino();
         refresh();
@@ -55,6 +78,7 @@
         wrefresh(this->winNext);
         wrefresh(this-> win);
         wrefresh(this-> score_win);
+        wrefresh(tetris);
     }
 
     bool TetrisBoard::is_empty(istream& file){
@@ -173,7 +197,7 @@
                 break;
         }
 
-        wmove(winHold, 2,4);
+        wmove(winHold, 2, 3);
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j++ ) {
                 if ( t_p-> ttrmnColor(i, j) == -1 ) {
@@ -184,7 +208,7 @@
                     printColors(this-> winHold, t_p-> ttrmnColor(i, j));
                 }
             }
-            wmove(winHold, 2+i+1, 2);
+            wmove(winHold, 2+i+1, 3);
         }
         wrefresh(this->winHold);
         refresh();
@@ -194,7 +218,7 @@
     }
 
     void TetrisBoard::drawNext(){
-        wmove(winNext, 2,4);
+        wmove(winNext, 2, 3);
         for ( int i = 0; i < 4; i++ ) {
             for ( int j = 0; j < 4; j++ ) {
                 if ( ttrmnNext-> ttrmnColor(i, j) == -1 ) {
@@ -205,7 +229,7 @@
                     printColors(this-> winNext, ttrmnNext-> ttrmnColor(i, j));
                 }
             }
-            wmove(winNext, 2+i+1, 2);
+            wmove(winNext, 2+i+1, 3);
         }
         wrefresh(this-> winNext);
         refresh();
@@ -559,8 +583,6 @@
         yDim = YLENGTH +2;
         this-> win = NULL;
         this->score_win = NULL;
-        fallDelay = 1000;
-        lastFall = clock();
     }
 
 
@@ -608,8 +630,7 @@
                 return -1;
 
             default:
-                lastFall = clock();
-                r = tetraFall();
+                r=tetraFall();
                 break;
         }
        if ( r != -1 ) {

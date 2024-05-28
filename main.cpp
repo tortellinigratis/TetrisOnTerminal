@@ -26,7 +26,7 @@ int playTetris(TetrisBoard* tBoard) {
         n = tBoard-> getInput(getch());
         t_end = chrono::high_resolution_clock::now();
 
-        r += (int)duration_cast<chrono::milliseconds>(t_start - t_end).count();
+        r += (int)std::chrono::duration_cast<chrono::milliseconds>(t_start - t_end).count();
         if ( r <= 0 ) {
             r = 1000;
         }

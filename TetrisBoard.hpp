@@ -7,6 +7,7 @@
 #include "tetramino.hpp"
 #include "ncrss.cpp"
 #include <vector>
+#include <ctime>
 
 #define XLENGTH 10
 #define YLENGTH 20
@@ -22,6 +23,7 @@ private:
     WINDOW* win;
     WINDOW* winNext;
     WINDOW* winHold;
+    WINDOW* tetris;
     short boardArray[YLENGTH][XLENGTH];
     bool can_hold;
     Tetramino* ttrmn;
@@ -35,9 +37,6 @@ private:
     WINDOW* nome;
 
     int yPosition, xPosition;
-
-    int fallDelay;
-    clock_t lastFall;
 
     void init() ;
     bool is_empty(istream&);
