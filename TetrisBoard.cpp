@@ -429,19 +429,19 @@
     }
 
     // movements:
-    int TetrisBoard::tetraFall() {
+    int TetrisBoard::tetraFall(int &fall_rate) {
         if ( clearUnder() ) {
             yPosition++;
             return 0;
         } else {
             int r = addBlock();
-            checkCompletedLines();
+            checkCompletedLines(fall_rate);
             return r;
         }
 
     }
 
-    void TetrisBoard::checkCompletedLines(){
+    void TetrisBoard::checkCompletedLines(int &fall_rate){
         int cont = 0;
         for(int y=0; y<YLENGTH; y++) {
             bool isLineCleared = true;
@@ -465,8 +465,20 @@
                 cont++;
             }
         }
-        score = incr_score(cont);
-        compl_lines+=cont;
+        score = incr_score(cont, level);
+        compl_lines+=cont; 
+        if(fall_rate>50){    
+            if(( compl_lines-(level+1)*4 >=0) && cont!=0){ 
+                if(level<6){
+                    fall_rate-=100;
+                }
+                else
+                {
+                    fall_rate-=50;
+                }
+                level++;
+            }
+        }
         //REVIEW Probabilmente non e' necessario leggere lo score ogni volta da una stringa, conviene tenere una variabile gia' sottoforma di numero
         string a;
         const char *u;
@@ -482,11 +494,6 @@
             mvwprintw(this->score_win, 2, 1, u); 
             wattroff(score_win, A_REVERSE);
         }
-        
-        if(compl_lines%4==0 && compl_lines!=0){
-            fall_rate-=50;
-            level++;
-        }
         wattron(lev_win, A_REVERSE);
 		mvwprintw(lev_win, 2, 1, "%d",compl_lines);
         wattroff(lev_win, A_REVERSE);
@@ -497,22 +504,22 @@
         wrefresh(score_win);
     }
 
-    int TetrisBoard::incr_score(int n){
+    int TetrisBoard::incr_score(int n, int level){
         // REVIEW can incr_score be called even if n is 0??
         switch(n){
             case 0:
                 break;
             case 1:
-                score = score + 40;
+                score = score + (40*(level+1));
                 break;
             case 2:
-                score = score + 100;
+                score = score + (100*(level+1));
                 break;
             case 3:
-                score = score + 300;
+                score = score + (300*(level+1));
                 break;
             case 4:
-                score = score + 1200;
+                score = score + (1200*(level+1));
                 break;
             default:
                 break;
@@ -585,11 +592,11 @@
         }
     }
 
-    int TetrisBoard::fallCompletely() {
+    int TetrisBoard::fallCompletely(int &fall_rate) {
         int r = 0;
         bool moving = true;
         while ( moving ) {
-            r = tetraFall();
+            r = tetraFall(fall_rate);
             if ( yPosition == 0 ) {
                 moving = false;
             }
@@ -613,7 +620,7 @@
 
 
     int TetrisBoard::getInput(int inpt, int &fall_rate) {
-
+        //printw("%d",fall_rate);
         int r = 0;
         switch( inpt ) {
 			// REVIEW each case should have all 3 possible type of key (see backspace for reference)
@@ -626,7 +633,7 @@
                 break;
 
             case ' ':
-                r = fallCompletely();
+                r = fallCompletely(fall_rate);
                 break;
 
             case 'r':
@@ -656,7 +663,7 @@
                 return -1;
 
             default:
-                r = tetraFall();
+                r = tetraFall(fall_rate);
                 break;
         }
        if ( r != -1 ) {

@@ -66,10 +66,10 @@ private:
 
     bool clearRotation() ;
     // movements:
-    int tetraFall() ;
-    void checkCompletedLines();
-
-    int incr_score(int );
+    int tetraFall(int &fall_rate) ;
+    void checkCompletedLines(int &fall_rate);
+//REVIEW - un paio di &fall_rate passati non servono
+    int incr_score(int, int );
 
     void moveLeft() ;
 
@@ -77,7 +77,7 @@ private:
 
     void pigliaTetramino();
 
-    int fallCompletely() ;
+    int fallCompletely(int &fall_rate) ;
 
 public:
 

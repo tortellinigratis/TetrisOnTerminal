@@ -25,10 +25,10 @@ int playTetris(TetrisBoard* tBoard, int &fall_rate) {
         timeout(r);
         n = tBoard-> getInput(getch(), fall_rate);
         t_end = chrono::high_resolution_clock::now();
-
         r += (int)std::chrono::duration_cast<chrono::milliseconds>(t_start - t_end).count();
+        
         if ( r <= 0 ) {
-            r = 1000;
+            r = fall_rate;
         }
     }
     return n;
