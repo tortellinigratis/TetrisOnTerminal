@@ -12,7 +12,7 @@
         ttrmn = ttrmnNext;
         randomTtrmn();
         xPosition = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
-        this->lev_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) - (xDim /2)-31);
+        this->lev_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) - (xDim /2)- 20);
         this-> win = newwin(yDim, xDim + 10 , (yMax /2) - (yDim /2), (xMax /2) - (xDim /2) + 5);
         this->score_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) + (xDim /2) + 20 );
         tetris = newwin(3, 12 , (yMax /2) - (yDim /2) , (xMax /2) - (xDim /2) - 20);
@@ -90,6 +90,7 @@
         wrefresh(this-> win);
         wrefresh(this-> score_win);
         wrefresh(this->lev_win);
+        wrefresh(this->tetris);
     }
 
     bool TetrisBoard::is_empty(istream& file){
