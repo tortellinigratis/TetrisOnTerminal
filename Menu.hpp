@@ -12,7 +12,6 @@ using namespace std;
 class Menu {
 private:
     int yMax, xMax;
-    char title[7];
     WINDOW* win;
     int index;
     char options[OPTIONS][12];
