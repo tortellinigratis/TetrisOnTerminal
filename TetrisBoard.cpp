@@ -471,12 +471,12 @@
         compl_lines+=cont; 
         if(fall_rate>50){    
             if(( compl_lines-(level+1)*4 >=0) && cont!=0){ 
-                if(level<6){
-                    fall_rate-=100;
+                if(level<5){
+                    fall_rate-=75;
                 }
                 else
                 {
-                    fall_rate-=50;
+                    fall_rate-=25;
                 }
                 level++;
             }
