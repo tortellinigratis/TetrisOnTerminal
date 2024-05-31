@@ -18,10 +18,8 @@ void Leaderboard::printscores(){
 
 		if(is_empty(readscore)){
 			clear();
-			int yMax, xMax;
-			getmaxyx(win, yMax, xMax);
-			mvwprintw( win, 2, xMax/2 - 6 ,"No scores yet");
-			mvwprintw( win, 5, xMax/2 - 21,"You can be the top player at least for once");
+			mvwprintw( win, 2, xMax/4 - 6 ,"No scores yet");
+			mvwprintw( win, 5, xMax/4 - 21,"You can be the top player at least for once");
 		}
 		else{
 			if(!readscore.is_open()) printw("Error: opeining file failed");
@@ -132,9 +130,7 @@ void Leaderboard::clear_scores(){
 		clear_check = newwin (7, xMax/3, yMax/3 + 1, xMax/3);  //creo la finestra
 	    box(clear_check,0,0);
 		start_color();
-		int ymax, xmax;
-		getmaxyx(clear_check, ymax, xmax);
-	    mvwprintw( clear_check, 0, xmax/2 -6 ," Are you sure? ");
+	    mvwprintw( clear_check, 0, xMax/6 -6 ," Are you sure? ");
 	    refresh();
 	    wrefresh(clear_check);
 		keypad(clear_check, true);
@@ -147,7 +143,7 @@ void Leaderboard::clear_scores(){
 				if (i == highlight){
 					wattron(clear_check, A_REVERSE);
 				}	
-				mvwprintw(clear_check, 4, xmax/4 + (xmax/2)*i, choices[i].c_str());
+				mvwprintw(clear_check, 4, xMax/12 + (xMax/6)*i, choices[i].c_str());
 				wattroff(clear_check, A_REVERSE);
 				
 				

@@ -1,69 +1,45 @@
 #include "Menu.hpp"
+
 void Menu::writeTitle() {
         //prima linea
         wmove(this-> win, yMax/4, xMax/2 - 22 + 1);
-        titleAttributes(14, "_____");
-        wprintw(this-> win, "   ");
-        titleAttributes(13, "_____");
-        wprintw(this-> win, "   ");
-        titleAttributes(11, "_____");
-        wprintw(this-> win, "   ");
-        titleAttributes(12, "____");
-        wprintw(this-> win, "    ");
-        titleAttributes(15, "___");
-        wprintw(this-> win, "   ");
+        titleAttributes(14, "_____   ");
+        titleAttributes(13, "_____   ");
+        titleAttributes(11, "_____   ");
+        titleAttributes(12, "____    ");
+        titleAttributes(15, "___   ");
         titleAttributes(16, "____");
         //seconda linea
         wmove(this-> win, yMax/4 + 1, xMax/2 - 22);
-        titleAttributes(14, "|_   _|");
-        wprintw(this-> win, " ");
-        titleAttributes(13, "| ____|");
-        wprintw(this-> win, " ");
-        titleAttributes(11, "|_   _|");
-        wprintw(this-> win, " ");
-        titleAttributes(12, "|  _ \\");
-        wprintw(this-> win, "  ");
-        titleAttributes(15,"|_ _|");
-        wprintw(this-> win, " ");
+        titleAttributes(14, "|_   _| ");
+        titleAttributes(13, "| ____| ");
+        titleAttributes(11, "|_   _| ");
+        titleAttributes(12, "|  _ \\  ");
+        titleAttributes(15,"|_ _| ");
         titleAttributes(16, "/ ___|");
         //terza linea
         wmove(this-> win, yMax/4 + 2, xMax/2 - 22 + 2);
-        titleAttributes(14, "| |");
-        wprintw(this-> win, "   ");
-        titleAttributes(13, "|  _|");
-        wprintw(this-> win, "     ");
-        titleAttributes(11, "| |");
-        wprintw(this-> win, "   ");
-        titleAttributes(12, "| |_) |");
-        wprintw(this-> win, "  ");
-        titleAttributes(15, "| |");
-        wprintw(this-> win, "  ");
+        titleAttributes(14, "| |   ");
+        titleAttributes(13, "|  _|     ");
+        titleAttributes(11, "| |   ");
+        titleAttributes(12, "| |_) |  ");
+        titleAttributes(15, "| |  ");
         titleAttributes(16, "\\___ \\");
         //quarta linea
         wmove(this-> win, yMax/4 + 3, xMax/2 - 22 + 2);
-        titleAttributes(14, "| |");
-        wprintw(this-> win, "   ");
-        titleAttributes(13, "| |___");
-        wprintw(this-> win, "    ");
-        titleAttributes(11, "| |");
-        wprintw(this-> win, "   ");
-        titleAttributes(12, "|  _ <");
-        wprintw(this-> win, "   ");
-        titleAttributes(15,"| |");
-        wprintw(this-> win, "   ");
+        titleAttributes(14, "| |   ");
+        titleAttributes(13, "| |___    ");
+        titleAttributes(11, "| |   ");
+        titleAttributes(12, "|  _ <   ");
+        titleAttributes(15,"| |   ");
         titleAttributes(16, "___) |");
         //quinta linea
         wmove(this-> win, yMax/4 + 4, xMax/2 - 22 + 2);
-        titleAttributes(14, "|_|");
-        wprintw(this-> win, "   ");
-        titleAttributes(13, "|_____|");
-        wprintw(this-> win, "   ");
-        titleAttributes(11, "|_|");
-        wprintw(this-> win, "   ");
-        titleAttributes(12, "|_| \\_\\");
-        wprintw(this-> win, " ");
-        titleAttributes(15,"|___|");
-        wprintw(this-> win, " ");
+        titleAttributes(14, "|_|   ");
+        titleAttributes(13, "|_____|   ");
+        titleAttributes(11, "|_|   ");
+        titleAttributes(12, "|_| \\_\\ ");
+        titleAttributes(15,"|___| ");
         titleAttributes(16, "|____/");
     }
 
