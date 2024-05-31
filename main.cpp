@@ -60,7 +60,7 @@ int main() {
         init_pair(15, COLOR_BLUE, COLOR_BLACK);
         init_pair(16, COLOR_MAGENTA, COLOR_BLACK);
     } else {
-        printw("No colors were found, errors may occur.");
+        printw("No colors were found, errors may occur. ");
     }
     refresh();
 
@@ -98,7 +98,7 @@ int main() {
                 break;
             case 1:
                 mainMenu.remove();
-                //tBoard.remove();
+                tBoard.remove();
                 // show the leaderboard;
                 lBoard.reload();
                 inpt = showLeaderboard(&lBoard);
@@ -109,7 +109,7 @@ int main() {
                 inApp = false;
                 break;
             default:
-                // REVIEW some error handling;
+                printw("Somehow you managed to get here... interesting... ^C to exit and try again. ");
                 break;
         }
     }

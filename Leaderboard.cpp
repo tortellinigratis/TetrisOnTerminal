@@ -24,7 +24,7 @@ void Leaderboard::printscores(){
 			mvwprintw( win, 5, xMax/2 - 21,"You can be the top player at least for once");
 		}
 		else{
-			if(!readscore.is_open()) cout << "Error : opening file failed";
+			if(!readscore.is_open()) printw("Error: opeining file failed");
 
 			if(!is_empty(readscore)){
 
@@ -108,13 +108,12 @@ void Leaderboard::readFile(){
 		readscore.open("scores.txt");
 
 		if(!readscore.is_open()) {
-			cout << "Error : opening file failed";
-			// REVIEW error handling
+			printw("Error: opening file failed");
 		}
 
 		p_pos head = NULL;
 
-		while(!readscore.eof()){        //salvo nella lista le informazioni (FUNZIONA!)
+		while(!readscore.eof()){        //salvo nella lista le informazioni
 			string p1;
 			getline(readscore, p1);
 
@@ -230,7 +229,7 @@ int Leaderboard::getInput(){
 					wclear(win);
 					wrefresh(win);
 					break;
-				case KEY_LEFT:  //esc=27
+				case KEY_LEFT:
 					clear();
 					inLeaderboard = false;
 					page = 0;

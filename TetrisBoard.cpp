@@ -99,7 +99,14 @@
 
     void TetrisBoard::randomTtrmn() {
         srand(time(NULL));
-        int rndm = rand() % POSS_TETRAM;
+        // NOTE: per motivi conosciuti solo a C, rand() % n crea problemi con alcuni valori di n.
+        //       Su MacOS, uno di questi e' 7, come il nostro numero di tetramini.
+        //       Per evitare di sbilanciare la statistica e avere 0 e 1 che generano lo stesso tetramino,
+        //       si utilizza questo metodo rapido anche se non molto elegante.
+        int rndm = 0;
+        while( rndm == 0 ) {
+            rndm = rand() % POSS_TETRAM;
+        }
         switch ( rndm ) {
             case 1:
                 ttrmnNext = new Square();
@@ -120,11 +127,8 @@
                 ttrmnNext = new T_SHAPE();
                 break;
             case 7:
-                ttrmnNext = new Z_SHAPE();
-                break;
             default:
-                ttrmnNext = new Square();
-                //ttrmn = new Square();
+                ttrmnNext = new Z_SHAPE();
                 break;
         }
     }
@@ -173,7 +177,7 @@
     }
 
     void TetrisBoard::drawHold(){
-        int t = ttrmn->type;
+        int t = ttrmn-> getType();
         Tetramino* t_p;
 
         switch (t) {
@@ -251,7 +255,7 @@
         for ( int i = 0; i < ttrmn-> getMaxDim(); i++ ) {
             for ( int j = 0; j < ttrmn-> getMaxDim(); j++ ) {
                 if ( ttrmn-> ttrmnColor(i, j) != -1 ) {
-                    boardArray[i + yPosition][j + xPosition] = ttrmn-> type;
+                    boardArray[i + yPosition][j + xPosition] = ttrmn-> getType();
                 }
             }
         }
@@ -265,7 +269,6 @@
         for ( int i = 0; i < 2; i++ ) {
             for ( int j = 0; j < XLENGTH; j++ ) {
                 if ( boardArray[i][j] >= 0) {
-                    // TODO open "write your name" for leaderboard puposes
                     name_player();
                     return -1;
                 }
@@ -298,16 +301,19 @@
         int c;
         while(position < 15 && c != 27){
             c = getch();
-            if ( (c == KEY_BACKSPACE || c == 127 || c == '\b') && position > 0 ) {
-                s[position - 1] = ' ' ;
-                mvwprintw(nome, 1, position, " ");
-                wrefresh(nome);
-                position--;
-            } else if ( c == 27 || ( c == '\n' && position > 0 ) ) {
-                position = 15;
-            } else if ( position < 14 && c != -1 && c != ' ') {
+            if ( (c == KEY_BACKSPACE || c == 127 || c == '\b') ) {
+                if ( position > 0 ) {
+                    s[position - 1] = ' ' ;
+                    mvwprintw(nome, 1, position, " ");
+                    wrefresh(nome);
+                    position--;
+                }
+            } else if ( c == 27 ||  c == '\n' || c == KEY_ENTER ) {
+                if ( position > 0 ) {
+                    position = 15;
+                }
+            } else if ( position < 14 && c != -1 && c != ' ' ) {
                 s[position] = c;
-                // TODO special chars are inserted even with arrows
                 mvwprintw(nome,  1, position +1, "%c", c);
                 wrefresh(nome);
                 position++;
@@ -481,7 +487,6 @@
                 level++;
             }
         }
-        //REVIEW Probabilmente non e' necessario leggere lo score ogni volta da una stringa, conviene tenere una variabile gia' sottoforma di numero
         string a;
         const char *u;
         a = to_string(score);
@@ -507,7 +512,6 @@
     }
 
     int TetrisBoard::incr_score(int n, int level){
-        // REVIEW can incr_score be called even if n is 0??
         switch(n){
             case 0:
                 break;
@@ -546,7 +550,7 @@
         if ( typeHold == -1 ) { 
             yPosition = 0; 
             drawHold();
-            typeHold = ttrmn->type;
+            typeHold = ttrmn-> getType();
             delete ttrmn;
             ttrmn = NULL;
             ttrmn = ttrmnNext;
@@ -554,7 +558,7 @@
             xPosition  = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
         } else {
             drawHold();
-            int tmp = ttrmn->type;
+            int tmp = ttrmn-> getType();
 
             switch (typeHold) {
                 case 1:
@@ -608,16 +612,10 @@
 
     TetrisBoard::TetrisBoard() {
         getmaxyx(stdscr, this-> yMax, this-> xMax);
-        if ( this-> yMax < this-> yDim ) {
-            // REVIEW error handling: not enough vertical space
-        } else if ( this-> xMax < this-> xDim ) {
-            // REVIEW error handling: not enough horizontal space;
-        }
         xDim = XLENGTH +2;
         yDim = YLENGTH +2;
         this-> win = NULL;
         this->score_win = NULL;
-
     }
 
 
@@ -629,7 +627,7 @@
                 moveRight();
                 break;
 
-            case KEY_LEFT: //TODO : girare in senso orario con freccia su
+            case KEY_LEFT:
                 moveLeft();
                 break;
 
@@ -637,6 +635,7 @@
                 r = fallCompletely(fall_rate);
                 break;
 
+            case KEY_UP: // routa in senso orario anche con la freccia in su
             case 'r':
                 ttrmn-> rotate();
                 if ( !clearRotation() ) {

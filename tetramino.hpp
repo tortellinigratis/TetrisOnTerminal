@@ -5,27 +5,30 @@ class Tetramino {
     protected:
         short shape[4][4];
         int maxDim;
-        //NOTE: 1: SQUARE
-        //      2: RECT
-        //      3: J SHAPE
-        //      4: L SHAPE
-        //      5: S HAPE
-        //      6: T SHAPE
-        //      7: Z SHAPE
+        int type;
+        //NOTE: type 1: SQUARE
+        //           2: RECT
+        //           3: J SHAPE
+        //           4: L SHAPE
+        //           5: S HAPE
+        //           6: T SHAPE
+        //           7: Z SHAPE
 
     public:
-        int type; 
         Tetramino();
 
-        void rotate();
+        void rotate(); // clockwise rotation
 
-        void antiRotate();
+        void antiRotate(); // anti-clockwise rotation
 
-        void cyclic_roll(short&, short&, short&, short&);
-            
-        short ttrmnColor(int , int );
+        short ttrmnColor(int , int ); // returns the color of a specific Tetramino in a speficic (x, y) position
 
-        int getMaxDim();
+        int getMaxDim(); // returns this-> maxDim, the maximum dimension the Tetramino can occupy
+
+        int getType();
+
+    private:
+        void cyclic_roll(short&, short&, short&, short&); // the actual matrix-rotation function
 };
 
 class Square: public Tetramino {

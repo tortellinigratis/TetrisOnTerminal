@@ -12,7 +12,7 @@
 #define XLENGTH 10
 #define YLENGTH 20
 // List of possible blocks to choose from
-#define POSS_TETRAM 7
+#define POSS_TETRAM 8
 #define maxc 15 //max carattere nome
 using namespace std;
 
@@ -65,6 +65,7 @@ private:
     bool clearRight() ;
 
     bool clearRotation() ;
+    // REVIEW order of functions
     // movements:
     int tetraFall(int &fall_rate) ;
     void checkCompletedLines(int &fall_rate);
@@ -77,7 +78,7 @@ private:
 
     void pigliaTetramino();
 
-    int fallCompletely(int &fall_rate) ;
+    int fallCompletely(int &fall_rate);
 
 public:
 

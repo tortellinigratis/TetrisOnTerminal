@@ -18,6 +18,8 @@ private:
 
     void writeTitle();
 
+    void titleAttributes(int n, const char* c);
+
     void writeOptions();
 
     void init();
@@ -26,10 +28,8 @@ public:
     Menu();
 
     int getInput() ;
-    // REVIEW potential semplification, check if these functions are actually used and how
-    void update() ;
 
-    void render();
+    void update() ;
 
     void reload();
 

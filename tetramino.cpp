@@ -32,6 +32,9 @@ int Tetramino::getMaxDim() {
     return this-> maxDim;
 }
 
+int Tetramino::getType() {
+    return this-> type;
+}
 
 Square::Square() {
     type = 1;

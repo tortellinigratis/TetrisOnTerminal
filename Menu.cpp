@@ -1,130 +1,76 @@
 #include "Menu.hpp"
 void Menu::writeTitle() {
+        //prima linea
         wmove(this-> win, yMax/4, xMax/2 - 22 + 1);
-        wattron(this->win, COLOR_PAIR(14));
-        wprintw(this-> win, "_____");
-        wattroff(this->win,COLOR_PAIR(14));
+        titleAttributes(14, "_____");
         wprintw(this-> win, "   ");
-        wattron(this->win, COLOR_PAIR(13));
-        wprintw(this-> win, "_____");
-        wattroff(this->win,COLOR_PAIR(13));
+        titleAttributes(13, "_____");
         wprintw(this-> win, "   ");
-        wattron(this->win, COLOR_PAIR(11));
-        wprintw(this-> win, "_____");
-        wattroff(this->win,COLOR_PAIR(11));
+        titleAttributes(11, "_____");
         wprintw(this-> win, "   ");
-        wattron(this->win, COLOR_PAIR(12));
-        wprintw(this-> win, "____");
-        wattroff(this->win,COLOR_PAIR(12));
+        titleAttributes(12, "____");
         wprintw(this-> win, "    ");
-        wattron(this->win, COLOR_PAIR(15));
-        wprintw(this-> win,"___");
-        wattroff(this->win,COLOR_PAIR(15));
+        titleAttributes(15, "___");
         wprintw(this-> win, "   ");
-        wattron(this->win, COLOR_PAIR(16));
-        wprintw(this-> win, "____");
-        wattroff(this->win,COLOR_PAIR(16));
+        titleAttributes(16, "____");
         //seconda linea
         wmove(this-> win, yMax/4 + 1, xMax/2 - 22);
-        wattron(this->win, COLOR_PAIR(14));
-        wprintw(this-> win, "|_   _|");
-        wattroff(this->win,COLOR_PAIR(14));
+        titleAttributes(14, "|_   _|");
         wprintw(this-> win, " ");
-        wattron(this->win, COLOR_PAIR(13));
-        wprintw(this-> win, "| ____|");
-        wattroff(this->win,COLOR_PAIR(13));
+        titleAttributes(13, "| ____|");
         wprintw(this-> win, " ");
-        wattron(this->win, COLOR_PAIR(11));
-        wprintw(this-> win, "|_   _|");
-        wattroff(this->win,COLOR_PAIR(11));
+        titleAttributes(11, "|_   _|");
         wprintw(this-> win, " ");
-        wattron(this->win, COLOR_PAIR(12));
-        wprintw(this-> win, "|  _ \\");
-        wattroff(this->win,COLOR_PAIR(12));
+        titleAttributes(12, "|  _ \\");
         wprintw(this-> win, "  ");
-        wattron(this->win, COLOR_PAIR(15));
-        wprintw(this-> win,"|_ _|");
-        wattroff(this->win,COLOR_PAIR(15));
+        titleAttributes(15,"|_ _|");
         wprintw(this-> win, " ");
-        wattron(this->win, COLOR_PAIR(16));
-        wprintw(this-> win, "/ ___|");
-        wattroff(this->win,COLOR_PAIR(16));
+        titleAttributes(16, "/ ___|");
         //terza linea
         wmove(this-> win, yMax/4 + 2, xMax/2 - 22 + 2);
-        wattron(this->win, COLOR_PAIR(14));
-        wprintw(this-> win, "| |");
-        wattroff(this->win,COLOR_PAIR(14));
+        titleAttributes(14, "| |");
         wprintw(this-> win, "   ");
-        wattron(this->win, COLOR_PAIR(13));
-        wprintw(this-> win, "|  _|");
-        wattroff(this->win,COLOR_PAIR(13));
+        titleAttributes(13, "|  _|");
         wprintw(this-> win, "     ");
-        wattron(this->win, COLOR_PAIR(11));
-        wprintw(this-> win, "| |");
-        wattroff(this->win,COLOR_PAIR(11));
+        titleAttributes(11, "| |");
         wprintw(this-> win, "   ");
-        wattron(this->win, COLOR_PAIR(12));
-        wprintw(this-> win, "| |_) |");
-        wattroff(this->win,COLOR_PAIR(12));
+        titleAttributes(12, "| |_) |");
         wprintw(this-> win, "  ");
-        wattron(this->win, COLOR_PAIR(15));
-        wprintw(this-> win,"| |");
-        wattroff(this->win,COLOR_PAIR(15));
+        titleAttributes(15, "| |");
         wprintw(this-> win, "  ");
-        wattron(this->win, COLOR_PAIR(16));
-        wprintw(this-> win, "\\___ \\");
-        wattroff(this->win,COLOR_PAIR(16));
+        titleAttributes(16, "\\___ \\");
         //quarta linea
         wmove(this-> win, yMax/4 + 3, xMax/2 - 22 + 2);
-        wattron(this->win, COLOR_PAIR(14));
-        wprintw(this-> win, "| |");
-        wattroff(this->win,COLOR_PAIR(14));
+        titleAttributes(14, "| |");
         wprintw(this-> win, "   ");
-        wattron(this->win, COLOR_PAIR(13));
-        wprintw(this-> win, "| |___");
-        wattroff(this->win,COLOR_PAIR(13));
+        titleAttributes(13, "| |___");
         wprintw(this-> win, "    ");
-        wattron(this->win, COLOR_PAIR(11));
-        wprintw(this-> win, "| |");
-        wattroff(this->win,COLOR_PAIR(11));
+        titleAttributes(11, "| |");
         wprintw(this-> win, "   ");
-        wattron(this->win, COLOR_PAIR(12));
-        wprintw(this-> win, "|  _ <");
-        wattroff(this->win,COLOR_PAIR(12));
+        titleAttributes(12, "|  _ <");
         wprintw(this-> win, "   ");
-        wattron(this->win, COLOR_PAIR(15));
-        wprintw(this-> win,"| |");
-        wattroff(this->win,COLOR_PAIR(15));
+        titleAttributes(15,"| |");
         wprintw(this-> win, "   ");
-        wattron(this->win, COLOR_PAIR(16));
-        wprintw(this-> win, "___) |");
-        wattroff(this->win,COLOR_PAIR(16));
+        titleAttributes(16, "___) |");
         //quinta linea
         wmove(this-> win, yMax/4 + 4, xMax/2 - 22 + 2);
-        wattron(this->win, COLOR_PAIR(14));
-        wprintw(this-> win, "|_|");
-        wattroff(this->win,COLOR_PAIR(14));
+        titleAttributes(14, "|_|");
         wprintw(this-> win, "   ");
-        wattron(this->win, COLOR_PAIR(13));
-        wprintw(this-> win, "|_____|");
-        wattroff(this->win,COLOR_PAIR(13));
+        titleAttributes(13, "|_____|");
         wprintw(this-> win, "   ");
-        wattron(this->win, COLOR_PAIR(11));
-        wprintw(this-> win, "|_|");
-        wattroff(this->win,COLOR_PAIR(11));
+        titleAttributes(11, "|_|");
         wprintw(this-> win, "   ");
-        wattron(this->win, COLOR_PAIR(12));
-        wprintw(this-> win, "|_| \\_\\");
-        wattroff(this->win,COLOR_PAIR(12));
+        titleAttributes(12, "|_| \\_\\");
         wprintw(this-> win, " ");
-        wattron(this->win, COLOR_PAIR(15));
-        wprintw(this-> win,"|___|");
-        wattroff(this->win,COLOR_PAIR(15));
+        titleAttributes(15,"|___|");
         wprintw(this-> win, " ");
-        wattron(this->win, COLOR_PAIR(16));
-        wprintw(this-> win, "|____/");
-        wattroff(this->win,COLOR_PAIR(16));
+        titleAttributes(16, "|____/");
+    }
 
+    void Menu::titleAttributes(int n, const char* c) {
+        wattron(this->win, COLOR_PAIR(n));
+        wprintw(this-> win, c);
+        wattroff(this->win,COLOR_PAIR(n));
     }
 
 void Menu::writeOptions() {
@@ -134,12 +80,10 @@ void Menu::writeOptions() {
             int l = strlen(options[i]);
             wmove(this-> win, (yMax /4 + 8) +(i *2), (xMax/2) - (l/2) );
             if ( i == this-> index ) {
-                //wattron(this-> win, A_REVERSE);
                 wprintw(this-> win, a.c_str());
             }
             
             wprintw(this-> win, options[i]);
-            //wattroff(this-> win, A_REVERSE);
         }
     }
 
@@ -193,19 +137,11 @@ void Menu::update() {
         wclear(this-> win);
         char c;
         c = ' ';
-        wborder(this-> win, int(c), int(c), int(c), int(c), int(c), int(c), int(c), int(c));
+        // wborder(this-> win, int(c), int(c), int(c), int(c), int(c), int(c), int(c), int(c));
         writeTitle();
         writeOptions();
-        render();
-    }
-
-void Menu::render() {
-        if ( this-> win != NULL ) {
-            refresh();
-            wrefresh(this-> win);
-        } else {
-            init();
-        }
+        refresh();
+        wrefresh(this-> win);
     }
 
 void Menu::reload() {
