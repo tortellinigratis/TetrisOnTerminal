@@ -475,17 +475,17 @@
         }
         score = incr_score(cont, level);
         compl_lines+=cont; 
-        if(fall_rate>50){    
-            if(( compl_lines-(level+1)*4 >=0) && cont!=0){ 
-                if(level<5){
-                    fall_rate-=75;
+        if(( compl_lines-(level+1)*4 >=0) && cont!=0){ //NOTE - (level+1) non è elegante ma necessario per iniziare il gioco a lv.0 e poter comunque applicare questa formula
+            if(fall_rate>MIN_RATE){   
+                if(level<REF_LEV){
+                    fall_rate-=FIRST_RATE;
                 }
                 else
                 {
-                    fall_rate-=25;
+                    fall_rate-=SECOND_RATE;
                 }
-                level++;
             }
+            level++;
         }
         string a;
         const char *u;
