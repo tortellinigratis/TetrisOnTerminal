@@ -1,7 +1,6 @@
 #include "TetrisBoard.hpp"
 
-    void TetrisBoard::init(int &fall_rate) {
-        fall_rate = INITIAL_RATE;
+    void TetrisBoard::init() {
         compl_lines = 0;
         level = 0;
         score = 0;
@@ -19,24 +18,13 @@
         box(tetris, 0, 0);
         wmove(this-> tetris, 1, 3);
         
-        wattron(this->tetris, COLOR_PAIR(14));
-        wprintw(this-> tetris, "T");
-        wattroff(this->tetris,COLOR_PAIR(14));
-        wattron(this->tetris, COLOR_PAIR(13));
-        wprintw(this-> tetris, "E");
-        wattroff(this->tetris,COLOR_PAIR(13));
-        wattron(this->tetris, COLOR_PAIR(11));
-        wprintw(this-> tetris, "T");
-        wattroff(this->tetris,COLOR_PAIR(11));
-        wattron(this->tetris, COLOR_PAIR(12));
-        wprintw(this-> tetris, "R");
-        wattroff(this->tetris,COLOR_PAIR(12));
-        wattron(this->tetris, COLOR_PAIR(15));
-        wprintw(this-> tetris,"I");
-        wattroff(this->tetris,COLOR_PAIR(15));
-        wattron(this->tetris, COLOR_PAIR(16));
-        wprintw(this-> tetris, "S");
-        wattroff(this->tetris,COLOR_PAIR(16));
+        printColors(this-> tetris, 14, "T");
+        printColors(this-> tetris, 13, "E");
+        printColors(this-> tetris, 11, "T");
+        printColors(this-> tetris, 12, "R");
+        printColors(this-> tetris, 15, "I");
+        printColors(this-> tetris, 16, "S");
+
         box(this->score_win, 0, 0); 
          box(this->lev_win, 0,  0);
         mvwprintw(this->score_win, 1, 1, "Highscore");
@@ -149,8 +137,8 @@
                     wprintw(this-> win, " ");
                     wprintw(this-> win, " ");
                 } else {
-                    printColors(this-> win, boardArray[i][j]);
-                    printColors(this-> win, boardArray[i][j]);
+                    printColors(this-> win, boardArray[i][j], " ");
+                    printColors(this-> win, boardArray[i][j], " ");
                 }
             }
         }
@@ -166,8 +154,8 @@
                     wmove(this-> win, yPosition +i +1, 2*(xPosition) + 2*j + 3);
                 } else {
 
-                    printColors(this-> win, ttrmn-> ttrmnColor(i, j));
-                    printColors(this-> win, ttrmn-> ttrmnColor(i, j));
+                    printColors(this-> win, ttrmn-> ttrmnColor(i, j), " ");
+                    printColors(this-> win, ttrmn-> ttrmnColor(i, j), " ");
 
                 }
             }
@@ -220,8 +208,8 @@
                     wprintw(this-> winHold, " ");
                     wprintw(this-> winHold, " ");
                 } else {
-                    printColors(this-> winHold, t_p-> ttrmnColor(i, j));
-                    printColors(this-> winHold, t_p-> ttrmnColor(i, j));
+                    printColors(this-> winHold, t_p-> ttrmnColor(i, j), " ");
+                    printColors(this-> winHold, t_p-> ttrmnColor(i, j), " ");
                 }
             }
             wmove(winHold, 2+i+1, 3);
@@ -241,8 +229,8 @@
                     wprintw(this-> winNext, " ");
                     wprintw(this-> winNext, " ");
                 } else {
-                    printColors(this-> winNext, ttrmnNext-> ttrmnColor(i, j));
-                    printColors(this-> winNext, ttrmnNext-> ttrmnColor(i, j));
+                    printColors(this-> winNext, ttrmnNext-> ttrmnColor(i, j), " ");
+                    printColors(this-> winNext, ttrmnNext-> ttrmnColor(i, j), " ");
                 }
             }
             wmove(winNext, 2+i+1, 3);
@@ -301,7 +289,7 @@
         int c;
         while(position < 15 && c != 27){
             c = getch();
-            if ( (c == KEY_BACKSPACE || c == 127 || c == '\b') ) {
+            if ( c == KEY_BACKSPACE || c == 127 || c == '\b' ) {
                 if ( position > 0 ) {
                     s[position - 1] = ' ' ;
                     mvwprintw(nome, 1, position, " ");
@@ -312,7 +300,7 @@
                 if ( position > 0 ) {
                     position = 15;
                 }
-            } else if ( position < 14 && c != -1 && c != ' ' ) {
+            } else if ( position < 14 && c != -1 && c != ' ' && c != KEY_RIGHT && c != KEY_LEFT && c != KEY_UP && c != KEY_DOWN ) {
                 s[position] = c;
                 mvwprintw(nome,  1, position +1, "%c", c);
                 wrefresh(nome);
@@ -334,23 +322,25 @@
                 string line;
                 int p;
                 int read_line = 1;
+                int pos_line = 0;
                 bool found = false;
-                vector <string> contents;
+                riga* head = new riga;
+                riga* tmp = head;
                 while (!readscore.eof()){
-                    //readscore.ignore(maxc, readscore.widen('\n'));
                     getline(readscore, line);
                     if (read_line % 2 == 0 ){
                         p = stoi(line);
-                        if(p < score){
+                        if(p < score && !found){
                             found = true;
-                            read_line -= 1;
+                            pos_line = read_line -1;
                         }
+                        tmp-> score = p;
+                        tmp-> next = new riga;
+                        tmp = tmp-> next;
+                    } else {
+                        tmp-> name = line;
                     }
-                    contents.push_back(line);
-                    //readscore.ignore(maxc, readscore.widen('\n'));
-                    if (!found) {
-                        read_line += 1;
-                    }
+                    read_line += 1;
                 }
                 if (!found){
                     writescore.open("scores.txt", ofstream::app);
@@ -361,16 +351,17 @@
                     int current_line = 1;
                     writescore.open("scores.txt");
                     if(!writescore.is_open()) cout << "Error : opening file failed";
-                    for (auto file_line : contents){
-                        if (current_line != 1) {
+                    tmp = head;
+                    while( tmp -> next != NULL ) {
+                        if ( current_line != 1 ) {
                             writescore << endl;
                         }
-                        if(current_line == read_line){
+                        if ( current_line == pos_line ) {
                             writescore << s << endl << score << endl;
-                            current_line++;
                         }
-                        writescore << file_line;
-                        current_line++;
+                        writescore << tmp-> name << endl << tmp-> score;
+                        current_line+=2;
+                        tmp = tmp-> next;
                     }
                 }
 
@@ -674,17 +665,17 @@
         return r;
     }
 
-    void TetrisBoard::printColors(WINDOW* thisWin, short colorNumber) {
+    void TetrisBoard::printColors(WINDOW* thisWin, short colorNumber, const char* s) {
         wattron(thisWin, COLOR_PAIR(colorNumber));
-        wprintw(thisWin, " ");
+        wprintw(thisWin, s);
         wattroff(thisWin, COLOR_PAIR(colorNumber));
     }
 
-    void TetrisBoard::reload(int &fall_rate) {
+    void TetrisBoard::reload() {
         if ( this-> win != NULL ) {
             remove();
         }
-        init(fall_rate);
+        init();
     }
 
 

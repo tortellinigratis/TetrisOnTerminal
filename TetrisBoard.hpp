@@ -6,7 +6,6 @@
 #include <iostream>
 #include "tetramino.hpp"
 #include "ncrss.cpp"
-#include <vector>
 #include <ctime>
 
 #define XLENGTH 10
@@ -24,11 +23,15 @@ using namespace std;
 
 class TetrisBoard {
 private:
+    struct riga {
+        string name;
+        int score;
+        riga* next;
+    };
     int yMax, xMax;
     int yDim, xDim;
     int compl_lines;
     int level;
-    int *fall_rate;
     WINDOW* win;
     WINDOW* winNext;
     WINDOW* winHold;
@@ -48,7 +51,7 @@ private:
 
     int yPosition, xPosition;
 
-    void init(int &fall_rate) ;
+    void init() ;
     bool is_empty(istream&);
 
     void randomTtrmn() ;
@@ -93,9 +96,9 @@ public:
     int getInput(int inpt, int &fall_rate) ;
 
     // utilities
-    void printColors(WINDOW* thisWin, short colorNumber);
+    void printColors(WINDOW* thisWin, short colorNumber, const char* s);
 
-    void reload(int &fall_rate);
+    void reload();
 
     void deleteWin(WINDOW* window);
 

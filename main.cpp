@@ -93,7 +93,7 @@ int main() {
                 mainMenu.remove();
                 lBoard.remove();
                 // start the game;
-                tBoard.reload(fall_rate);
+                tBoard.reload();
                 inpt = playTetris(&tBoard, fall_rate);
                 break;
             case 1:
