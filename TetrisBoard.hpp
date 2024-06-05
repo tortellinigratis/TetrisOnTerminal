@@ -14,10 +14,11 @@
 // List of possible blocks to choose from
 #define POSS_TETRAM 8
 #define maxc 15 //max carattere nome
-#define MIN_RATE 25 //valore più basso raggiungibile da fall_rate
+#define INITIAL_RATE 1000 //valore iniziale in millisecondi che definisce l'intervallo di discesa del tetramino
+#define MIN_RATE 25 //valore più basso in millisecondi raggiungibile da fall_rate
 #define REF_LEV 5 //livello fino al quale viene sottratto FIRST_RATE
-#define FIRST_RATE 75 //valore sottratto a fall_rate per i primi REF_LEV livelli
-#define SECOND_RATE 25 //valore sottratto a fall_rate da quando si raggiunge REF_LEV a quando fall_rate è maggiore di MIN_RATE
+#define FIRST_RATE 75 //valore sottratto in millisecondi a fall_rate per i primi REF_LEV livelli
+#define SECOND_RATE 25 //valore sottratto in millisecondi a fall_rate da quando si raggiunge REF_LEV a quando fall_rate è maggiore di MIN_RATE
 
 using namespace std;
 
