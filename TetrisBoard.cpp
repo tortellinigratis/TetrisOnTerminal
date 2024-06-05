@@ -1,7 +1,7 @@
 #include "TetrisBoard.hpp"
 
     void TetrisBoard::init(int &fall_rate) {
-        fall_rate = 1000;
+        fall_rate = INITIAL_RATE;
         compl_lines = 0;
         level = 0;
         score = 0;
