@@ -12,10 +12,10 @@
         ttrmn = ttrmnNext;
         randomTtrmn();
         xPosition = (xDim /2) - (ttrmn-> getMaxDim() /2) -1;
-        this->lev_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) - (xDim /2)- 20);
-        this-> win = newwin(yDim, xDim + 10 , (yMax /2) - (yDim /2), (xMax /2) - (xDim /2) + 5);
-        this->score_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) + (xDim /2) + 20 );
-        tetris = newwin(3, 12 , (yMax /2) - (yDim /2) , (xMax /2) - (xDim /2) - 20);
+        this->lev_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) - (xDim /2) - 25);
+        this-> win = newwin(yDim, xDim + 10 , (yMax /2) - (yDim /2), (xMax /2) - (xDim /2) - 5);
+        this->score_win = newwin(6, 17, (yMax /2) - (yDim /2) + 3, (xMax /2) + (xDim /2) + 8 );
+        tetris = newwin(3, 12 , (yMax /2) - (yDim /2) , (xMax /2) - (xDim /2) - 22);
         box(tetris, 0, 0);
         wmove(this-> tetris, 1, 3);
         
@@ -76,8 +76,8 @@
         clearboard();
         showBoard();
 
-        winNext = newwin (8, 12, (yMax /2) - (yDim /2)+10, (xMax /2) + (xDim /2) + 20);
-        winHold = newwin (8, 12, (yMax /2) - (yDim /2)+10, (xMax /2) - (xDim /2) - 20);
+        winNext = newwin (8, 12, (yMax /2) - (yDim /2)+10, (xMax /2) + (xDim /2) + 10);
+        winHold = newwin (8, 12, (yMax /2) - (yDim /2)+10, (xMax /2) - (xDim /2) - 22);
         box(winNext, 0, 0);
         box(winHold, 0, 0);
         mvwprintw(winNext, 0, 3 , " Next ");
