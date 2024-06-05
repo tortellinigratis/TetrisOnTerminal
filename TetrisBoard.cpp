@@ -286,12 +286,12 @@
     void TetrisBoard::name_player() {
         string s = "              ";
         //apriamo finestra che chiede il nome, inseriamo il nome e sovrascriviamo il file
-        name_win = newwin(9, 40, yMax/4, xMax/2 - 20);
+        name_win = newwin(9, 40, yMax/2 - 3, xMax/2 - 20);
         box(name_win,0,0);
         mvwprintw(name_win, 1, 12,"Insert your name:");
        
         
-        nome = newwin(3, 17, yMax/4 + 4, xMax/2 - 9);
+        nome = newwin(3, 17, yMax/2 + 1, xMax/2 - 9);
         box(nome, 0,0);
         refresh();
         wrefresh(name_win);
