@@ -1,7 +1,7 @@
 #include "Menu.hpp"
 #include "TetrisBoard.hpp"
 #include "Leaderboard.hpp"
-#include "ncrss.cpp"
+#include "platform.hpp"
 #include <chrono>
 
 using namespace std;

@@ -3,7 +3,7 @@
 
 #include <string.h>
 #include <iostream>
-#include "ncrss.cpp"
+#include "platform.hpp"
 
 using namespace std;
 

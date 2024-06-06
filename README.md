@@ -15,7 +15,7 @@ Progetto di Programmazione (00819), Università di Bologna, A.A. 2023-24;
 
 **Linux, macOS**: `g++ *.cpp -lncurses -o Tetris && ./Tetris`
 
-**Windows**: `g++ -I/mingw64/include/ncurses -o Tetris *.cpp -lncurses -L/mingw64/bin -static && ./Tetris`
+**Windows**: `g++ -I/mingw64/include/ncurses -o Tetris *.cpp -lncurses -L/mingw64/bin -static`, dopodiché eseguire con `Tetris` oppure `./Tetris`;
 
 # Comandi
 **Menù:**

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
-#include "ncrss.cpp"
+#include "platform.hpp"
 #define N 10
 #define maxc 15
 using namespace std;

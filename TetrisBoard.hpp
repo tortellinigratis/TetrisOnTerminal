@@ -5,7 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include "tetramino.hpp"
-#include "ncrss.cpp"
+#include "platform.hpp"
 #include <ctime>
 
 #define XLENGTH 10
