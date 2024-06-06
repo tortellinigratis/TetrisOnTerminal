@@ -11,25 +11,24 @@ using namespace std;
 
 class Menu {
 private:
-    int yMax, xMax;
-    WINDOW* win;
     int index;
     char options[OPTIONS][12];
+    int yMax, xMax;
+    WINDOW* win;
 
+    void init();
+    
     void writeTitle();
-
     void titleAttributes(int n, const char* c);
 
     void writeOptions();
 
-    void init();
-
 public:
     Menu();
 
-    int getInput() ;
+    int getInput();
 
-    void update() ;
+    void update();
 
     void reload();
 

@@ -23,81 +23,81 @@ using namespace std;
 
 class TetrisBoard {
 private:
-    struct riga {
+    struct riga { // struttra utilizzata per salvare momentaneamente tutti gli score della leaderboard
         string name;
         int score;
         riga* next;
     };
+
+    // main board variables
     int yMax, xMax;
     int yDim, xDim;
+    int yPosition, xPosition;
+    short boardArray[YLENGTH][XLENGTH];
+    Tetramino* ttrmn;
+    WINDOW* win;
+
+    // score and level screens
+    int fall_rate;
     int compl_lines;
     int level;
-    WINDOW* win;
+    WINDOW* lev_win;
+    string highscore;
+    int score;
+    WINDOW* score_win;
+
+    // next tetramino screen
+    Tetramino* ttrmnNext;
     WINDOW* winNext;
+
+    // hold tetramino screen
+    int typeHold;
+    bool can_hold;
     WINDOW* winHold;
     WINDOW* tetris;
-    short boardArray[YLENGTH][XLENGTH];
-    bool can_hold;
-    Tetramino* ttrmn;
-    Tetramino* ttrmnNext;
-    int typeHold;
-    int score;
-    string highscore;
 
-    WINDOW* score_win;
+    // endgame screen (to save the score)
     WINDOW* name_win;
     WINDOW* nome;
-    WINDOW* lev_win;
 
-    int yPosition, xPosition;
-
-    void init() ;
-    bool is_empty(istream&);
-
-    void randomTtrmn() ;
-    void clearboard() ;
-
-    void showBoard() ;
-
-    void drawTetramino() ;
-
+    // some useful functions
+    void init();
+    void printColors(WINDOW* thisWin, short colorNumber, const char* s);
+    void clearboard();
+    void showBoard();
+    void drawTetramino();
+    void randomTtrmn();
+    void pigliaTetramino();
+    
     void drawHold();
 
     void drawNext();
 
-    int addBlock() ;
+    // lines and points
+    int addBlock();
+    void checkCompletedLines();
+    int incr_score(int, int);
+
+    // endgame functions
     void name_player();
-    bool clearUnder() ;
+    bool is_empty(istream&);
 
-    bool clearLeft() ;
-
-    bool clearRight() ;
-
-    bool clearRotation() ;
-    // REVIEW order of functions
     // movements:
-    int tetraFall(int &fall_rate) ;
-    void checkCompletedLines(int &fall_rate);
-
-    int incr_score(int, int );
-
+    int tetraFall() ;
+    bool clearUnder();
+    bool clearLeft();
+    bool clearRight();
+    bool clearRotation();
     void moveLeft() ;
-
     void moveRight();
-
-    void pigliaTetramino();
-
-    int fallCompletely(int &fall_rate);
+    int fallCompletely();
 
 public:
+    TetrisBoard();
+    int getInput(int inpt);
+    int getFallRate();
 
-    TetrisBoard() ;
-
-    int getInput(int inpt, int &fall_rate) ;
-
-    // utilities
-    void printColors(WINDOW* thisWin, short colorNumber, const char* s);
-
+    // the usual
     void reload();
 
     void deleteWin(WINDOW* window);

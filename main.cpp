@@ -14,21 +14,21 @@ int showMenu(Menu* mMenu) {
     return n;
 }
 
-int playTetris(TetrisBoard* tBoard, int &fall_rate) {
+int playTetris(TetrisBoard* tBoard) {
     int n = 0;
-    int r = fall_rate;
+    int r = tBoard-> getFallRate();
     char inpt;
     chrono::time_point<std::chrono::high_resolution_clock> t_start, t_end;
     // time diff
     while ( n == 0 ) {
         t_start = chrono::high_resolution_clock::now();
         timeout(r);
-        n = tBoard-> getInput(getch(), fall_rate);
+        n = tBoard-> getInput(getch());
         t_end = chrono::high_resolution_clock::now();
         r += (int)std::chrono::duration_cast<chrono::milliseconds>(t_start - t_end).count();
         
         if ( r <= 0 ) {
-            r = fall_rate;
+            r = tBoard-> getFallRate();
         }
     }
     return n;
@@ -77,7 +77,6 @@ int main() {
     //                   0, game
     //                   1, leaderboard
     //                   2, exit
-    int fall_rate = 1000;
     int inpt = -1;
     while ( inApp ) {
         switch ( inpt ) {
@@ -94,7 +93,7 @@ int main() {
                 lBoard.remove();
                 // start the game;
                 tBoard.reload();
-                inpt = playTetris(&tBoard, fall_rate);
+                inpt = playTetris(&tBoard);
                 break;
             case 1:
                 mainMenu.remove();

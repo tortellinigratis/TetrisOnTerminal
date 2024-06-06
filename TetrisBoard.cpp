@@ -1,6 +1,7 @@
 #include "TetrisBoard.hpp"
 
     void TetrisBoard::init() {
+        fall_rate = 1000;
         compl_lines = 0;
         level = 0;
         score = 0;
@@ -368,6 +369,7 @@
             }
             readscore.close();
             writescore.close();
+            // TODO delete the whole list
         }
     }
 
@@ -428,19 +430,19 @@
     }
 
     // movements:
-    int TetrisBoard::tetraFall(int &fall_rate) {
+    int TetrisBoard::tetraFall() {
         if ( clearUnder() ) {
             yPosition++;
             return 0;
         } else {
             int r = addBlock();
-            checkCompletedLines(fall_rate);
+            checkCompletedLines();
             return r;
         }
 
     }
 
-    void TetrisBoard::checkCompletedLines(int &fall_rate){
+    void TetrisBoard::checkCompletedLines(){
         int cont = 0;
         for(int y=0; y<YLENGTH; y++) {
             bool isLineCleared = true;
@@ -524,6 +526,10 @@
         return score;
     }
 
+    int TetrisBoard::getFallRate() {
+        return this-> fall_rate;
+    }
+
     void TetrisBoard::moveLeft() {
         if ( clearLeft() ) {
             xPosition--;
@@ -589,11 +595,11 @@
         }
     }
 
-    int TetrisBoard::fallCompletely(int &fall_rate) {
+    int TetrisBoard::fallCompletely() {
         int r = 0;
         bool moving = true;
         while ( moving ) {
-            r = tetraFall(fall_rate);
+            r = tetraFall();
             if ( yPosition == 0 ) {
                 moving = false;
             }
@@ -610,7 +616,7 @@
     }
 
 
-    int TetrisBoard::getInput(int inpt, int &fall_rate) {
+    int TetrisBoard::getInput(int inpt) {
         int r = 0;
         switch( inpt ) {
 			// REVIEW each case should have all 3 possible type of key (see backspace for reference)
@@ -623,7 +629,7 @@
                 break;
 
             case ' ':
-                r = fallCompletely(fall_rate);
+                r = fallCompletely();
                 break;
 
             case KEY_UP: // routa in senso orario anche con la freccia in su
@@ -654,7 +660,7 @@
                 return -1;
 
             default:
-                r = tetraFall(fall_rate);
+                r = tetraFall();
                 break;
         }
        if ( r != -1 ) {

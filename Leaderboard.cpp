@@ -101,29 +101,6 @@ void Leaderboard::scrollup(){
 		}
 }
 
-void Leaderboard::readFile(){
-    ifstream readscore;
-		readscore.open("scores.txt");
-
-		if(!readscore.is_open()) {
-			printw("Error: opening file failed");
-		}
-
-		p_pos head = NULL;
-
-		while(!readscore.eof()){        //salvo nella lista le informazioni
-			string p1;
-			getline(readscore, p1);
-
-			string p2;
-			getline(readscore, p2);
-			int p3 = stoi(p2);
-
-			head = head_insert(head,p1,p3);
-		}
-		readscore.close();
-}
-
 void Leaderboard::clear_scores(){
     start_color();
 		WINDOW *clear_check;
@@ -182,14 +159,6 @@ void Leaderboard::clear_scores(){
 					break;
 			}
 		}
-}
-
-Leaderboard::p_pos Leaderboard::head_insert(p_pos head,  string user, int score){
-        p_pos tmp = new pos;
-        tmp->username = user;
-        tmp->score = score;
-        tmp->next = head;
-		return tmp;
 }
 
 Leaderboard::Leaderboard(){

@@ -12,22 +12,25 @@ using namespace std;
 class Leaderboard{
 
 private:  
-    int yMax, xMax, page;
-    WINDOW * win;
 	struct pos{
 		string username;
 		int score;
 		pos *next;
     };
 	typedef pos* p_pos;
+
+    int yMax, xMax, page;
+    WINDOW * win;
+
     void init();
+
     void printscores();
-	bool is_empty(ifstream& );
+	bool is_empty(ifstream&);
+	
 	void scrolldown();
 	void scrollup();
-	void readFile();
+	
 	void clear_scores();
-    p_pos head_insert(p_pos ,  string , int ); 
 
 public:
     Leaderboard();

@@ -13,22 +13,21 @@ class Tetramino {
         //           5: S HAPE
         //           6: T SHAPE
         //           7: Z SHAPE
+    
+    private:
+        void cyclic_roll(short&, short&, short&, short&); // the actual matrix-rotation function
 
     public:
         Tetramino();
-
-        void rotate(); // clockwise rotation
-
-        void antiRotate(); // anti-clockwise rotation
-
-        short ttrmnColor(int , int ); // returns the color of a specific Tetramino in a speficic (x, y) position
 
         int getMaxDim(); // returns this-> maxDim, the maximum dimension the Tetramino can occupy
 
         int getType();
 
-    private:
-        void cyclic_roll(short&, short&, short&, short&); // the actual matrix-rotation function
+        void rotate(); // clockwise rotation
+        void antiRotate(); // anti-clockwise rotation
+
+        short ttrmnColor(int , int ); // returns the color of a specific Tetramino in a speficic (x, y) position
 };
 
 class Square: public Tetramino {
