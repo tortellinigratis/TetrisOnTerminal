@@ -27,7 +27,7 @@
         printColors(this-> tetris, 16, "S");
 
         box(this->score_win, 0, 0); 
-         box(this->lev_win, 0,  0);
+        box(this->lev_win, 0,  0);
         mvwprintw(this->score_win, 1, 1, "Highscore");
         mvwprintw(this->lev_win, 1, 1, "Lines");
         mvwprintw(this->lev_win, 3, 1, "Level");
@@ -369,7 +369,6 @@
             }
             readscore.close();
             writescore.close();
-            // TODO delete the whole list
         }
     }
 
@@ -698,7 +697,6 @@
             deleteWin(winHold);
 
             // For some reasons it crashes when you do deleteWin(this-> win);
-            // No fucking clue of why
             wclear(this-> win);
             wrefresh(this-> win);
             delwin(this-> win);

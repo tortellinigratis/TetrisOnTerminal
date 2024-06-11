@@ -13,7 +13,7 @@ void Leaderboard::init(){
 
 void Leaderboard::printscores(){
     ifstream readscore;
-		int h=3;  //g++ -I/mingw64/include/ncurses -o main main.cpp -lncurses -L/mingw64/bin -static
+		int h=3;  
     	readscore.open("scores.txt");
 
 		if(is_empty(readscore)){
@@ -22,7 +22,7 @@ void Leaderboard::printscores(){
 			mvwprintw( win, 5, xMax/4 - 21,"You can be the top player at least for once");
 		}
 		else{
-			if(!readscore.is_open()) printw("Error: opeining file failed");
+			if(!readscore.is_open()) printw("Error: opening file failed");
 
 			if(!is_empty(readscore)){
 
@@ -102,11 +102,9 @@ void Leaderboard::scrollup(){
 }
 
 void Leaderboard::clear_scores(){
-    start_color();
 		WINDOW *clear_check;
 		clear_check = newwin (7, xMax/3, yMax/3 + 1, xMax/3);  //creo la finestra
 	    box(clear_check,0,0);
-		start_color();
 	    mvwprintw( clear_check, 0, xMax/6 -6 ," Are you sure? ");
 	    refresh();
 	    wrefresh(clear_check);
@@ -129,16 +127,10 @@ void Leaderboard::clear_scores(){
 
 			switch(choice){
 				case KEY_LEFT:
-					highlight --;
-					if(highlight == -1){
-						highlight = 0;
-					}
+					highlight = 0;
 					break;
 				case KEY_RIGHT:
-					highlight ++;
-					if (highlight == 2){
-						highlight = 1;
-					}
+					highlight = 1;
 					break;
 				case '\n':
 					if (highlight == 1){

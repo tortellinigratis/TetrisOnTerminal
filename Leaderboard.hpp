@@ -11,14 +11,7 @@ using namespace std;
 
 class Leaderboard{
 
-private:  
-	struct pos{
-		string username;
-		int score;
-		pos *next;
-    };
-	typedef pos* p_pos;
-
+private:
     int yMax, xMax, page;
     WINDOW * win;
 
